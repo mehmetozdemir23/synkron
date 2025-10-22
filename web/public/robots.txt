@@ -1,0 +1,14 @@
+# robots.txt for Synkron - https://synkron.app
+User-agent: *
+Allow: /
+Allow: /register
+Allow: /login
+
+# Disallow private areas
+Disallow: /dashboard/
+Disallow: /subscription-success
+Disallow: /subscription-cancel
+Disallow: /reset-password/
+
+# Sitemap
+Sitemap: https://synkron.app/sitemap.xml
