@@ -32,5 +32,5 @@ npm run dev
 
 ```bash
 cd api
-./vendor/bin/pest
+./vendor/bin/phpunit
 ```
