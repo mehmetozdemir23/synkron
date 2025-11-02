@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
+use Override;
 
 class GetAvailableSlotsRequest extends FormRequest
 {
@@ -21,6 +22,7 @@ class GetAvailableSlotsRequest extends FormRequest
         ];
     }
 
+    #[Override]
     public function messages(): array
     {
         return [

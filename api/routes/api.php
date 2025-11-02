@@ -40,10 +40,10 @@ Route::middleware(['auth:sanctum'])->group(function (): void {
     Route::post('/availabilities', [AvailabilityController::class, 'upsert']);
 
     Route::get('/bookings', [BookingController::class, 'index']);
-    Route::get('/bookings/{id}', [BookingController::class, 'show']);
-    Route::post('/bookings/{id}/confirm', [BookingController::class, 'confirm']);
-    Route::post('/bookings/{id}/reject', [BookingController::class, 'reject']);
-    Route::post('/bookings/{id}/cancel', [BookingController::class, 'cancel']);
+    Route::get('/bookings/{booking}', [BookingController::class, 'show']);
+    Route::post('/bookings/{booking}/confirm', [BookingController::class, 'confirm']);
+    Route::post('/bookings/{booking}/reject', [BookingController::class, 'reject']);
+    Route::post('/bookings/{booking}/cancel', [BookingController::class, 'cancel']);
 
     Route::prefix('subscription')->group(function (): void {
         Route::get('/status', [SubscriptionController::class, 'status']);

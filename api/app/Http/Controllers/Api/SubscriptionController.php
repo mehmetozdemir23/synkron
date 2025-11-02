@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -56,7 +57,7 @@ class SubscriptionController extends Controller
             return response()->json([
                 'url' => $checkout->url,
             ]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return response()->json([
                 'error' => 'Erreur lors de la création de la session de paiement',
                 'message' => $e->getMessage(),
@@ -76,7 +77,7 @@ class SubscriptionController extends Controller
             return response()->json([
                 'url' => $url,
             ]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return response()->json([
                 'error' => 'Erreur lors de l\'ouverture du portail',
                 'message' => $e->getMessage(),

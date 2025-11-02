@@ -8,9 +8,10 @@ use App\Http\Requests\GetBookingsRequest;
 use App\Mail\BookingCancelled;
 use App\Mail\BookingConfirmation;
 use App\Mail\BookingRejected;
+use App\Models\Booking;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
 
 class BookingController extends Controller
@@ -34,26 +35,25 @@ class BookingController extends Controller
         return response()->json(['bookings' => $bookings]);
     }
 
-    public function show(Request $request, int $id): JsonResponse
+    public function show(Booking $booking): JsonResponse
     {
-        $booking = $request->user()
-            ->bookings()
-            ->with('service')
-            ->findOrFail($id);
+        Gate::authorize('view', $booking);
+
+        $booking->load('service');
 
         return response()->json(['booking' => $booking]);
     }
 
-    public function confirm(Request $request, int $id): JsonResponse
+    public function confirm(Booking $booking): JsonResponse
     {
-        $booking = $request->user()
-            ->bookings()
-            ->findOrFail($id);
+        Gate::authorize('update', $booking);
+
         if ($booking->status !== BookingStatus::PENDING->value) {
             return response()->json([
                 'message' => 'Seules les réservations en attente peuvent être confirmées.',
             ], 400);
         }
+
         $booking->update([
             'status' => BookingStatus::CONFIRMED->value,
         ]);
@@ -68,16 +68,16 @@ class BookingController extends Controller
         ]);
     }
 
-    public function reject(Request $request, int $id): JsonResponse
+    public function reject(Booking $booking): JsonResponse
     {
-        $booking = $request->user()
-            ->bookings()
-            ->findOrFail($id);
+        Gate::authorize('update', $booking);
+
         if ($booking->status !== BookingStatus::PENDING->value) {
             return response()->json([
                 'message' => 'Seules les réservations en attente peuvent être rejetées.',
             ], 400);
         }
+
         $booking->update([
             'status' => BookingStatus::CANCELLED->value,
             'cancelled_at' => now(),
@@ -93,11 +93,9 @@ class BookingController extends Controller
         ]);
     }
 
-    public function cancel(Request $request, int $id): JsonResponse
+    public function cancel(Booking $booking): JsonResponse
     {
-        $booking = $request->user()
-            ->bookings()
-            ->findOrFail($id);
+        Gate::authorize('update', $booking);
 
         if ($booking->status === BookingStatus::CANCELLED->value) {
             return response()->json([

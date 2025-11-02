@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\BookingStatus;
 use App\Models\Availability;
 use App\Models\Booking;
 use App\Models\Service;
@@ -88,7 +89,7 @@ class DatabaseSeeder extends Seeder
             'notes' => 'Première consultation - Gestion du stress',
             'start_at' => $tomorrow,
             'end_at' => $tomorrow->copy()->addMinutes(60),
-            'status' => 'confirmed',
+            'status' => BookingStatus::CONFIRMED->value,
         ]);
 
         Booking::create([
@@ -99,7 +100,7 @@ class DatabaseSeeder extends Seeder
             'notes' => 'Suivi mensuel',
             'start_at' => $nextWeek,
             'end_at' => $nextWeek->copy()->addMinutes(60),
-            'status' => 'pending',
+            'status' => BookingStatus::PENDING->value,
         ]);
 
         Booking::create([
@@ -109,12 +110,7 @@ class DatabaseSeeder extends Seeder
             'client_email' => 'claire.dubois@example.com',
             'start_at' => $lastWeek,
             'end_at' => $lastWeek->copy()->addMinutes(60),
-            'status' => 'confirmed',
+            'status' => BookingStatus::CONFIRMED->value,
         ]);
-
-        $this->command->info('✅ Profil de démonstration créé');
-        $this->command->info('📧 Email: demo@synkron.app');
-        $this->command->info('🔑 Mot de passe: demo1234');
-        $this->command->info('🔗 Slug: marie-dupont');
     }
 }

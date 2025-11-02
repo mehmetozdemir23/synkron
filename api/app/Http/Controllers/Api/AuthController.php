@@ -8,7 +8,9 @@ use App\Actions\RegisterUserAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginUserRequest;
 use App\Http\Requests\RegisterUserRequest;
+use Exception;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -57,12 +59,12 @@ class AuthController extends Controller
         return response()->json(['user' => $request->user()]);
     }
 
-    public function googleRedirect()
+    public function googleRedirect(): RedirectResponse
     {
         return Socialite::driver('google')->redirect();
     }
 
-    public function googleCallback(AuthenticateGoogleUserAction $action)
+    public function googleCallback(AuthenticateGoogleUserAction $action): RedirectResponse
     {
         try {
             $googleUser = Socialite::driver('google')->user();
@@ -77,7 +79,7 @@ class AuthController extends Controller
             $frontendUrl = config('app.frontend_url', 'http://localhost:5173');
 
             return redirect($frontendUrl.'/dashboard');
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Log::error('Google OAuth authentication failed', [
                 'message' => $e->getMessage(),
                 'trace' => $e->getTraceAsString(),

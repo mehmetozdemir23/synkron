@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\Service;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Override;
 use Tests\TestCase;
 
 class ServiceManagementTest extends TestCase
@@ -13,6 +14,7 @@ class ServiceManagementTest extends TestCase
 
     private User $user;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

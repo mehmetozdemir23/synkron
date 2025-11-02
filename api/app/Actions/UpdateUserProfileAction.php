@@ -13,7 +13,7 @@ class UpdateUserProfileAction
             $firstname = $data['firstname'] ?? $user->firstname;
             $lastname = $data['lastname'] ?? $user->lastname;
             $fullName = trim($firstname.' '.$lastname);
-            $data['slug'] = generate_unique_slug($fullName, $user->id);
+            $data['slug'] = User::generateSlug($fullName, $user->id);
         }
 
         $user->update($data);

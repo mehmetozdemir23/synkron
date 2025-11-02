@@ -5,16 +5,8 @@ namespace Database\Factories;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Service>
- */
 class ServiceFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
     public function definition(): array
     {
         return [
@@ -33,9 +25,6 @@ class ServiceFactory extends Factory
         ];
     }
 
-    /**
-     * Service inactif
-     */
     public function inactive(): static
     {
         return $this->state(fn () => [
@@ -43,9 +32,6 @@ class ServiceFactory extends Factory
         ]);
     }
 
-    /**
-     * Service gratuit
-     */
     public function free(): static
     {
         return $this->state(fn () => [

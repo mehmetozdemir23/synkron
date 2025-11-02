@@ -2,12 +2,14 @@
 
 namespace Tests\Feature;
 
+use App\BookingStatus;
 use App\Models\Availability;
 use App\Models\Booking;
 use App\Models\Service;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Override;
 use Tests\TestCase;
 
 class BookingFlowTest extends TestCase
@@ -18,6 +20,7 @@ class BookingFlowTest extends TestCase
 
     private Service $service;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -83,7 +86,7 @@ class BookingFlowTest extends TestCase
         $booking = Booking::factory()->create([
             'user_id' => $this->professional->id,
             'service_id' => $this->service->id,
-            'status' => 'pending',
+            'status' => BookingStatus::PENDING->value,
         ]);
 
         $response = $this->actingAs($this->professional)->post("/api/bookings/{$booking->id}/confirm");
@@ -91,7 +94,7 @@ class BookingFlowTest extends TestCase
         $response->assertOk();
         $this->assertDatabaseHas('bookings', [
             'id' => $booking->id,
-            'status' => 'confirmed',
+            'status' => BookingStatus::CONFIRMED->value,
         ]);
     }
 
@@ -100,7 +103,7 @@ class BookingFlowTest extends TestCase
         $booking = Booking::factory()->create([
             'user_id' => $this->professional->id,
             'service_id' => $this->service->id,
-            'status' => 'pending',
+            'status' => BookingStatus::PENDING->value,
         ]);
 
         $response = $this->actingAs($this->professional)->post("/api/bookings/{$booking->id}/reject");
@@ -108,7 +111,7 @@ class BookingFlowTest extends TestCase
         $response->assertOk();
         $this->assertDatabaseHas('bookings', [
             'id' => $booking->id,
-            'status' => 'cancelled',
+            'status' => BookingStatus::CANCELLED->value,
         ]);
     }
 
@@ -117,7 +120,7 @@ class BookingFlowTest extends TestCase
         $booking = Booking::factory()->create([
             'user_id' => $this->professional->id,
             'service_id' => $this->service->id,
-            'status' => 'confirmed',
+            'status' => BookingStatus::CONFIRMED->value,
             'cancellation_token' => 'test-token-123',
         ]);
 
@@ -126,7 +129,7 @@ class BookingFlowTest extends TestCase
         $response->assertOk();
         $this->assertDatabaseHas('bookings', [
             'id' => $booking->id,
-            'status' => 'cancelled',
+            'status' => BookingStatus::CANCELLED->value,
         ]);
         $this->assertDatabaseMissing('bookings', [
             'id' => $booking->id,
@@ -143,7 +146,7 @@ class BookingFlowTest extends TestCase
             'service_id' => $this->service->id,
             'start_at' => $startAt,
             'end_at' => $startAt->copy()->addHour(),
-            'status' => 'confirmed',
+            'status' => BookingStatus::CONFIRMED->value,
         ]);
 
         $response = $this->postJson("/api/public/{$this->professional->slug}/services/{$this->service->id}/bookings", [
@@ -164,7 +167,7 @@ class BookingFlowTest extends TestCase
             'service_id' => $this->service->id,
             'start_at' => $startOfMonth->copy()->addDays(5)->setTime(10, 0),
             'end_at' => $startOfMonth->copy()->addDays(5)->setTime(11, 0),
-            'status' => 'confirmed',
+            'status' => BookingStatus::CONFIRMED->value,
         ]);
 
         $response = $this->actingAs($this->professional)->get('/api/bookings');

@@ -6,7 +6,9 @@
         class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
         @click.self="close"
       >
-        <div class="bg-neutral-200 rounded-2xl shadow-2xl max-w-md w-full border border-neutral-400">
+        <div
+          class="bg-neutral-200 rounded-2xl shadow-2xl max-w-md w-full border border-neutral-400"
+        >
           <div
             class="px-4 sm:px-6 py-4 sm:py-5 flex items-start sm:items-center justify-between gap-3 border-b border-neutral-400"
           >
@@ -78,7 +80,9 @@
 
               <div class="text-center space-y-2">
                 <div class="flex items-baseline justify-center gap-1">
-                  <span class="text-3xl sm:text-4xl font-bold text-neutral-900">9€</span>
+                  <span class="text-3xl sm:text-4xl font-bold text-neutral-900"
+                    >9€</span
+                  >
                   <span class="text-sm text-neutral-600">/mois</span>
                 </div>
                 <p class="text-xs text-neutral-600">

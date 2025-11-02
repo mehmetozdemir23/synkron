@@ -15,9 +15,6 @@ use Illuminate\Validation\ValidationException;
 
 class PasswordResetController extends Controller
 {
-    /**
-     * Envoie un lien de réinitialisation de mot de passe.
-     */
     public function forgotPassword(Request $request): JsonResponse
     {
         $request->validate([
@@ -54,9 +51,6 @@ class PasswordResetController extends Controller
         ]);
     }
 
-    /**
-     * Réinitialise le mot de passe de l'utilisateur.
-     */
     public function resetPassword(Request $request): JsonResponse
     {
         $request->validate([

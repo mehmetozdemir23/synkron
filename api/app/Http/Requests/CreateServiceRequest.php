@@ -2,13 +2,15 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Service;
 use Illuminate\Foundation\Http\FormRequest;
+use Override;
 
 class CreateServiceRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return $this->user()->can('create', \App\Models\Service::class);
+        return $this->user()->can('create', Service::class);
     }
 
     public function rules(): array
@@ -22,6 +24,7 @@ class CreateServiceRequest extends FormRequest
         ];
     }
 
+    #[Override]
     public function messages(): array
     {
         return [

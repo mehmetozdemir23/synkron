@@ -31,25 +31,16 @@ class Service extends Model
         ];
     }
 
-    /**
-     * Get the professional who owns the service.
-     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    /**
-     * Get the bookings for this service.
-     */
     public function bookings(): HasMany
     {
         return $this->hasMany(Booking::class);
     }
 
-    /**
-     * Scope to filter only active services.
-     */
     #[Scope]
     protected function active(Builder $query): void
     {

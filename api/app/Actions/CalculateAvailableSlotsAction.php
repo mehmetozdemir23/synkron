@@ -66,7 +66,7 @@ class CalculateAvailableSlotsAction
     private function isAvailable(Carbon $slotStart, Carbon $slotEnd, Collection $bookings): bool
     {
         return $bookings->every(
-            fn ($booking) => $slotStart >= $booking->end_at || $slotEnd <= $booking->start_at
+            fn ($booking): bool => $slotStart >= $booking->end_at || $slotEnd <= $booking->start_at
         );
     }
 }

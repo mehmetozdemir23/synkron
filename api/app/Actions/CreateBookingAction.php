@@ -30,7 +30,7 @@ class CreateBookingAction
             }
 
             $conflict = Booking::where('user_id', $user->id)
-                ->where('status', '!=', 'cancelled')
+                ->where('status', '!=', BookingStatus::CANCELLED->value)
                 ->where('start_at', '<', $endAt)
                 ->where('end_at', '>', $startAt)
                 ->lockForUpdate()

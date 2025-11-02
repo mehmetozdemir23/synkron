@@ -2,13 +2,15 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Availability;
 use Illuminate\Foundation\Http\FormRequest;
+use Override;
 
 class UpsertAvailabilitiesRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return true;
+        return $this->user()->can('create', Availability::class);
     }
 
     public function rules(): array
@@ -21,6 +23,7 @@ class UpsertAvailabilitiesRequest extends FormRequest
         ];
     }
 
+    #[Override]
     public function messages(): array
     {
         return [

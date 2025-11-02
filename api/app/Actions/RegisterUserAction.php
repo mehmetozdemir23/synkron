@@ -11,7 +11,7 @@ class RegisterUserAction
     public function handle(array $data): User
     {
         $fullName = trim($data['firstname'].' '.$data['lastname']);
-        $slug = generate_unique_slug($fullName);
+        $slug = User::generateSlug($fullName);
 
         $user = User::create([
             'firstname' => $data['firstname'],
@@ -21,7 +21,6 @@ class RegisterUserAction
             'slug' => $slug,
             'business_name' => $data['business_name'] ?? null,
             'activity' => $data['activity'] ?? null,
-            'timezone' => $data['timezone'] ?? 'Europe/Paris',
         ]);
 
         $user->notify(new ProfessionalWelcome(

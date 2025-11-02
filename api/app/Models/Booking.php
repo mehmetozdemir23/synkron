@@ -32,25 +32,16 @@ class Booking extends Model
         ];
     }
 
-    /**
-     * Get the professional who receives the booking.
-     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    /**
-     * Get the professional who receives the booking (alias).
-     */
     public function professional(): BelongsTo
     {
         return $this->user();
     }
 
-    /**
-     * Get the booked service.
-     */
     public function service(): BelongsTo
     {
         return $this->belongsTo(Service::class);

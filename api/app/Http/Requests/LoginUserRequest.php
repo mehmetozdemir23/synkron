@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Override;
 
 class LoginUserRequest extends FormRequest
 {
@@ -19,6 +20,7 @@ class LoginUserRequest extends FormRequest
         ];
     }
 
+    #[Override]
     public function messages(): array
     {
         return [

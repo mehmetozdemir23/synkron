@@ -21,7 +21,7 @@ class AuthenticateGoogleUserAction
         $firstname = $nameParts[0] ?? '';
         $lastname = $nameParts[1] ?? '';
 
-        $slug = generate_unique_slug($googleData['name']);
+        $slug = User::generateSlug($googleData['name']);
 
         $user = User::create([
             'firstname' => $firstname,
@@ -30,7 +30,6 @@ class AuthenticateGoogleUserAction
             'password' => Hash::make(Str::random(32)),
             'slug' => $slug,
             'business_name' => $googleData['name'] ?? null,
-            'timezone' => 'Europe/Paris',
         ]);
 
         $user->notify(new ProfessionalWelcome(

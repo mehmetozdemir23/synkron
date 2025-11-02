@@ -38,7 +38,6 @@ class ServiceController extends Controller
 
     public function update(UpdateServiceRequest $request, Service $service, UpdateServiceAction $action): JsonResponse
     {
-
         $service = $action->handle($service, $request->validated());
 
         return response()->json(['service' => $service]);

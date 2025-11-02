@@ -14,16 +14,12 @@
     </template>
 
     <div class="w-full space-y-6">
-      
-      <section class="bg-neutral-200 rounded-xl border border-neutral-400 p-6 sm:p-7 transition-all hover:shadow-md">
-        <div class="flex items-center gap-3 mb-6">
-          <div class="w-10 h-10 rounded-lg bg-brand-100 flex items-center justify-center">
-            <User class="w-5 h-5 text-brand-600" />
-          </div>
-          <h2 class="text-lg font-semibold text-neutral-900">
-            Informations personnelles
-          </h2>
-        </div>
+      <section
+        class="bg-neutral-200 rounded-xl border border-neutral-400 p-6 sm:p-7 transition-all hover:shadow-md"
+      >
+        <h2 class="text-lg font-semibold text-neutral-900 mb-5">
+          Informations personnelles
+        </h2>
 
         <form @submit.prevent="updateProfile" class="space-y-4 sm:space-y-5">
           <BaseInput
@@ -98,33 +94,30 @@
         </form>
       </section>
 
-      
       <PasswordChangeForm />
 
-      
-      <section class="bg-neutral-200 rounded-xl border border-neutral-400 p-6 sm:p-7 transition-all hover:shadow-md">
-        <div class="flex items-center gap-3 mb-5">
-          <div class="w-10 h-10 rounded-lg bg-accent-100 flex items-center justify-center">
-            <CreditCard class="w-5 h-5 text-accent-600" />
-          </div>
-          <h2 class="text-lg font-semibold text-neutral-900">Abonnement</h2>
-        </div>
+      <section
+        class="bg-neutral-200 rounded-xl border border-neutral-400 p-6 sm:p-7 transition-all hover:shadow-md"
+      >
+        <h2 class="text-lg font-semibold text-neutral-900 mb-5">Abonnement</h2>
 
-        
-        <div
-          v-if="subscriptionStore.loading"
-          class="space-y-5 animate-pulse"
-        >
-          <div class="p-5 bg-neutral-100 rounded-xl border border-neutral-300 space-y-3">
+        <div v-if="subscriptionStore.loading" class="space-y-5 animate-pulse">
+          <div
+            class="p-5 bg-neutral-100 rounded-xl border border-neutral-300 space-y-3"
+          >
             <div class="h-4 bg-neutral-300 rounded w-28"></div>
             <div class="h-5 bg-neutral-300 rounded w-36"></div>
           </div>
           <div class="grid grid-cols-2 gap-3">
-            <div class="p-5 bg-neutral-100 rounded-xl border border-neutral-300 space-y-2">
+            <div
+              class="p-5 bg-neutral-100 rounded-xl border border-neutral-300 space-y-2"
+            >
               <div class="h-3 bg-neutral-300 rounded w-14"></div>
               <div class="h-5 bg-neutral-300 rounded w-20"></div>
             </div>
-            <div class="p-5 bg-neutral-100 rounded-xl border border-neutral-300 space-y-2">
+            <div
+              class="p-5 bg-neutral-100 rounded-xl border border-neutral-300 space-y-2"
+            >
               <div class="h-3 bg-neutral-300 rounded w-12"></div>
               <div class="h-5 bg-neutral-300 rounded w-24"></div>
             </div>
@@ -132,7 +125,6 @@
           <div class="h-10 bg-neutral-300 rounded-lg w-40"></div>
         </div>
 
-        
         <div v-else class="space-y-5">
           <div
             class="flex items-center justify-between p-5 bg-neutral-100 border border-neutral-300 rounded-xl"
@@ -159,7 +151,6 @@
             </div>
           </div>
 
-          
           <div v-if="subscriptionStore.isPro" class="space-y-4">
             <div class="grid grid-cols-2 gap-3 text-sm">
               <div
@@ -229,9 +220,10 @@
             </div>
           </div>
 
-          
           <div v-else class="space-y-4">
-            <div class="p-5 bg-neutral-100 rounded-lg border border-neutral-300">
+            <div
+              class="p-5 bg-neutral-100 rounded-lg border border-neutral-300"
+            >
               <div class="flex items-center justify-between mb-3">
                 <span class="text-sm font-medium text-neutral-800"
                   >Utilisation ce mois</span

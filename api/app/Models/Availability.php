@@ -24,9 +24,6 @@ class Availability extends Model
         ];
     }
 
-    /**
-     * Get the professional who owns the availability.
-     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

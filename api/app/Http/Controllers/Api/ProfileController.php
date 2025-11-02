@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateUserProfileRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
 
@@ -21,12 +22,14 @@ class ProfileController extends Controller
 
     public function updatePassword(Request $request): JsonResponse
     {
+        $user = $request->user();
+
+        Gate::authorize('updatePassword', $user);
+
         $request->validate([
             'current_password' => ['required', 'string'],
             'password' => ['required', 'string', 'confirmed', Password::min(8)],
         ]);
-
-        $user = $request->user();
 
         if (! Hash::check($request->current_password, $user->password)) {
             return response()->json([

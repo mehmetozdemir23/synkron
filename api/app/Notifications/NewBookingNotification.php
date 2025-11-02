@@ -26,10 +26,10 @@ class NewBookingNotification extends Notification implements ShouldQueue
     {
         $dashboardUrl = config('app.frontend_url').'/dashboard/bookings';
 
-        return (new NewBookingMail(
+        return new NewBookingMail(
             booking: $this->booking,
             dashboardUrl: $dashboardUrl
-        ))->to($notifiable->email);
+        )->to($notifiable->email);
     }
 
     public function toArray(object $notifiable): array

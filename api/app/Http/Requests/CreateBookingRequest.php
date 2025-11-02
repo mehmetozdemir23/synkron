@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Override;
 
 class CreateBookingRequest extends FormRequest
 {
@@ -21,6 +22,7 @@ class CreateBookingRequest extends FormRequest
         ];
     }
 
+    #[Override]
     public function messages(): array
     {
         return [

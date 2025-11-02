@@ -130,7 +130,7 @@ class ProfessionalController extends Controller
         }
 
         $booking->update([
-            'status' => 'cancelled',
+            'status' => BookingStatus::CANCELLED->value,
             'cancelled_at' => now(),
         ]);
 

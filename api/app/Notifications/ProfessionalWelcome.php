@@ -27,11 +27,11 @@ class ProfessionalWelcome extends Notification implements ShouldQueue
     {
         $dashboardUrl = config('app.frontend_url').'/dashboard';
 
-        return (new ProfessionalWelcomeMail(
+        return new ProfessionalWelcomeMail(
             name: $this->name,
             businessName: $this->businessName,
             dashboardUrl: $dashboardUrl
-        ))->to($notifiable->email);
+        )->to($notifiable->email);
     }
 
     public function toArray(object $notifiable): array

@@ -39,7 +39,7 @@
       <div
         class="lg:hidden flex-shrink-0 bg-neutral-100/95 backdrop-blur-md border-b border-neutral-400 px-4 py-3"
       >
-        <LogoBrand size="md" />
+        <LogoBrand size="sm" />
       </div>
 
       <div class="flex-1 overflow-y-auto">
