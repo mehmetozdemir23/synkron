@@ -3,13 +3,11 @@
 namespace App\Actions;
 
 use App\BookingStatus;
-use App\Mail\BookingPending;
 use App\Models\Booking;
 use App\Models\Service;
 use App\Notifications\NewBookingNotification;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
@@ -61,8 +59,6 @@ class CreateBookingAction
             ]);
 
             $booking->load('service', 'professional');
-
-            Mail::to($booking->client_email)->send(new BookingPending($booking));
 
             $user->notify(new NewBookingNotification($booking));
 
