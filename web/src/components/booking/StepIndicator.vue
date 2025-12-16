@@ -1,32 +1,32 @@
 <template>
-  <div class="flex items-center justify-center gap-1 sm:gap-2 md:gap-4">
+  <div class="flex items-start justify-center gap-1 sm:gap-2 md:gap-4">
     <div
       v-for="(stepLabel, index) in ['Service', 'Date', 'Informations']"
       :key="index + 1"
-      class="flex items-center"
+      class="flex items-start"
     >
-      <div class="flex flex-col items-center gap-1 sm:gap-2">
+      <div class="flex flex-col items-center gap-1.5 sm:gap-2">
         <div
           :class="[
-            'w-7 h-7 sm:w-9 sm:h-9 md:w-10 md:h-10 rounded-full flex items-center justify-center text-xs sm:text-sm font-semibold transition-all',
+            'w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center text-xs sm:text-sm md:text-base font-semibold transition-all duration-300',
             currentStep > index + 1
-              ? 'bg-brand-500 text-white'
+              ? 'bg-brand-500 text-white shadow-sm'
               : currentStep === index + 1
-              ? 'bg-brand-500 text-white ring-2 sm:ring-4 ring-brand-500/20'
-              : 'bg-neutral-300 text-neutral-600 border-2 border-neutral-400',
+              ? 'bg-brand-500 text-white ring-2 sm:ring-4 ring-brand-500/20 shadow-lg'
+              : 'bg-neutral-200 text-neutral-500',
           ]"
         >
           <CheckCircle
             v-if="currentStep > index + 1"
-            class="w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5"
+            class="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6"
           />
           <span v-else>{{ index + 1 }}</span>
         </div>
 
         <span
           :class="[
-            'text-[10px] sm:text-xs font-medium transition-colors text-center',
-            currentStep >= index + 1 ? 'text-neutral-950' : 'text-neutral-600',
+            'text-[10px] sm:text-xs md:text-sm font-medium transition-colors text-center whitespace-nowrap',
+            currentStep >= index + 1 ? 'text-neutral-900' : 'text-neutral-500',
           ]"
         >
           {{ stepLabel }}
@@ -35,11 +35,15 @@
 
       <div
         v-if="index < 2"
-        :class="[
-          'h-0.5 w-8 sm:w-12 md:w-20 mx-1 sm:mx-2 md:mx-3 transition-all',
-          currentStep > index + 1 ? 'bg-brand-500' : 'bg-neutral-300',
-        ]"
-      ></div>
+        class="flex items-center h-8 sm:h-10 md:h-12"
+      >
+        <div
+          :class="[
+            'h-0.5 w-16 sm:w-28 md:w-36 mx-2 sm:mx-3 md:mx-4 transition-all duration-300 rounded-full',
+            currentStep > index + 1 ? 'bg-brand-500' : 'bg-neutral-200',
+          ]"
+        ></div>
+      </div>
     </div>
   </div>
 </template>

@@ -21,6 +21,7 @@ class RegisterUserAction
             'slug' => $slug,
             'business_name' => $data['business_name'] ?? null,
             'activity' => $data['activity'] ?? null,
+            'timezone' => $data['timezone'],
         ]);
 
         $user->notify(new ProfessionalWelcome(

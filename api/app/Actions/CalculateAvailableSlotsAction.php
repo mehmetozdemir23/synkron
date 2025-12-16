@@ -33,7 +33,7 @@ class CalculateAvailableSlotsAction
             foreach ($availabilities[$date->dayOfWeek] ?? [] as $availability) {
                 $slots = [
                     ...$slots,
-                    ...$this->generateSlots($date, $availability, $service->duration_minutes, $bookings),
+                    ...$this->generateSlots($date, $service->user->timezone, $availability, $service->duration_minutes, $bookings),
                 ];
             }
         }
@@ -41,32 +41,39 @@ class CalculateAvailableSlotsAction
         return $slots;
     }
 
-    private function generateSlots(Carbon $date, Availability $availability, int $duration, Collection $bookings): array
+    private function generateSlots(Carbon $date, string $timezone, Availability $availability, int $serviceDuration, Collection $bookings): array
     {
-        $start = Carbon::parse("{$date->format('Y-m-d')} {$availability->start_time}");
-        $end = Carbon::parse("{$date->format('Y-m-d')} {$availability->end_time}");
+        $availabilityStart = Carbon::parse("{$date->format('Y-m-d')} {$availability->start_time}", $timezone);
+        $availabilityEnd = Carbon::parse("{$date->format('Y-m-d')} {$availability->end_time}", $timezone);
+
         $slots = [];
+        $currentSlotStart = $availabilityStart->copy();
 
-        while ($start->copy()->addMinutes($duration) <= $end) {
-            $slotEnd = $start->copy()->addMinutes($duration);
+        $intervalBetweenSlots = 15;
 
-            if ($this->isAvailable($start, $slotEnd, $bookings)) {
+        while ($currentSlotStart->copy()->addMinutes($serviceDuration) <= $availabilityEnd) {
+            $currentSlotEnd = $currentSlotStart->copy()->addMinutes($serviceDuration);
+
+            if ($this->isSlotAvailable($currentSlotStart, $currentSlotEnd, $bookings)) {
                 $slots[] = [
-                    'start_at' => $start->toIso8601String(),
-                    'end_at' => $slotEnd->toIso8601String(),
+                    'start_at' => $currentSlotStart->copy(),
+                    'end_at' => $currentSlotEnd->copy(),
                 ];
             }
 
-            $start->addMinutes($duration);
+            $currentSlotStart->addMinutes($intervalBetweenSlots);
         }
 
         return $slots;
     }
 
-    private function isAvailable(Carbon $slotStart, Carbon $slotEnd, Collection $bookings): bool
+    private function isSlotAvailable(Carbon $slotStart, Carbon $slotEnd, Collection $bookings): bool
     {
-        return $bookings->every(
-            fn ($booking): bool => $slotStart >= $booking->end_at || $slotEnd <= $booking->start_at
-        );
+        return $bookings->every(function ($booking) use ($slotStart, $slotEnd): bool {
+            $slotStartsAfterBooking = $slotStart >= $booking->end_at;
+            $slotEndsBeforeBooking = $slotEnd <= $booking->start_at;
+
+            return $slotStartsAfterBooking || $slotEndsBeforeBooking;
+        });
     }
 }

@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
             'slug' => 'marie-dupont',
             'business_name' => 'Cabinet Marie Dupont',
             'activity' => 'Psychologue clinicienne',
+            'timezone' => 'Europe/Paris',
         ]);
 
         $services = [

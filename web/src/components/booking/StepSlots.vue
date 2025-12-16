@@ -1,8 +1,14 @@
 <template>
   <div class="space-y-4 sm:space-y-6">
     <div>
-      <h2 class="text-xl sm:text-2xl font-normal text-neutral-950 mb-1 sm:mb-2">Choisissez une date et une heure</h2>
-      <p class="text-xs sm:text-sm text-neutral-700">Sélectionnez votre créneau de réservation</p>
+      <h2 class="text-xl sm:text-2xl font-normal text-neutral-950 mb-2 sm:mb-2.5">Choisissez une date et une heure</h2>
+      <div class="flex items-center gap-3">
+        <p class="text-xs sm:text-sm text-neutral-700">Sélectionnez votre créneau de réservation</p>
+        <div v-if="selectedService" class="flex items-center gap-1.5 px-2.5 py-1 bg-brand-500/10 text-brand-700 rounded-lg border border-brand-500/20">
+          <Clock class="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+          <span class="text-xs sm:text-sm font-medium whitespace-nowrap">{{ selectedService.duration_minutes }} min</span>
+        </div>
+      </div>
     </div>
 
     <div v-if="loading" class="flex items-center justify-center py-8 sm:py-12">
@@ -65,7 +71,7 @@
 
 <script setup>
 import { ref } from "vue";
-import { CalendarDays } from "lucide-vue-next";
+import { CalendarDays, Clock } from "lucide-vue-next";
 
 const props = defineProps({
   slotsByDay: {
@@ -83,6 +89,10 @@ const props = defineProps({
   loading: {
     type: Boolean,
     default: false,
+  },
+  selectedService: {
+    type: Object,
+    default: null,
   },
 });
 

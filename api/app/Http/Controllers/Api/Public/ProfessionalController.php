@@ -54,14 +54,15 @@ class ProfessionalController extends Controller
             ->where('user_id', $professional->id)
             ->where('is_active', true)
             ->firstOrFail();
+        $timezone = $professional->timezone;
 
         $startDate = $request->input('start_date')
-            ? Carbon::parse($request->input('start_date'))
-            : Carbon::now();
+            ? Carbon::parse($request->input('start_date'), $timezone)
+            : Carbon::now($timezone);
 
         $endDate = $request->input('end_date')
-            ? Carbon::parse($request->input('end_date'))
-            : Carbon::now()->addDays(30);
+            ? Carbon::parse($request->input('end_date'), $timezone)
+            : Carbon::now($timezone)->addDays(30);
 
         $slots = $action->handle($service, $startDate, $endDate);
 

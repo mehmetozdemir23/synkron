@@ -37,6 +37,7 @@
                   :slots-by-day="slotsByDay"
                   :selected-day-index="selectedDayIndex"
                   :selected-slot="selectedSlot"
+                  :selected-service="selectedService"
                   :loading="loadingSlots"
                   @select-day="(index) => (selectedDayIndex = index)"
                   @select-slot="selectSlot"

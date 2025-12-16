@@ -69,6 +69,65 @@
             :icon-component="Briefcase"
           />
 
+          <div>
+            <label class="block text-sm font-semibold text-neutral-800 mb-2"
+              >Fuseau horaire</label
+            >
+            <div class="relative">
+              <Clock class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-600 pointer-events-none" />
+              <select
+                v-model="formData.timezone"
+                class="w-full pl-11 pr-10 py-3 min-h-[44px] bg-neutral-100 border border-neutral-300 rounded-xl text-sm font-medium text-neutral-950 focus:outline-none focus:border-brand-500 focus:bg-neutral-200 hover:border-neutral-400 transition-all duration-200 appearance-none cursor-pointer"
+                required
+              >
+                <optgroup label="Europe">
+                  <option value="Europe/Paris">Paris (GMT+1)</option>
+                  <option value="Europe/London">Londres (GMT+0)</option>
+                  <option value="Europe/Berlin">Berlin (GMT+1)</option>
+                  <option value="Europe/Madrid">Madrid (GMT+1)</option>
+                  <option value="Europe/Rome">Rome (GMT+1)</option>
+                  <option value="Europe/Brussels">Bruxelles (GMT+1)</option>
+                  <option value="Europe/Zurich">Zurich (GMT+1)</option>
+                  <option value="Europe/Amsterdam">Amsterdam (GMT+1)</option>
+                </optgroup>
+                <optgroup label="Amérique">
+                  <option value="America/New_York">New York (GMT-5)</option>
+                  <option value="America/Chicago">Chicago (GMT-6)</option>
+                  <option value="America/Denver">Denver (GMT-7)</option>
+                  <option value="America/Los_Angeles">Los Angeles (GMT-8)</option>
+                  <option value="America/Toronto">Toronto (GMT-5)</option>
+                  <option value="America/Montreal">Montréal (GMT-5)</option>
+                  <option value="America/Sao_Paulo">São Paulo (GMT-3)</option>
+                  <option value="America/Mexico_City">Mexico (GMT-6)</option>
+                </optgroup>
+                <optgroup label="Asie">
+                  <option value="Asia/Tokyo">Tokyo (GMT+9)</option>
+                  <option value="Asia/Shanghai">Shanghai (GMT+8)</option>
+                  <option value="Asia/Hong_Kong">Hong Kong (GMT+8)</option>
+                  <option value="Asia/Singapore">Singapour (GMT+8)</option>
+                  <option value="Asia/Dubai">Dubaï (GMT+4)</option>
+                  <option value="Asia/Seoul">Séoul (GMT+9)</option>
+                  <option value="Asia/Kolkata">Mumbai (GMT+5:30)</option>
+                </optgroup>
+                <optgroup label="Océanie">
+                  <option value="Australia/Sydney">Sydney (GMT+11)</option>
+                  <option value="Australia/Melbourne">Melbourne (GMT+11)</option>
+                  <option value="Pacific/Auckland">Auckland (GMT+13)</option>
+                </optgroup>
+                <optgroup label="Afrique">
+                  <option value="Africa/Cairo">Le Caire (GMT+2)</option>
+                  <option value="Africa/Johannesburg">Johannesburg (GMT+2)</option>
+                  <option value="Africa/Lagos">Lagos (GMT+1)</option>
+                  <option value="Africa/Nairobi">Nairobi (GMT+3)</option>
+                </optgroup>
+              </select>
+              <ChevronDown class="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-600 pointer-events-none" />
+            </div>
+            <p class="text-xs text-neutral-600 mt-2 font-medium">
+              Utilisé pour afficher vos disponibilités
+            </p>
+          </div>
+
           <BaseAlert
             v-if="error"
             variant="error"
@@ -286,6 +345,8 @@ import {
   CreditCard,
   Shield,
   Building2,
+  Clock,
+  ChevronDown,
 } from "lucide-vue-next";
 
 const authStore = useAuthStore();
@@ -298,6 +359,7 @@ const formData = ref({
   email: "",
   business_name: "",
   activity: "",
+  timezone: "",
 });
 
 const saving = ref(false);
@@ -416,6 +478,7 @@ onMounted(async () => {
       email: authStore.user.email || "",
       business_name: authStore.user.business_name || "",
       activity: authStore.user.activity || "",
+      timezone: authStore.user.timezone || "Europe/Paris",
     };
   }
 
