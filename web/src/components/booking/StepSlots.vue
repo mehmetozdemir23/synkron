@@ -2,11 +2,14 @@
   <div class="space-y-4 sm:space-y-6">
     <div>
       <h2 class="text-xl sm:text-2xl font-normal text-neutral-950 mb-2 sm:mb-2.5">Choisissez une date et une heure</h2>
-      <div class="flex items-center gap-3">
+      <div class="flex items-center gap-3 flex-wrap">
         <p class="text-xs sm:text-sm text-neutral-700">Sélectionnez votre créneau de réservation</p>
         <div v-if="selectedService" class="flex items-center gap-1.5 px-2.5 py-1 bg-brand-500/10 text-brand-700 rounded-lg border border-brand-500/20">
           <Clock class="w-3.5 h-3.5 sm:w-4 sm:h-4" />
           <span class="text-xs sm:text-sm font-medium whitespace-nowrap">{{ selectedService.duration_minutes }} min</span>
+        </div>
+        <div class="flex items-center gap-1.5 px-2.5 py-1 bg-neutral-400/30 text-neutral-700 rounded-lg border border-neutral-400/50">
+          <span class="text-xs sm:text-sm font-medium whitespace-nowrap">{{ formatTimezone(professionalTimezone) }}</span>
         </div>
       </div>
     </div>
@@ -70,7 +73,6 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
 import { CalendarDays, Clock } from "lucide-vue-next";
 
 const props = defineProps({
@@ -94,6 +96,10 @@ const props = defineProps({
     type: Object,
     default: null,
   },
+  professionalTimezone: {
+    type: String,
+    required: true,
+  },
 });
 
 const emit = defineEmits(["select-day", "select-slot"]);
@@ -111,6 +117,18 @@ function formatSlotTime(dateString) {
   return new Intl.DateTimeFormat("fr-FR", {
     hour: "2-digit",
     minute: "2-digit",
+    timeZone: props.professionalTimezone,
   }).format(date);
+}
+
+function formatTimezone(timezone) {
+  const date = new Date();
+  const formatter = new Intl.DateTimeFormat("fr-FR", {
+    timeZone: timezone,
+    timeZoneName: "short",
+  });
+  const parts = formatter.formatToParts(date);
+  const timeZoneName = parts.find(part => part.type === "timeZoneName")?.value;
+  return timeZoneName || timezone;
 }
 </script>

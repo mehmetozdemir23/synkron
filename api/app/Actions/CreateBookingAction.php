@@ -2,7 +2,7 @@
 
 namespace App\Actions;
 
-use App\BookingStatus;
+use App\Enums\BookingStatus;
 use App\Models\Booking;
 use App\Models\Service;
 use App\Notifications\NewBookingNotification;
@@ -20,12 +20,6 @@ class CreateBookingAction
 
             $startAt = Carbon::parse($data['start_at']);
             $endAt = $startAt->copy()->addMinutes($service->duration_minutes);
-
-            if ($startAt->isPast()) {
-                throw ValidationException::withMessages([
-                    'start_at' => ['Le créneau sélectionné est dans le passé.'],
-                ]);
-            }
 
             $conflict = Booking::where('user_id', $user->id)
                 ->where('status', '!=', BookingStatus::CANCELLED->value)

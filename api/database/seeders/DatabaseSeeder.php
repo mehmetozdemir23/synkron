@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\BookingStatus;
+use App\Enums\BookingStatus;
 use App\Models\Availability;
 use App\Models\Booking;
 use App\Models\Service;

@@ -253,7 +253,9 @@
             <p class="text-lg font-semibold text-neutral-900">
               {{ formatTime(selectedBooking.start_at) }}
             </p>
-            <p class="text-xs text-neutral-600">heure locale</p>
+            <p class="text-xs text-neutral-600">
+              {{ selectedBooking.service.duration_minutes }} min • heure locale
+            </p>
           </div>
         </div>
 
@@ -413,6 +415,7 @@ import {
 import BaseModal from "@/components/ui/BaseModal.vue";
 import PendingBookings from "@/components/dashboard/PendingBookings.vue";
 import { useBookingsStore } from "@/stores/bookings";
+import { useAlertStore } from "@/stores/alert";
 import { useFormatters } from "@/composables/useFormatters";
 import { useStatusClasses } from "@/composables/useStatusClasses";
 
@@ -422,6 +425,7 @@ const { getStatusBadgeClass, getStatusLabel, getStatusColor } =
   useStatusClasses();
 
 const bookingsStore = useBookingsStore();
+const alertStore = useAlertStore();
 const actionInProgress = ref(false);
 
 const props = defineProps({
@@ -544,7 +548,9 @@ async function confirmBooking(bookingId) {
     selectedBooking.value = null;
     emit("refresh");
   } catch (error) {
-    alert(error.message || "Une erreur est survenue lors de la confirmation");
+    await alertStore.error(
+      error.message || "Une erreur est survenue lors de la confirmation"
+    );
   } finally {
     actionInProgress.value = false;
   }
@@ -561,7 +567,9 @@ async function rejectBooking(bookingId) {
     selectedBooking.value = null;
     emit("refresh");
   } catch (error) {
-    alert(error.message || "Une erreur est survenue lors du rejet");
+    await alertStore.error(
+      error.message || "Une erreur est survenue lors du rejet"
+    );
   } finally {
     actionInProgress.value = false;
   }
@@ -578,7 +586,9 @@ async function cancelBooking(bookingId) {
     selectedBooking.value = null;
     emit("refresh");
   } catch (error) {
-    alert(error.message || "Une erreur est survenue lors de l'annulation");
+    await alertStore.error(
+      error.message || "Une erreur est survenue lors de l'annulation"
+    );
   } finally {
     actionInProgress.value = false;
   }
