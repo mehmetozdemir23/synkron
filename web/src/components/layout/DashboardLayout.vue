@@ -24,10 +24,12 @@
       <div class="px-2.5 pb-2.5">
         <button
           @click="handleLogout"
-          class="flex flex-col items-center justify-center gap-0.5 py-1.5 text-neutral-600 w-full rounded-2xl hover:text-neutral-800 hover:bg-neutral-200 border-0 cursor-pointer bg-transparent transition-colors"
+          class="flex flex-col items-center justify-center gap-0.5 py-1.5 text-neutral-600 w-full rounded-2xl border-0 cursor-pointer bg-transparent"
           title="Déconnexion"
         >
-          <div class="flex items-center justify-center w-12 h-12 rounded-full">
+          <div
+            class="flex items-center justify-center w-12 h-12 rounded-full hover:text-neutral-800 hover:bg-neutral-200 transition-colors"
+          >
             <LogOut class="w-5 h-5" />
           </div>
           <span class="text-xs font-medium">Quitter</span>

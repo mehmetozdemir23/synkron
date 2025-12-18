@@ -29,7 +29,7 @@
                   v-if="currentStep === 1"
                   :services="services"
                   :selected-service="selectedService"
-                  @select-service="selectService"
+                  @select-service="handleServiceSelect"
                 />
 
                 <StepSlots
@@ -38,9 +38,10 @@
                   :selected-day-index="selectedDayIndex"
                   :selected-slot="selectedSlot"
                   :selected-service="selectedService"
+                  :professional-timezone="professional.timezone"
                   :loading="loadingSlots"
-                  @select-day="(index) => (selectedDayIndex = index)"
-                  @select-slot="selectSlot"
+                  @select-day="selectedDayIndex = $event"
+                  @select-slot="selectedSlot = $event"
                 />
 
                 <StepInfo
@@ -57,8 +58,8 @@
               :selected-service="selectedService"
               :selected-slot="selectedSlot"
               :booking-in-progress="bookingInProgress"
-              @go-to-step="goToStep"
-              @create-booking="createBooking"
+              @go-to-step="handleGoToStep"
+              @create-booking="handleCreateBooking"
             />
           </div>
         </div>
@@ -86,6 +87,8 @@ import { useRoute, useRouter } from "vue-router";
 import { publicAPI } from "@/services/api";
 import { useToastStore } from "@/stores/toast";
 
+const SLOTS_RANGE_DAYS = 30;
+
 const route = useRoute();
 const router = useRouter();
 const toastStore = useToastStore();
@@ -94,26 +97,38 @@ const loading = ref(true);
 const error = ref("");
 const professional = ref({});
 const services = ref([]);
+
 const currentStep = ref(1);
 const selectedService = ref(null);
+const selectedSlot = ref(null);
+const selectedDayIndex = ref(0);
+const bookingData = ref({
+  client_name: "",
+  client_email: "",
+  notes: "",
+});
+const bookingInProgress = ref(false);
 
 const loadingSlots = ref(false);
 const slots = ref([]);
-const selectedSlot = ref(null);
-const selectedDayIndex = ref(0);
-const bookingData = ref({ client_name: "", client_email: "", notes: "" });
-const bookingInProgress = ref(false);
 
 const slotsByDay = computed(() => {
   if (!slots.value?.length) return [];
 
+  return groupSlotsByDay(slots.value);
+});
+
+function groupSlotsByDay(slots) {
   const groups = {};
-  slots.value.forEach((slot) => {
+
+  slots.forEach((slot) => {
     const date = new Date(slot.start_at);
     const dateKey = date.toISOString().split("T")[0];
+
     if (!groups[dateKey]) {
       groups[dateKey] = { date: dateKey, dateObj: date, slots: [] };
     }
+
     groups[dateKey].slots.push(slot);
   });
 
@@ -121,26 +136,37 @@ const slotsByDay = computed(() => {
     .sort((a, b) => a.dateObj.getTime() - b.dateObj.getTime())
     .map((group) => ({
       date: group.date,
-      dayName: new Intl.DateTimeFormat("fr-FR", { weekday: "short" }).format(
-        group.dateObj
-      ),
-      dayNumber: new Intl.DateTimeFormat("fr-FR", {
-        day: "numeric",
-        month: "short",
-      }).format(group.dateObj),
-      fullDate: new Intl.DateTimeFormat("fr-FR", {
-        weekday: "long",
-        day: "numeric",
-        month: "long",
-        year: "numeric",
-      }).format(group.dateObj),
+      dayName: formatDayName(group.dateObj),
+      dayNumber: formatDayNumber(group.dateObj),
+      fullDate: formatFullDate(group.dateObj),
       slotsCount: group.slots.length,
       slots: group.slots,
     }));
-});
+}
+
+function formatDayName(date) {
+  return new Intl.DateTimeFormat("fr-FR", { weekday: "short" }).format(date);
+}
+
+function formatDayNumber(date) {
+  return new Intl.DateTimeFormat("fr-FR", {
+    day: "numeric",
+    month: "short",
+  }).format(date);
+}
+
+function formatFullDate(date) {
+  return new Intl.DateTimeFormat("fr-FR", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  }).format(date);
+}
 
 async function loadProfessional() {
   loading.value = true;
+
   try {
     const response = await publicAPI.getProfessional(route.params.slug);
     professional.value = response.data.professional;
@@ -152,55 +178,58 @@ async function loadProfessional() {
   }
 }
 
-function selectService(service) {
-  selectedService.value = service;
-  loadSlots();
-}
-
-async function goToStep(step) {
-  if (step === 2 && !slots.value.length) {
-    await loadSlots();
-  }
-  currentStep.value = step;
-  if (step === 2) {
-    selectedSlot.value = null;
-    selectedDayIndex.value = 0;
-  }
-}
-
 async function loadSlots() {
   if (!selectedService.value) return;
+
   loadingSlots.value = true;
+
   try {
-    const today = new Date().toISOString().split("T")[0];
+    const today = new Date();
     const endDate = new Date();
-    endDate.setDate(endDate.getDate() + 30);
+    endDate.setDate(endDate.getDate() + SLOTS_RANGE_DAYS);
+
     const response = await publicAPI.getAvailableSlots(
       route.params.slug,
       selectedService.value.id,
       {
-        start_date: today,
+        start_date: today.toISOString().split("T")[0],
         end_date: endDate.toISOString().split("T")[0],
       }
     );
+
     slots.value = response.data.slots;
   } catch (err) {
     console.error("Error loading slots:", err);
+    toastStore.error("Erreur lors du chargement des créneaux");
   } finally {
     loadingSlots.value = false;
   }
 }
 
-function selectSlot(slot) {
-  selectedSlot.value = slot;
+function handleServiceSelect(service) {
+  selectedService.value = service;
+  loadSlots();
 }
 
-async function createBooking() {
-  if (
-    !selectedSlot.value ||
-    !bookingData.value.client_name ||
-    !bookingData.value.client_email
-  ) {
+async function handleGoToStep(step) {
+  if (step === 2 && !slots.value.length) {
+    await loadSlots();
+  }
+
+  currentStep.value = step;
+
+  if (step === 2) {
+    resetSlotSelection();
+  }
+}
+
+function resetSlotSelection() {
+  selectedSlot.value = null;
+  selectedDayIndex.value = 0;
+}
+
+async function handleCreateBooking() {
+  if (!isBookingDataValid()) {
     toastStore.error("Veuillez remplir tous les champs obligatoires");
     return;
   }
@@ -232,12 +261,12 @@ async function createBooking() {
   }
 }
 
-function formatSlotTime(dateString) {
-  const date = new Date(dateString);
-  return new Intl.DateTimeFormat("fr-FR", {
-    hour: "2-digit",
-    minute: "2-digit",
-  }).format(date);
+function isBookingDataValid() {
+  return (
+    selectedSlot.value &&
+    bookingData.value.client_name &&
+    bookingData.value.client_email
+  );
 }
 
 onMounted(() => {

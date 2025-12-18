@@ -56,7 +56,7 @@
             </div>
 
             <div class="bg-neutral-500 rounded-lg p-3 mb-6">
-              <div class="flex items-center gap-2 text-success-700">
+              <div class="flex items-center gap-2 text-neutral-900 font-medium">
                 <Mail class="w-4 h-4 flex-shrink-0" />
                 <p class="text-xs">
                   Vous recevrez un email à

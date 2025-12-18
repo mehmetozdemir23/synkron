@@ -101,7 +101,7 @@
               <span v-else>Passer Pro maintenant</span>
             </button>
 
-            <p class="text-xs text-neutral-500 text-center">
+            <p class="text-xs text-neutral-600 text-center">
               Paiement sécurisé par Stripe
             </p>
           </div>
@@ -114,7 +114,7 @@
 <script setup>
 import { ref } from "vue";
 import { useSubscriptionStore } from "@/stores/subscription";
-import { X, Check, Sparkles, Zap } from "lucide-vue-next";
+import { X, Sparkles, Zap } from "lucide-vue-next";
 
 const props = defineProps({
   show: Boolean,
