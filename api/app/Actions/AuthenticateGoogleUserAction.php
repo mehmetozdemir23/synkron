@@ -30,6 +30,7 @@ class AuthenticateGoogleUserAction
             'password' => Hash::make(Str::random(32)),
             'slug' => $slug,
             'business_name' => $googleData['name'] ?? null,
+            'timezone' => 'Europe/Paris',
         ]);
 
         $user->notify(new ProfessionalWelcome(

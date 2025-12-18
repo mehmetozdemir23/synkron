@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('slug')->unique()->nullable();
             $table->string('business_name')->nullable();
             $table->string('activity')->nullable();
+            $table->string('timezone');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('stripe_id')->nullable();

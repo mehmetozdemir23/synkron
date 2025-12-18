@@ -264,6 +264,7 @@
 <script setup>
 import { ref, computed, onMounted } from "vue";
 import { useServicesStore } from "@/stores/services";
+import { useAlertStore } from "@/stores/alert";
 import DashboardLayout from "@/components/layout/DashboardLayout.vue";
 import BaseButton from "@/components/ui/BaseButton.vue";
 import BaseInput from "@/components/ui/BaseInput.vue";
@@ -280,6 +281,7 @@ import {
 } from "lucide-vue-next";
 
 const servicesStore = useServicesStore();
+const alertStore = useAlertStore();
 
 const showModal = ref(false);
 const editingService = ref(null);
@@ -329,7 +331,7 @@ async function deleteServiceConfirm(service) {
     try {
       await servicesStore.remove(service.id);
     } catch (err) {
-      alert("Erreur lors de la suppression");
+      await alertStore.error("Erreur lors de la suppression");
     }
   }
 }

@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\BookingStatus;
+use App\Enums\BookingStatus;
 use App\Models\Availability;
 use App\Models\Booking;
 use App\Models\Service;
@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
             'slug' => 'marie-dupont',
             'business_name' => 'Cabinet Marie Dupont',
             'activity' => 'Psychologue clinicienne',
+            'timezone' => 'Europe/Paris',
         ]);
 
         $services = [

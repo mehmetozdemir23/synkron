@@ -20,7 +20,12 @@ class AuthController extends Controller
 {
     public function register(RegisterUserRequest $request, RegisterUserAction $action): JsonResponse
     {
-        $user = $action->handle($request->validated());
+        $validated = [
+            ...$request->validated(),
+            'timezone' => $request->header('X-Timezone', 'Europe/Paris'),
+        ];
+
+        $user = $action->handle($validated);
 
         auth()->login($user);
 

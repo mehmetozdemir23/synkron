@@ -17,12 +17,10 @@ const props = defineProps({
 
 const logoClass = computed(() => {
   const sizeClasses = {
-    sm: "h-6",
+    sm: "h-8",
     md: "h-10",
     lg: "h-12",
   };
-  return `w-auto transition-transform group-hover:scale-105 ${
-    sizeClasses[props.size]
-  }`;
+  return `w-auto ${sizeClasses[props.size]}`;
 });
 </script>

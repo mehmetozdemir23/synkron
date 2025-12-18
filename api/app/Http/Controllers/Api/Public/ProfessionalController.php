@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\Public;
 
 use App\Actions\CalculateAvailableSlotsAction;
 use App\Actions\CreateBookingAction;
-use App\BookingStatus;
+use App\Enums\BookingStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateBookingRequest;
 use App\Http\Requests\GetAvailableSlotsRequest;
@@ -37,6 +37,7 @@ class ProfessionalController extends Controller
                 'business_name' => $professional->business_name,
                 'activity' => $professional->activity,
                 'slug' => $professional->slug,
+                'timezone' => $professional->timezone,
                 'can_accept_bookings' => $canAcceptBookings,
             ],
             'services' => $professional->services,
@@ -54,14 +55,15 @@ class ProfessionalController extends Controller
             ->where('user_id', $professional->id)
             ->where('is_active', true)
             ->firstOrFail();
+        $timezone = $professional->timezone;
 
         $startDate = $request->input('start_date')
-            ? Carbon::parse($request->input('start_date'))
-            : Carbon::now();
+            ? Carbon::parse($request->input('start_date'), $timezone)
+            : Carbon::now($timezone);
 
         $endDate = $request->input('end_date')
-            ? Carbon::parse($request->input('end_date'))
-            : Carbon::now()->addDays(30);
+            ? Carbon::parse($request->input('end_date'), $timezone)
+            : Carbon::now($timezone)->addDays(30);
 
         $slots = $action->handle($service, $startDate, $endDate);
 
@@ -80,7 +82,10 @@ class ProfessionalController extends Controller
             ->where('is_active', true)
             ->firstOrFail();
 
-        $booking = $action->handle($service, $request->validated());
+        $validated = $request->validated();
+        $validated['start_at'] = Carbon::parse($validated['start_at'])->setTimezone('UTC')->toIso8601String();
+
+        $booking = $action->handle($service, $validated);
 
         return response()->json([
             'message' => 'Réservation effectuée avec succès !',

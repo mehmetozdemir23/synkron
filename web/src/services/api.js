@@ -32,7 +32,12 @@ export async function getCsrfCookie() {
 }
 
 export const authAPI = {
-  register: (data) => webAPI.post("/auth/register", data),
+  register: (data) =>
+    webAPI.post("/auth/register", data, {
+      headers: {
+        "X-Timezone": Intl.DateTimeFormat().resolvedOptions().timeZone,
+      },
+    }),
   login: (data) => webAPI.post("/auth/login", data),
   logout: () => api.post("/auth/logout"),
   me: () => api.get("/auth/me"),

@@ -5,7 +5,7 @@
     >
       <div class="max-w-6xl mx-auto py-4 flex items-center justify-between">
         <LogoBrand size="sm" />
-        <div class="flex items-center sm:gap-3">
+        <div class="flex items-center gap-2 sm:gap-3">
           <router-link
             to="/login"
             class="px-4 py-2 text-xs sm:text-sm font-medium text-neutral-600 hover:text-neutral-950 transition-colors"
@@ -22,10 +22,12 @@
       </div>
     </nav>
 
-    <section class="pt-20 pb-16 px-4 sm:px-6 bg-neutral-100">
-      <div class="max-w-6xl mx-auto">
-        <div class="grid lg:grid-cols-2 gap-12 items-center">
-          <div>
+    <section
+      class="min-h-[calc(100vh-80px)] flex items-center px-4 sm:px-6 bg-neutral-100 py-16"
+    >
+      <div class="max-w-6xl mx-auto w-full">
+        <div class="grid lg:grid-cols-2 gap-16 items-center">
+          <div class="sm:mb-8">
             <h1
               class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-normal text-neutral-950 leading-tight mb-6"
             >
@@ -50,28 +52,28 @@
                 Se connecter
               </router-link>
             </div>
-            <div class="flex flex-wrap gap-4 text-sm text-neutral-700">
-              <div class="flex items-center gap-2">
-                <CheckCircle class="w-4 h-4 text-success-500" />
+            <div class="flex flex-wrap gap-2">
+              <div
+                class="inline-flex items-center gap-1.5 px-3 pt-2 pb-2.5 bg-neutral-200 text-neutral-800 rounded-full text-xs font-medium border border-neutral-400"
+              >
+                <CheckCircle class="w-3.5 h-3.5 flex-shrink-0 mt-px" />
                 <span>10 réservations gratuites / mois</span>
               </div>
-              <div class="flex items-center gap-2">
-                <CheckCircle class="w-4 h-4 text-success-500" />
-                <span>Sans carte bancaire</span>
+              <div
+                class="inline-flex items-center gap-1.5 px-3 pt-2 pb-2.5 bg-neutral-200 text-neutral-800 rounded-full text-xs font-medium border border-neutral-400"
+              >
+                <CheckCircle class="w-3.5 h-3.5 flex-shrink-0 mt-px" />
+                <span>Sans CB</span>
               </div>
-              <div class="flex items-center gap-2">
-                <CheckCircle class="w-4 h-4 text-success-500" />
+              <div
+                class="inline-flex items-center gap-1.5 px-3 pt-2 pb-2.5 bg-neutral-200 text-neutral-800 rounded-full text-xs font-medium border border-neutral-400"
+              >
+                <CheckCircle class="w-3.5 h-3.5 flex-shrink-0 mt-px" />
                 <span>Services illimités</span>
               </div>
             </div>
           </div>
-          <div class="relative">
-            <div
-              class="rounded-2xl overflow-hidden border border-neutral-300 shadow-xl bg-neutral-200 p-6 sm:mb-12"
-            >
-              <DashboardDemo />
-            </div>
-          </div>
+          <DashboardDemo />
         </div>
       </div>
     </section>

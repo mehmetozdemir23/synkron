@@ -19,6 +19,7 @@ class UpdateUserProfileRequest extends FormRequest
             'lastname' => ['sometimes', 'string', 'max:255'],
             'business_name' => ['nullable', 'string', 'max:255'],
             'activity' => ['nullable', 'string', 'max:255'],
+            'timezone' => ['sometimes', 'string', 'max:255', 'timezone:all'],
         ];
     }
 
@@ -30,6 +31,8 @@ class UpdateUserProfileRequest extends FormRequest
             'lastname.max' => 'Le nom ne peut pas dépasser 255 caractères.',
             'business_name.max' => 'Le nom de l\'entreprise ne peut pas dépasser 255 caractères.',
             'activity.max' => 'L\'activité ne peut pas dépasser 255 caractères.',
+            'timezone.max' => 'Le fuseau horaire ne peut pas dépasser 255 caractères.',
+            'timezone.timezone' => 'Le fuseau horaire est invalide.',
         ];
     }
 }

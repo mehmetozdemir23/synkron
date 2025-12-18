@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\BookingStatus;
+use App\Enums\BookingStatus;
 use App\Models\Service;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
