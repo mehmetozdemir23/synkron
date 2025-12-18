@@ -8,10 +8,10 @@
     <button
       @click="copyToClipboard(url)"
       :class="[
-        'py-2 px-4 rounded-lg font-medium text-xs flex justify-center items-center gap-1.5 whitespace-nowrap flex-shrink-0',
+        'py-2 px-4 rounded-lg font-medium text-xs flex justify-center items-center gap-1.5 whitespace-nowrap flex-shrink-0 transition-colors w-[36px] sm:w-[140px]',
         isCopied
-          ? 'bg-neutral-300 text-neutral-800 transition-colors'
-          : 'bg-brand-500 text-white hover:bg-brand-600 hover:shadow-sm active:bg-brand-700 transition-all',
+          ? 'bg-brand-300 text-neutral-800'
+          : 'bg-neutral-300 text-neutral-800 hover:bg-neutral-400',
       ]"
       :title="label"
     >
