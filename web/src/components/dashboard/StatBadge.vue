@@ -1,16 +1,16 @@
 <template>
   <div
     :class="[
-      'rounded-xl p-5 sm:p-6 flex flex-col justify-between h-full',
+      'bg-neutral-100 rounded-xl shadow-md p-5 sm:p-6 flex flex-col justify-between h-full',
       bgClass,
     ]"
   >
     <div>
       <div class="flex items-center justify-between mb-3">
         <p :class="['text-sm font-medium', labelColor]">{{ label }}</p>
-        <component :is="resolvedIcon" :class="['w-5 h-5', iconColor]" />
+        <component :is="resolvedIcon" :class="['icon-md', iconColor]" />
       </div>
-      <p class="text-3xl sm:text-4xl font-bold text-neutral-950">
+      <p class="text-3xl sm:text-4xl font-bold text-neutral-900">
         {{ value }}
       </p>
     </div>
@@ -51,7 +51,7 @@ const props = defineProps({
   },
   labelColor: {
     type: String,
-    default: "text-neutral-600",
+    default: "text-neutral-700",
   },
   sublabelColor: {
     type: String,

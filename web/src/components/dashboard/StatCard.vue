@@ -3,9 +3,8 @@
     :is="clickable ? 'button' : 'div'"
     @click="clickable ? $emit('click') : null"
     :class="[
-      'group relative rounded-xl transition-all duration-200 overflow-hidden',
+      'group relative bg-neutral-100 rounded-xl shadow-md transition-all duration-200 overflow-hidden',
       clickable ? 'cursor-pointer hover:shadow-lg hover:shadow-neutral-900/5' : 'cursor-default',
-      'bg-neutral-200 border border-neutral-400 shadow-sm',
     ]"
   >
     <div class="absolute top-3 right-3 opacity-10 pointer-events-none">
