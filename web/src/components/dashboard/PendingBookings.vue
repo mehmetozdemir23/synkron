@@ -3,10 +3,10 @@
     
     <div class="mb-4">
       <div
-        class="inline-flex items-center gap-2 px-4 py-2 bg-amber-100 rounded-full border border-amber-300"
+        class="inline-flex items-center gap-2 px-4 py-2 bg-warning-100 rounded-full border border-warning-300"
       >
-        <div class="w-2 h-2 rounded-full bg-amber-500"></div>
-        <span class="text-sm font-medium text-amber-900">
+        <div class="w-2 h-2 rounded-full bg-warning-500"></div>
+        <span class="text-sm font-medium text-warning-900">
           {{ pendingBookings.length }}
           {{ pendingBookings.length > 1 ? "réservations" : "réservation" }} à
           traiter
@@ -19,7 +19,7 @@
       <div
         v-for="booking in pendingBookings"
         :key="booking.id"
-        class="bg-neutral-200 rounded-2xl border border-neutral-400 overflow-hidden"
+        class="bg-neutral-100 rounded-2xl shadow-md overflow-hidden"
       >
         <div class="p-4">
           <h3 class="text-base font-medium text-neutral-900 mb-3">
@@ -27,15 +27,15 @@
           </h3>
 
           <div class="space-y-2 mb-4">
-            <div class="flex items-center gap-3 text-sm text-neutral-800">
+            <div class="flex items-center gap-3 text-sm text-neutral-700">
               <Calendar class="w-5 h-5 text-neutral-600" />
               {{ formatDateShort(booking.start_at) }}
             </div>
-            <div class="flex items-center gap-3 text-sm text-neutral-800">
+            <div class="flex items-center gap-3 text-sm text-neutral-700">
               <Clock class="w-5 h-5 text-neutral-600" />
               {{ formatTime(booking.start_at) }}
             </div>
-            <div class="flex items-center gap-3 text-sm text-neutral-800">
+            <div class="flex items-center gap-3 text-sm text-neutral-700">
               <User class="w-5 h-5 text-neutral-600" />
               {{ booking.client_name }}
             </div>
@@ -66,11 +66,11 @@
 
   
   <div v-else class="flex flex-col items-center justify-center p-12 text-center">
-    <div class="w-12 h-12 rounded-full bg-neutral-300 flex items-center justify-center mb-3">
+    <div class="w-12 h-12 rounded-full bg-neutral-200 flex items-center justify-center mb-3">
       <Check class="w-6 h-6 text-neutral-600" />
     </div>
     <p class="text-sm font-medium text-neutral-900 mb-1">Tout est à jour</p>
-    <p class="text-sm text-neutral-700">Aucune réservation en attente</p>
+    <p class="text-sm text-neutral-600">Aucune réservation en attente</p>
   </div>
 </template>
 

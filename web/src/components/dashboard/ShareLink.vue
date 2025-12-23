@@ -1,22 +1,17 @@
 <template>
   <div class="flex items-center gap-3 min-w-0 sm:min-w-fit">
-    <Link2 class="w-4 h-4 text-neutral-600 flex-shrink-0" />
+    <Link2 class="icon-sm text-brand-500 flex-shrink-0" />
     <code
-      class="text-xs sm:text-sm text-neutral-950 font-mono truncate sm:truncate"
+      class="text-xs sm:text-sm text-neutral-900 font-mono font-semibold truncate sm:truncate"
       >{{ url }}</code
     >
     <button
       @click="copyToClipboard(url)"
-      :class="[
-        'py-2 px-4 rounded-lg font-medium text-xs flex justify-center items-center gap-1.5 whitespace-nowrap flex-shrink-0 transition-colors w-[36px] sm:w-[140px]',
-        isCopied
-          ? 'bg-brand-300 text-neutral-800'
-          : 'bg-neutral-300 text-neutral-800 hover:bg-neutral-400',
-      ]"
+      class="py-2 px-4 rounded-lg bg-neutral-200 text-neutral-900 hover:bg-neutral-300 font-semibold text-xs flex-center gap-1.5 whitespace-nowrap flex-shrink-0 transition-smooth w-[36px] sm:w-[130px]"
       :title="label"
     >
-      <Check v-if="isCopied" class="w-3.5 h-3.5" />
-      <Copy v-else class="w-3.5 h-3.5" />
+      <Check v-if="isCopied" class="icon-xs" />
+      <Copy v-else class="icon-xs" />
       <span class="hidden sm:inline">{{ label }}</span>
     </button>
   </div>
@@ -25,6 +20,7 @@
 <script setup>
 import { ref, computed } from "vue";
 import { Copy, Check, Link2 } from "lucide-vue-next";
+import { logError } from "@/utils/logger";
 
 defineProps({
   url: {
@@ -44,7 +40,7 @@ async function copyToClipboard(text) {
       isCopied.value = false;
     }, 2000);
   } catch (error) {
-    console.error("Failed to copy to clipboard:", error);
+    logError("ShareLink.copyToClipboard", error);
   }
 }
 </script>

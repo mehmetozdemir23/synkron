@@ -26,16 +26,14 @@
 
     <div class="w-full space-y-6">
       <div
-        class="flex items-start gap-2 sm:gap-3 p-3 sm:p-4 bg-brand-50 border border-brand-200 rounded-xl"
+        class="flex items-center gap-2 sm:gap-3 p-3 sm:p-4 bg-brand-50 border border-brand-200 rounded-xl"
       >
         <div
-          class="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-brand-100 flex items-center justify-center flex-shrink-0"
+          class="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-brand-100 self-start sm:self-auto flex items-center justify-center flex-shrink-0"
         >
           <Info class="w-4 h-4 text-brand-600" />
         </div>
-        <p
-          class="text-xs sm:text-sm text-neutral-800 leading-relaxed pt-0.5 sm:pt-1"
-        >
+        <p class="text-xs sm:text-sm text-neutral-700 leading-relaxed">
           Les créneaux de réservation seront calculés automatiquement en
           fonction de vos disponibilités et de la durée de vos services.
         </p>
@@ -48,13 +46,13 @@
             :key="i"
             class="bg-neutral-200 rounded-xl border border-neutral-400 p-6 animate-pulse"
           >
-            <div class="h-5 bg-neutral-300 rounded w-24 mb-4"></div>
+            <div class="h-5 bg-neutral-200 rounded w-24 mb-4"></div>
             <div class="space-y-3">
               <div class="flex items-center gap-2">
-                <div class="h-10 bg-neutral-300 rounded-lg flex-1"></div>
-                <div class="h-5 w-8 bg-neutral-300 rounded"></div>
-                <div class="h-10 bg-neutral-300 rounded-lg flex-1"></div>
-                <div class="h-10 w-10 bg-neutral-300 rounded-lg"></div>
+                <div class="h-10 bg-neutral-200 rounded-lg flex-1"></div>
+                <div class="h-5 w-8 bg-neutral-200 rounded"></div>
+                <div class="h-10 bg-neutral-200 rounded-lg flex-1"></div>
+                <div class="h-10 w-10 bg-neutral-200 rounded-lg"></div>
               </div>
             </div>
           </div>
@@ -64,7 +62,7 @@
           <div
             v-for="day in days"
             :key="day.value"
-            class="bg-neutral-200 rounded-xl border border-neutral-400 p-4 sm:p-6 transition-all hover:shadow-md"
+            class="bg-neutral-100 rounded-xl shadow-md p-4 sm:p-6 transition-all hover:shadow-lg"
           >
             <div
               class="flex items-center justify-between gap-2 xs:gap-0 mb-4 sm:mb-5"
@@ -108,7 +106,7 @@
                     />
                   </div>
                   <span
-                    class="text-sm text-neutral-700 font-medium px-1 flex-shrink-0"
+                    class="text-sm text-neutral-600 font-medium px-1 flex-shrink-0"
                     >→</span
                   >
                   <div class="relative flex-1">
@@ -148,20 +146,13 @@
           </div>
         </div>
 
-        <BaseAlert
-          v-if="error"
-          variant="error"
-          :message="error"
-          dismissible
-          @update:modelValue="error = ''"
-        />
+        <BaseAlert v-if="error" variant="error" :message="error" dismissible />
 
         <BaseAlert
           v-if="success"
           variant="success"
           :message="success"
           dismissible
-          @update:modelValue="success = ''"
         />
       </form>
     </div>
@@ -203,10 +194,10 @@ import { Info, Clock, Plus, Trash2, Save } from "lucide-vue-next";
 const availabilitiesStore = useAvailabilitiesStore();
 
 const days = computed(() => availabilitiesStore.groupedByDay);
-const saving = computed(() => availabilitiesStore.loading);
-const loading = ref(true);
-const error = ref("");
-const success = ref("");
+const loading = computed(() => availabilitiesStore.loading);
+const saving = computed(() => availabilitiesStore.saving);
+const error = computed(() => availabilitiesStore.error);
+const success = computed(() => availabilitiesStore.success);
 const hasChanges = ref(false);
 const initialData = ref(null);
 
@@ -230,9 +221,6 @@ function removeSlot(day, index) {
 }
 
 async function saveAvailabilities() {
-  error.value = "";
-  success.value = "";
-
   const availabilities = [];
   days.value.forEach((day) => {
     day.slots.forEach((slot) => {
@@ -246,25 +234,13 @@ async function saveAvailabilities() {
 
   try {
     await availabilitiesStore.upsert({ availabilities });
-    success.value = "Disponibilités enregistrées avec succès !";
-    setTimeout(() => (success.value = ""), 3000);
-
     initialData.value = JSON.stringify(days.value);
     hasChanges.value = false;
-  } catch (err) {
-    error.value =
-      err.response?.data?.message || "Erreur lors de l'enregistrement";
-  }
+  } catch (err) {}
 }
 
 onMounted(async () => {
-  loading.value = true;
-  try {
-    await availabilitiesStore.fetchAll();
-
-    initialData.value = JSON.stringify(days.value);
-  } finally {
-    loading.value = false;
-  }
+  await availabilitiesStore.fetchAll();
+  initialData.value = JSON.stringify(days.value);
 });
 </script>

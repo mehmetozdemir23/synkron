@@ -1,11 +1,14 @@
 import { defineStore } from "pinia";
 import { ref, computed } from "vue";
 import { availabilitiesAPI } from "../services/api";
+import { logError } from "../utils/logger";
 
 export const useAvailabilitiesStore = defineStore("availabilities", () => {
   const availabilities = ref([]);
   const loading = ref(false);
+  const saving = ref(false);
   const error = ref(null);
+  const success = ref(null);
   const lastFetch = ref(null);
 
   const days = ref([
@@ -53,7 +56,7 @@ export const useAvailabilitiesStore = defineStore("availabilities", () => {
       error.value =
         err.response?.data?.message ||
         "Erreur lors du chargement des disponibilités";
-      console.error("Error fetching availabilities:", err);
+      logError("AvailabilitiesStore.fetchAll", err);
       throw err;
     } finally {
       loading.value = false;
@@ -61,33 +64,43 @@ export const useAvailabilitiesStore = defineStore("availabilities", () => {
   }
 
   async function upsert(data) {
-    loading.value = true;
+    saving.value = true;
     error.value = null;
+    success.value = null;
 
     try {
       await availabilitiesAPI.upsert(data);
-
       await fetchAll({ force: true });
+      success.value = "Disponibilités enregistrées avec succès !";
+
+      setTimeout(() => {
+        success.value = null;
+      }, 3000);
     } catch (err) {
       error.value =
         err.response?.data?.message || "Erreur lors de l'enregistrement";
+      logError("AvailabilitiesStore.upsert", err);
       throw err;
     } finally {
-      loading.value = false;
+      saving.value = false;
     }
   }
 
   function reset() {
     availabilities.value = [];
     loading.value = false;
+    saving.value = false;
     error.value = null;
+    success.value = null;
     lastFetch.value = null;
   }
 
   return {
     availabilities,
     loading,
+    saving,
     error,
+    success,
 
     hasAvailabilities,
     groupedByDay,

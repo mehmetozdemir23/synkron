@@ -115,6 +115,7 @@
 import { ref } from "vue";
 import { useSubscriptionStore } from "@/stores/subscription";
 import { X, Sparkles, Zap } from "lucide-vue-next";
+import { logError } from "@/utils/logger";
 
 const props = defineProps({
   show: Boolean,
@@ -130,7 +131,7 @@ const handleUpgrade = async () => {
   try {
     await subscriptionStore.checkout();
   } catch (error) {
-    console.error("Erreur upgrade:", error);
+    logError("UpgradeModal.handleUpgrade", error);
     processing.value = false;
   }
 };

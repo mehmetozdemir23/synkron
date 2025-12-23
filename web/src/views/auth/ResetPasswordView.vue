@@ -23,7 +23,7 @@
           />
 
           <div
-            class="bg-neutral-200 rounded-2xl border border-neutral-400 shadow-md hover:shadow-lg transition-all p-6 sm:p-8 animate-fade-in"
+            class="bg-neutral-100 rounded-2xl shadow-md hover:shadow-lg transition-all p-6 sm:p-8 animate-fade-in"
           >
             <AuthForm :loading="loading" :error="error" @submit="handleSubmit">
               <BaseInput

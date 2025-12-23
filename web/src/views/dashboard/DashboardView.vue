@@ -2,9 +2,9 @@
   <DashboardLayout>
     <template #header>
       <div
-        class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4"
+        class="flex flex-col items-center sm:flex-row sm:items-start sm:justify-between gap-4"
       >
-        <div class="flex-1 min-w-0">
+        <div class="self-start flex-1 min-w-0">
           <h1 class="text-2xl font-normal text-neutral-900">
             Bonjour, {{ authStore.user?.firstname }}
           </h1>

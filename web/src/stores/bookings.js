@@ -1,12 +1,15 @@
 import { defineStore } from "pinia";
 import { ref, computed } from "vue";
 import { bookingsAPI } from "../services/api";
+import { logError } from "../utils/logger";
 
 export const useBookingsStore = defineStore("bookings", () => {
   const bookingsByMonth = ref({});
   const currentMonthKey = ref(null);
   const loading = ref(false);
+  const saving = ref(false);
   const error = ref(null);
+  const success = ref(null);
 
   const bookings = computed(() => {
     if (!currentMonthKey.value) return [];
@@ -31,7 +34,7 @@ export const useBookingsStore = defineStore("bookings", () => {
   async function fetchAll(params = {}, options = { force: false }) {
     const { month, year } = params;
     if (!month || !year) {
-      console.error("Month and year are required");
+      logError("BookingsStore.fetchAll", new Error("Month and year are required"));
       return;
     }
 
@@ -52,7 +55,7 @@ export const useBookingsStore = defineStore("bookings", () => {
       error.value =
         err.response?.data?.message ||
         "Erreur lors du chargement des réservations";
-      console.error("Error fetching bookings:", err);
+      logError("BookingsStore.fetchAll", err);
       throw err;
     } finally {
       loading.value = false;
@@ -88,55 +91,79 @@ export const useBookingsStore = defineStore("bookings", () => {
   }
 
   async function confirm(id) {
-    loading.value = true;
+    saving.value = true;
     error.value = null;
+    success.value = null;
 
     try {
       const response = await bookingsAPI.confirm(id);
       updateBookingInCache(response.data.booking);
+      success.value = "Réservation confirmée avec succès !";
+
+      setTimeout(() => {
+        success.value = null;
+      }, 3000);
+
       return response.data;
     } catch (err) {
       error.value =
         err.response?.data?.message ||
         "Erreur lors de la confirmation de la réservation";
+      logError("BookingsStore.confirm", err);
       throw err;
     } finally {
-      loading.value = false;
+      saving.value = false;
     }
   }
 
   async function reject(id) {
-    loading.value = true;
+    saving.value = true;
     error.value = null;
+    success.value = null;
 
     try {
       const response = await bookingsAPI.reject(id);
       updateBookingInCache(response.data.booking);
+      success.value = "Réservation rejetée avec succès !";
+
+      setTimeout(() => {
+        success.value = null;
+      }, 3000);
+
       return response.data;
     } catch (err) {
       error.value =
         err.response?.data?.message || "Erreur lors du rejet de la réservation";
+      logError("BookingsStore.reject", err);
       throw err;
     } finally {
-      loading.value = false;
+      saving.value = false;
     }
   }
 
   async function cancel(id) {
-    loading.value = true;
+    saving.value = true;
     error.value = null;
+    success.value = null;
 
     try {
       const response = await bookingsAPI.cancel(id);
       updateBookingInCache(response.data.booking);
+      success.value = "Réservation annulée avec succès !";
+
+      setTimeout(() => {
+        success.value = null;
+      }, 3000);
+
       return response.data;
     } catch (err) {
       error.value =
         err.response?.data?.message ||
         "Erreur lors de l'annulation de la réservation";
+      logError("BookingsStore.cancel", err);
       throw err;
     } finally {
-      loading.value = false;
+      saving.value = false;
     }
   }
 
@@ -144,13 +171,17 @@ export const useBookingsStore = defineStore("bookings", () => {
     bookingsByMonth.value = {};
     currentMonthKey.value = null;
     loading.value = false;
+    saving.value = false;
     error.value = null;
+    success.value = null;
   }
 
   return {
     bookings,
     loading,
+    saving,
     error,
+    success,
 
     confirmedBookings,
     pendingBookings,

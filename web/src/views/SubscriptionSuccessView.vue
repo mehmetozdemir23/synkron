@@ -38,25 +38,25 @@
               <p class="font-semibold text-neutral-900">Vous débloquez :</p>
             </div>
             <ul class="space-y-3">
-              <li class="flex items-center gap-3 text-sm text-neutral-700">
+              <li class="flex items-center gap-3 text-sm text-neutral-600">
                 <div
                   class="w-2 h-2 bg-brand-600 rounded-full flex-shrink-0"
                 ></div>
                 <span>Réservations illimitées</span>
               </li>
-              <li class="flex items-center gap-3 text-sm text-neutral-700">
+              <li class="flex items-center gap-3 text-sm text-neutral-600">
                 <div
                   class="w-2 h-2 bg-brand-600 rounded-full flex-shrink-0"
                 ></div>
                 <span>Services illimités</span>
               </li>
-              <li class="flex items-center gap-3 text-sm text-neutral-700">
+              <li class="flex items-center gap-3 text-sm text-neutral-600">
                 <div
                   class="w-2 h-2 bg-brand-600 rounded-full flex-shrink-0"
                 ></div>
                 <span>Notifications par email</span>
               </li>
-              <li class="flex items-center gap-3 text-sm text-neutral-700">
+              <li class="flex items-center gap-3 text-sm text-neutral-600">
                 <div
                   class="w-2 h-2 bg-brand-600 rounded-full flex-shrink-0"
                 ></div>
@@ -89,6 +89,7 @@ import { useRouter } from "vue-router";
 import { useAuthStore } from "@/stores/auth";
 import { useSubscriptionStore } from "@/stores/subscription";
 import { CheckCircle, Sparkles, Loader2 } from "lucide-vue-next";
+import { logError } from "@/utils/logger";
 
 const router = useRouter();
 const authStore = useAuthStore();
@@ -110,10 +111,7 @@ onMounted(async () => {
       }
     }, 1000);
   } catch (error) {
-    console.error(
-      "Erreur lors de la vérification de l'authentification:",
-      error
-    );
+    logError("SubscriptionSuccessView.onMounted", error);
     router.push("/login");
   }
 });

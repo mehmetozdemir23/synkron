@@ -31,7 +31,7 @@
         </BaseAlert>
 
         <div
-          class="bg-neutral-200 rounded-2xl border border-neutral-400 shadow-md hover:shadow-lg transition-all p-6 sm:p-8 animate-fade-in"
+          class="bg-neutral-100 rounded-2xl shadow-md hover:shadow-lg transition-all p-6 sm:p-8 animate-fade-in"
         >
           <AuthForm :loading="loading" :error="error" @submit="handleSubmit">
             <BaseInput
@@ -72,42 +72,29 @@ import BaseAlert from "@/components/ui/BaseAlert.vue";
 import AppFooter from "@/components/layout/AppFooter.vue";
 import { useAuthStore } from "@/stores/auth";
 import { useFormValidation } from "@/composables/useFormValidation";
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { ArrowLeft } from "lucide-vue-next";
 
 const authStore = useAuthStore();
 
-const {
-  formData,
-  fieldErrors,
-  error,
-  loading,
-  setFieldErrors,
-  setError,
-  setLoading,
-} = useFormValidation({
+const { formData, fieldErrors, setFieldErrors } = useFormValidation({
   email: "",
 });
 
-const success = ref(false);
-const successMessage = ref("");
+const loading = computed(() => authStore.saving);
+const error = computed(() => authStore.error);
+const success = computed(() => !!authStore.success);
+const successMessage = computed(() => authStore.success || "");
 const resetUrl = ref(null);
 
 const handleSubmit = async () => {
   setFieldErrors({});
-  setError("");
-  success.value = false;
   resetUrl.value = null;
-
-  setLoading(true);
 
   try {
     const response = await authStore.sendPasswordResetLink(
       formData.value.email
     );
-
-    success.value = true;
-    successMessage.value = response.message;
 
     if (response.reset_url) {
       resetUrl.value = response.reset_url;
@@ -117,11 +104,7 @@ const handleSubmit = async () => {
   } catch (err) {
     if (err.response?.data?.errors) {
       setFieldErrors(err.response.data.errors);
-    } else {
-      setError(err.response?.data?.message || "Une erreur est survenue");
     }
-  } finally {
-    setLoading(false);
   }
 };
 </script>

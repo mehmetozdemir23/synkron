@@ -30,7 +30,7 @@
           </button>
           <button
             @click="goBack"
-            class="w-full px-4 py-2.5 border border-neutral-200 text-neutral-700 hover:bg-neutral-50 rounded-lg font-medium transition-colors inline-flex items-center justify-center gap-2"
+            class="w-full px-4 py-2.5 border border-neutral-200 text-neutral-600 hover:bg-neutral-50 rounded-lg font-medium transition-colors inline-flex items-center justify-center gap-2"
           >
             <ArrowLeft class="w-4 h-4" />
             Revenir en arrière

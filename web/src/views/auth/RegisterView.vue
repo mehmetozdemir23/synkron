@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col min-h-screen bg-neutral-100">
+  <div class="flex flex-col min-h-screen bg-neutral-50">
     <PublicHeader />
 
     <div class="flex-1 flex items-center justify-center px-4 py-8 sm:py-12">
@@ -14,7 +14,7 @@
         </div>
 
         <div
-          class="bg-neutral-200 rounded-2xl border border-neutral-400 shadow-md hover:shadow-lg transition-all p-6 sm:p-8 animate-fade-in"
+          class="rounded-2xl shadow-md hover:shadow-lg transition-all animate-fade-in"
         >
           <div class="space-y-5">
             <AuthForm
@@ -78,11 +78,11 @@
 
           <div class="relative my-6">
             <div class="absolute inset-0 flex items-center">
-              <div class="w-full border-t border-neutral-400"></div>
+              <div class="w-full border-t border-neutral-300"></div>
             </div>
             <div class="relative flex justify-center">
               <span
-                class="px-3 bg-neutral-200 text-sm text-neutral-600 font-medium"
+                class="px-3 bg-neutral-100 text-sm text-neutral-600 font-medium"
                 >ou</span
               >
             </div>
@@ -132,6 +132,7 @@ import AppFooter from "@/components/layout/AppFooter.vue";
 import { useRouter } from "vue-router";
 import { useAuthStore } from "@/stores/auth";
 import { useToastStore } from "@/stores/toast";
+import { computed } from "vue";
 import { useFormValidation } from "@/composables/useFormValidation";
 import AuthForm from "@/components/forms/AuthForm.vue";
 import BaseInput from "@/components/ui/BaseInput.vue";
@@ -142,21 +143,16 @@ const router = useRouter();
 const authStore = useAuthStore();
 const toastStore = useToastStore();
 
-const {
-  formData,
-  fieldErrors,
-  error,
-  loading,
-  setFieldErrors,
-  setError,
-  setLoading,
-} = useFormValidation({
+const { formData, fieldErrors, setFieldErrors } = useFormValidation({
   firstname: "",
   lastname: "",
   email: "",
   password: "",
   password_confirmation: "",
 });
+
+const loading = computed(() => authStore.saving);
+const error = computed(() => authStore.error);
 
 function validatePasswordMatch() {
   if (formData.value.password !== formData.value.password_confirmation) {
@@ -169,30 +165,19 @@ function validatePasswordMatch() {
 }
 
 async function handleRegister() {
-  setLoading(true);
-  setError("");
   setFieldErrors({});
 
   if (!validatePasswordMatch()) {
-    setLoading(false);
     return;
   }
 
   try {
     await authStore.register(formData.value);
-    toastStore.success("Compte créé avec succès");
     router.push("/dashboard");
   } catch (err) {
     if (err.response?.data?.errors) {
       setFieldErrors(err.response.data.errors);
-    } else {
-      setError(
-        err.response?.data?.message ||
-          "Erreur lors de l'inscription. Veuillez réessayer."
-      );
     }
-  } finally {
-    setLoading(false);
   }
 }
 </script>

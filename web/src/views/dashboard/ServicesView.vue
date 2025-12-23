@@ -35,49 +35,49 @@
         >
           <div class="flex items-start justify-between mb-4">
             <div class="flex-1 space-y-3">
-              <div class="h-5 bg-neutral-300 rounded w-3/4 animate-pulse"></div>
+              <div class="h-5 bg-neutral-200 rounded w-3/4 animate-pulse"></div>
               <div
-                class="h-6 bg-neutral-300 rounded-full w-16 animate-pulse"
+                class="h-6 bg-neutral-200 rounded-full w-16 animate-pulse"
               ></div>
             </div>
             <div
-              class="w-2 h-2 bg-neutral-300 rounded-full animate-pulse"
+              class="w-2 h-2 bg-neutral-200 rounded-full animate-pulse"
             ></div>
           </div>
           <div class="space-y-3">
             <div class="flex items-center gap-3">
               <div
-                class="w-10 h-10 bg-neutral-300 rounded-full animate-pulse"
+                class="w-10 h-10 bg-neutral-200 rounded-full animate-pulse"
               ></div>
               <div class="flex-1 space-y-2">
                 <div
-                  class="h-3 bg-neutral-300 rounded w-12 animate-pulse"
+                  class="h-3 bg-neutral-200 rounded w-12 animate-pulse"
                 ></div>
                 <div
-                  class="h-4 bg-neutral-300 rounded w-16 animate-pulse"
+                  class="h-4 bg-neutral-200 rounded w-16 animate-pulse"
                 ></div>
               </div>
             </div>
             <div class="flex items-center gap-3">
               <div
-                class="w-10 h-10 bg-neutral-300 rounded-full animate-pulse"
+                class="w-10 h-10 bg-neutral-200 rounded-full animate-pulse"
               ></div>
               <div class="flex-1 space-y-2">
                 <div
-                  class="h-3 bg-neutral-300 rounded w-12 animate-pulse"
+                  class="h-3 bg-neutral-200 rounded w-12 animate-pulse"
                 ></div>
                 <div
-                  class="h-4 bg-neutral-300 rounded w-16 animate-pulse"
+                  class="h-4 bg-neutral-200 rounded w-16 animate-pulse"
                 ></div>
               </div>
             </div>
           </div>
           <div class="flex items-center gap-2 pt-3 border-t border-neutral-300">
             <div
-              class="flex-1 h-10 bg-neutral-300 rounded-lg animate-pulse"
+              class="flex-1 h-10 bg-neutral-200 rounded-lg animate-pulse"
             ></div>
             <div
-              class="w-10 h-10 bg-neutral-300 rounded-lg animate-pulse"
+              class="w-10 h-10 bg-neutral-200 rounded-lg animate-pulse"
             ></div>
           </div>
         </div>
@@ -101,7 +101,7 @@
         <div
           v-for="service in services"
           :key="service.id"
-          class="group relative bg-neutral-200 rounded-xl border border-neutral-400 p-5 overflow-hidden"
+          class="group relative bg-neutral-100 rounded-xl shadow-md p-5 overflow-hidden"
         >
           <div class="flex items-start justify-between mb-4">
             <div class="flex-1 pr-2">
@@ -123,7 +123,7 @@
             <div
               :class="[
                 'w-2 h-2 rounded-full flex-shrink-0',
-                service.is_active ? 'bg-success-500' : 'bg-neutral-600',
+                service.is_active ? 'bg-success-400' : 'bg-warning-400',
               ]"
             ></div>
           </div>
@@ -131,12 +131,12 @@
           <div class="mb-4 space-y-3">
             <div class="flex items-center gap-3">
               <div
-                class="w-10 h-10 rounded-full bg-brand-100 flex items-center justify-center"
+                class="w-10 h-10 rounded-lg bg-brand-200 flex items-center justify-center"
               >
                 <Clock class="w-4 h-4 text-brand-700" />
               </div>
               <div>
-                <div class="text-xs text-neutral-700">Durée</div>
+                <div class="text-xs text-neutral-600">Durée</div>
                 <div class="text-sm font-medium text-neutral-900">
                   {{ service.duration_minutes }} min
                 </div>
@@ -145,12 +145,12 @@
 
             <div class="flex items-center gap-3">
               <div
-                class="w-10 h-10 rounded-full bg-neutral-300 flex items-center justify-center"
+                class="w-10 h-10 rounded-lg bg-brand-200 flex items-center justify-center"
               >
-                <DollarSign class="w-4 h-4 text-neutral-800" />
+                <DollarSign class="w-4 h-4 text-neutral-700" />
               </div>
               <div>
-                <div class="text-xs text-neutral-700">Prix</div>
+                <div class="text-xs text-neutral-600">Prix</div>
                 <div class="text-sm font-medium text-neutral-900">
                   {{ service.price ? `${service.price}€` : "Gratuit" }}
                 </div>
@@ -181,7 +181,7 @@
           {{ editingService ? "Modifier le service" : "Nouveau service" }}
         </template>
 
-        <p class="text-sm text-neutral-700 mb-6">
+        <p class="text-sm text-neutral-600 mb-6">
           {{
             editingService
               ? "Mettez à jour les informations de ce service"
@@ -221,7 +221,7 @@
               type="checkbox"
               class="w-4 h-4 text-brand-600 rounded border-neutral-400 focus:ring-2 focus:ring-brand-500/20"
             />
-            <span class="text-sm font-medium text-neutral-800"
+            <span class="text-sm font-medium text-neutral-700"
               >Service actif</span
             >
           </label>
@@ -231,7 +231,13 @@
             variant="error"
             :message="error"
             dismissible
-            @update:modelValue="error = ''"
+          />
+
+          <BaseAlert
+            v-if="success"
+            variant="success"
+            :message="success"
+            dismissible
           />
         </form>
 
@@ -291,11 +297,12 @@ const formData = ref({
   price: null,
   is_active: true,
 });
-const saving = ref(false);
-const error = ref("");
 
 const services = computed(() => servicesStore.services);
 const loading = computed(() => servicesStore.loading);
+const saving = computed(() => servicesStore.saving);
+const error = computed(() => servicesStore.error);
+const success = computed(() => servicesStore.success);
 
 function editService(service) {
   editingService.value = service;
@@ -309,8 +316,6 @@ function editService(service) {
 }
 
 async function saveService() {
-  saving.value = true;
-  error.value = "";
   try {
     if (editingService.value) {
       await servicesStore.update(editingService.value.id, formData.value);
@@ -318,21 +323,14 @@ async function saveService() {
       await servicesStore.create(formData.value);
     }
     closeModal();
-  } catch (err) {
-    error.value =
-      err.response?.data?.message || "Erreur lors de l'enregistrement";
-  } finally {
-    saving.value = false;
-  }
+  } catch (err) {}
 }
 
 async function deleteServiceConfirm(service) {
   if (confirm(`Supprimer le service "${service.name}" ?`)) {
     try {
       await servicesStore.remove(service.id);
-    } catch (err) {
-      await alertStore.error("Erreur lors de la suppression");
-    }
+    } catch (err) {}
   }
 }
 
@@ -345,7 +343,6 @@ function closeModal() {
     price: null,
     is_active: true,
   };
-  error.value = "";
 }
 
 onMounted(async () => {

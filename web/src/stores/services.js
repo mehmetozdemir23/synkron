@@ -1,11 +1,14 @@
 import { defineStore } from "pinia";
 import { ref, computed } from "vue";
 import { servicesAPI } from "../services/api";
+import { logError } from "../utils/logger";
 
 export const useServicesStore = defineStore("services", () => {
   const services = ref([]);
   const loading = ref(false);
+  const saving = ref(false);
   const error = ref(null);
+  const success = ref(null);
   const lastFetch = ref(null);
 
   const activeServices = computed(() =>
@@ -32,7 +35,7 @@ export const useServicesStore = defineStore("services", () => {
     } catch (err) {
       error.value =
         err.response?.data?.message || "Erreur lors du chargement des services";
-      console.error("Error fetching services:", err);
+      logError("ServicesStore.fetchAll", err);
       throw err;
     } finally {
       loading.value = false;
@@ -40,24 +43,33 @@ export const useServicesStore = defineStore("services", () => {
   }
 
   async function create(data) {
-    loading.value = true;
+    saving.value = true;
     error.value = null;
+    success.value = null;
 
     try {
       const response = await servicesAPI.create(data);
       services.value.push(response.data.service);
+      success.value = "Service créé avec succès !";
+
+      setTimeout(() => {
+        success.value = null;
+      }, 3000);
+
       return response.data.service;
     } catch (err) {
       error.value = err.response?.data?.message || "Erreur lors de la création";
+      logError("ServicesStore.create", err);
       throw err;
     } finally {
-      loading.value = false;
+      saving.value = false;
     }
   }
 
   async function update(id, data) {
-    loading.value = true;
+    saving.value = true;
     error.value = null;
+    success.value = null;
 
     try {
       const response = await servicesAPI.update(id, data);
@@ -65,43 +77,61 @@ export const useServicesStore = defineStore("services", () => {
       if (index !== -1) {
         services.value[index] = response.data.service;
       }
+      success.value = "Service mis à jour avec succès !";
+
+      setTimeout(() => {
+        success.value = null;
+      }, 3000);
+
       return response.data.service;
     } catch (err) {
       error.value =
         err.response?.data?.message || "Erreur lors de la mise à jour";
+      logError("ServicesStore.update", err);
       throw err;
     } finally {
-      loading.value = false;
+      saving.value = false;
     }
   }
 
   async function remove(id) {
-    loading.value = true;
+    saving.value = true;
     error.value = null;
+    success.value = null;
 
     try {
       await servicesAPI.delete(id);
       services.value = services.value.filter((s) => s.id !== id);
+      success.value = "Service supprimé avec succès !";
+
+      setTimeout(() => {
+        success.value = null;
+      }, 3000);
     } catch (err) {
       error.value =
         err.response?.data?.message || "Erreur lors de la suppression";
+      logError("ServicesStore.remove", err);
       throw err;
     } finally {
-      loading.value = false;
+      saving.value = false;
     }
   }
 
   function reset() {
     services.value = [];
     loading.value = false;
+    saving.value = false;
     error.value = null;
+    success.value = null;
     lastFetch.value = null;
   }
 
   return {
     services,
     loading,
+    saving,
     error,
+    success,
 
     activeServices,
     inactiveServices,

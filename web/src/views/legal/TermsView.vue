@@ -3,8 +3,8 @@
     <PublicHeader />
 
     <div class="flex-1 max-w-4xl mx-auto w-full px-4 py-12 sm:py-16">
-      <div class="bg-neutral-200 rounded-xl border border-neutral-400 p-8 sm:p-10 md:p-12 shadow-sm">
-        <div class="mb-8 pb-8 border-b border-neutral-400">
+      <div class="bg-neutral-100 rounded-xl shadow-md p-8 sm:p-10 md:p-12">
+        <div class="mb-8 pb-8 border-b border-neutral-300">
           <h1 class="text-3xl sm:text-4xl font-bold text-neutral-900 mb-3">
             Conditions Générales d'Utilisation
           </h1>
@@ -230,7 +230,7 @@ const lastUpdate = computed(() => {
 }
 
 .prose p {
-  @apply text-neutral-700 mb-4 leading-relaxed text-base;
+  @apply text-neutral-600 mb-4 leading-relaxed text-base;
 }
 
 .prose ul {
@@ -238,7 +238,7 @@ const lastUpdate = computed(() => {
 }
 
 .prose ul li {
-  @apply text-neutral-700 text-base;
+  @apply text-neutral-600 text-base;
 }
 
 .prose strong {

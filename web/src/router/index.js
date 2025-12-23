@@ -115,7 +115,7 @@ router.beforeEach(async (to) => {
 
   if (!to.meta.requiresAuth && !to.meta.guest) return true;
 
-  if (to.meta.requiresAuth && authStore.user === null && !authStore.isLoading) {
+  if (to.meta.requiresAuth && authStore.user === null && !authStore.loading) {
     try {
       await authStore.fetchUser();
     } catch (error) {

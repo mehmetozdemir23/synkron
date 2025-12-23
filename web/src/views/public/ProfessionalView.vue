@@ -8,20 +8,20 @@
 
       <div
         v-else
-        class="flex-1 flex flex-col max-w-5xl mx-auto w-full px-2 sm:px-3 md:px-4 lg:px-6"
+        class="flex-1 flex flex-col max-w-3xl mx-auto w-full px-3 sm:px-4 md:px-6"
       >
         <ProfessionalCard :professional="professional" />
 
         <UnavailableAlert
           v-if="professional.can_accept_bookings === false"
-          class="mt-4 sm:mt-6"
+          class="mt-5"
         />
 
-        <div v-else class="mt-4 sm:mt-6 flex-1 flex flex-col min-h-0">
-          <StepIndicator :current-step="currentStep" class="mb-4 sm:mb-6" />
+        <div v-else class="mt-5 sm:mt-6 flex-1 flex flex-col min-h-0">
+          <StepIndicator :current-step="currentStep" class="mb-6 sm:mb-8" />
 
           <div
-            class="bg-neutral-200 rounded-xl sm:rounded-2xl border border-neutral-400 shadow-sm flex flex-col flex-1 overflow-hidden"
+            class="bg-neutral-100 border border-neutral-200 rounded-2xl flex flex-col flex-1 overflow-hidden shadow-sm"
           >
             <div class="p-4 sm:p-6 md:p-8 flex-1 overflow-y-auto">
               <Transition name="fade-slide" mode="out-in">
@@ -86,6 +86,8 @@ import { ref, computed, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { publicAPI } from "@/services/api";
 import { useToastStore } from "@/stores/toast";
+import { useFormatters } from "@/composables/useFormatters";
+import { logError } from "@/utils/logger";
 
 const SLOTS_RANGE_DAYS = 30;
 
@@ -144,25 +146,7 @@ function groupSlotsByDay(slots) {
     }));
 }
 
-function formatDayName(date) {
-  return new Intl.DateTimeFormat("fr-FR", { weekday: "short" }).format(date);
-}
-
-function formatDayNumber(date) {
-  return new Intl.DateTimeFormat("fr-FR", {
-    day: "numeric",
-    month: "short",
-  }).format(date);
-}
-
-function formatFullDate(date) {
-  return new Intl.DateTimeFormat("fr-FR", {
-    weekday: "long",
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  }).format(date);
-}
+const { formatDayName, formatDayNumber, formatFullDate } = useFormatters();
 
 async function loadProfessional() {
   loading.value = true;
@@ -199,7 +183,7 @@ async function loadSlots() {
 
     slots.value = response.data.slots;
   } catch (err) {
-    console.error("Error loading slots:", err);
+    logError("ProfessionalView.loadSlots", err);
     toastStore.error("Erreur lors du chargement des créneaux");
   } finally {
     loadingSlots.value = false;
