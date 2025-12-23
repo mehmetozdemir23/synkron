@@ -1,6 +1,6 @@
 <template>
   <div
-    class="relative overflow-hidden bg-neutral-200 rounded-2xl border border-neutral-400 p-8 sm:p-12 text-center"
+    class="relative overflow-hidden bg-neutral-100 rounded-2xl shadow-md p-8 sm:p-12 text-center"
   >
     <div
       class="absolute top-0 right-0 w-40 h-40 bg-brand-100 rounded-full opacity-20 -mr-20 -mt-20"
@@ -24,7 +24,7 @@
         {{ title }}
       </h3>
 
-      <p class="text-sm sm:text-base text-neutral-700 mb-8 max-w-sm mx-auto">
+      <p class="text-sm sm:text-base text-neutral-600 mb-8 max-w-sm mx-auto">
         {{ description }}
       </p>
 
@@ -46,7 +46,7 @@ import BaseButton from "./BaseButton.vue";
 
 defineProps({
   icon: {
-    type: Object,
+    type: Function,
     default: null,
   },
   title: {

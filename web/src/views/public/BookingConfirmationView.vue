@@ -169,6 +169,7 @@ import { useRoute } from "vue-router";
 import { publicAPI } from "@/services/api";
 import PublicHeader from "@/components/layout/PublicHeader.vue";
 import AppFooter from "@/components/layout/AppFooter.vue";
+import { logError } from "@/utils/logger";
 import {
   Calendar,
   Clock,
@@ -234,7 +235,7 @@ async function fetchBooking() {
     }
   } catch (err) {
     error.value = "Impossible de charger les détails de la réservation";
-    console.error("Error fetching booking:", err);
+    logError("BookingConfirmationView.fetchBooking", err);
   } finally {
     loading.value = false;
   }

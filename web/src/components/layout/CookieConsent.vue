@@ -37,7 +37,7 @@
           <div class="flex items-center gap-2 sm:gap-3 w-full sm:w-auto">
             <button
               @click="rejectCookies"
-              class="flex-1 sm:flex-initial px-4 py-2.5 min-h-[44px] text-sm font-medium text-neutral-700 bg-neutral-100 hover:bg-neutral-200 rounded-lg transition-colors"
+              class="flex-1 sm:flex-initial px-4 py-2.5 min-h-[44px] text-sm font-medium text-neutral-600 bg-neutral-100 hover:bg-neutral-200 rounded-lg transition-colors"
             >
               Refuser
             </button>

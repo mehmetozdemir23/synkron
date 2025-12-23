@@ -68,19 +68,13 @@ class User extends Authenticatable
 
     public function getMonthlyBookingCount(): int
     {
-        $startOfMonth = Carbon::now()->startOfMonth();
-
         return $this->bookings()
-            ->where('created_at', '>=', $startOfMonth)
+            ->where('created_at', '>=', Carbon::now()->startOfMonth())
             ->count();
     }
 
     public function canCreateBooking(): bool
     {
-        if ($this->services()->active()->count() === 0) {
-            return false;
-        }
-
         if ($this->isPro()) {
             return true;
         }
@@ -117,7 +111,7 @@ class User extends Authenticatable
         }
 
         while ($query->exists()) {
-            $slug = $baseSlug.'-'.$counter;
+            $slug = $baseSlug . '-' . $counter;
             $counter++;
 
             $query = self::where('slug', $slug);

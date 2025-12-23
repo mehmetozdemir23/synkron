@@ -4,13 +4,13 @@
       <div class="flex items-center gap-3">
         <component
           :is="getIcon(alertStore.type)"
-          :class="['w-6 h-6', getIconColor(alertStore.type)]"
+          :class="['icon-lg', getIconColor(alertStore.type)]"
         />
         <span>{{ alertStore.title }}</span>
       </div>
     </template>
 
-    <div class="text-neutral-800">
+    <div class="text-neutral-700">
       {{ alertStore.message }}
     </div>
 
@@ -18,7 +18,7 @@
       <div class="flex justify-end">
         <button
           @click="alertStore.close"
-          class="px-5 py-2.5 bg-brand-500 text-white rounded-lg font-medium hover:bg-brand-600 active:bg-brand-700 transition-colors"
+          class="btn btn-primary btn-sm"
         >
           OK
         </button>

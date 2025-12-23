@@ -15,14 +15,14 @@
         <MoreVertical
           :class="[
             'w-6 h-6 transition-all duration-200',
-            isOpen ? 'text-brand-700' : 'text-neutral-700 group-hover:text-neutral-900',
+            isOpen ? 'text-brand-700' : 'text-neutral-600 group-hover:text-neutral-900',
           ]"
         />
       </div>
       <span
         :class="[
           'text-[11px] font-medium transition-all duration-200 leading-none text-center px-1',
-          isOpen ? 'text-neutral-900' : 'text-neutral-700',
+          isOpen ? 'text-neutral-900' : 'text-neutral-600',
         ]"
       >
         Plus
@@ -59,11 +59,11 @@
       >
         <router-link
           to="/dashboard/profile"
-          class="flex items-center gap-3 px-4 py-3.5 text-sm font-medium text-neutral-900 hover:bg-neutral-200 active:bg-neutral-300 border-b border-neutral-300 transition-colors"
+          class="flex items-center gap-3 px-4 py-3.5 text-sm font-medium text-neutral-900 hover:bg-neutral-200 active:bg-neutral-200 border-b border-neutral-300 transition-colors"
           @click="closeMenu"
         >
           <div class="w-9 h-9 rounded-lg bg-neutral-200 flex items-center justify-center">
-            <Settings class="w-4 h-4 text-neutral-700" />
+            <Settings class="w-4 h-4 text-neutral-600" />
           </div>
           <span>Profil</span>
         </router-link>

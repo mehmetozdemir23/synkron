@@ -1,5 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -8,58 +7,7 @@
 @layer base {
   html,
   body {
-    @apply overflow-x-hidden font-sans;
-  }
-
-  body {
-    @apply max-w-full text-neutral-900;
-    font-size: 1rem;
-    font-weight: 400;
-    line-height: 1.5rem;
-    letter-spacing: 0.015em;
-  }
-
-  /* Professional Typography: Poppins for headings, Inter for body */
-  h1 {
-    font-family: "Poppins", system-ui;
-    @apply text-5xl font-bold leading-tight;
-    letter-spacing: -0.02em;
-  }
-
-  h2 {
-    font-family: "Poppins", system-ui;
-    @apply text-4xl font-bold leading-tight;
-    letter-spacing: -0.015em;
-  }
-
-  h3 {
-    font-family: "Poppins", system-ui;
-    @apply text-3xl font-semibold leading-snug;
-    letter-spacing: -0.01em;
-  }
-
-  h4 {
-    font-family: "Poppins", system-ui;
-    @apply text-2xl font-semibold leading-snug;
-    letter-spacing: -0.005em;
-  }
-
-  h5 {
-    font-family: "Poppins", system-ui;
-    @apply text-xl font-semibold leading-6;
-    letter-spacing: 0em;
-  }
-
-  h6 {
-    font-family: "Inter", system-ui;
-    @apply text-base font-semibold leading-6;
-    letter-spacing: 0.005em;
-  }
-
-  p {
-    font-family: "Inter", system-ui;
-    @apply text-base font-normal leading-relaxed;
-    letter-spacing: 0.005em;
+    @apply overflow-x-hidden font-sans bg-neutral-50 text-neutral-950;
   }
 
   @supports (padding: max(0px)) {
@@ -73,240 +21,52 @@
 }
 
 @layer components {
-  /* Professional Typography Classes: Poppins + Inter */
-  .typography-display-large {
-    font-family: "Poppins", system-ui;
-    @apply text-7xl font-bold leading-relaxed;
-    letter-spacing: -0.025em;
-  }
-
-  .typography-display-medium {
-    font-family: "Poppins", system-ui;
-    @apply text-6xl font-bold leading-tight;
-    letter-spacing: -0.02em;
-  }
-
-  .typography-display-small {
-    font-family: "Poppins", system-ui;
-    @apply text-5xl font-bold leading-tight;
-    letter-spacing: -0.015em;
-  }
-
-  .typography-headline-large {
-    font-family: "Poppins", system-ui;
-    @apply text-4xl font-bold leading-snug;
-    letter-spacing: -0.01em;
-  }
-
-  .typography-headline-medium {
-    font-family: "Poppins", system-ui;
-    @apply text-3xl font-semibold leading-snug;
-    letter-spacing: -0.01em;
-  }
-
-  .typography-headline-small {
-    font-family: "Poppins", system-ui;
-    @apply text-2xl font-semibold leading-snug;
-    letter-spacing: -0.005em;
-  }
-
-  .typography-title-large {
-    font-family: "Poppins", system-ui;
-    @apply text-xl font-semibold leading-6;
-    letter-spacing: 0em;
-  }
-
-  .typography-title-medium {
-    font-family: "Inter", system-ui;
-    @apply text-base font-semibold leading-6;
-    letter-spacing: 0.005em;
-  }
-
-  .typography-title-small {
-    font-family: "Inter", system-ui;
-    @apply text-sm font-semibold leading-5;
-    letter-spacing: 0.005em;
-  }
-
-  .typography-body-large {
-    font-family: "Inter", system-ui;
-    @apply text-base font-normal leading-6;
-    letter-spacing: 0.005em;
-  }
-
-  .typography-body-medium {
-    font-family: "Inter", system-ui;
-    @apply text-sm font-normal leading-5;
-    letter-spacing: 0.003em;
-  }
-
-  .typography-body-small {
-    font-family: "Inter", system-ui;
-    @apply text-xs font-normal leading-4;
-    letter-spacing: 0.002em;
-  }
-
-  .typography-label-large {
-    font-family: "Inter", system-ui;
-    @apply text-sm font-semibold leading-5 uppercase;
-    letter-spacing: 0.1em;
-  }
-
-  .typography-label-medium {
-    font-family: "Inter", system-ui;
-    @apply text-xs font-semibold leading-4 uppercase;
-    letter-spacing: 0.08em;
-  }
-
-  .typography-label-small {
-    font-family: "Inter", system-ui;
-    @apply text-2xs font-semibold leading-3 uppercase;
-    letter-spacing: 0.1em;
-  }
-
-  .label {
-    @apply block text-xs font-medium text-neutral-700 mb-1;
-  }
-
-  .label-required::after {
-    @apply content-['*'] text-error-500 ml-1;
-  }
-
-  .input {
-    @apply w-full px-3.5 py-2 text-base text-neutral-950 bg-neutral-100 border border-neutral-300 rounded-lg transition-all duration-200;
-    @apply placeholder:text-neutral-600;
-    @apply focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 focus:bg-neutral-200;
-    @apply hover:border-neutral-400;
-  }
-
-  .input-error {
-    @apply border-error-500 focus:ring-error-500/20 focus:border-error-500;
-  }
-
   .btn {
-    @apply inline-flex items-center justify-center gap-2 font-medium rounded-full transition-all duration-200 focus:outline-none focus:ring-0 disabled:opacity-50 disabled:cursor-not-allowed;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .btn::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.3);
-    transform: translate(-50%, -50%);
-    transition: width 0.6s, height 0.6s;
-  }
-
-  .btn:active::before {
-    width: 300px;
-    height: 300px;
+    @apply inline-flex items-center justify-center gap-2 px-6 py-2.5 text-sm font-medium rounded-xl transition-all duration-200 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed;
   }
 
   .btn-primary {
-    @apply bg-brand-500 text-white hover:shadow-sm hover:bg-brand-600 active:bg-brand-700 transition-all;
-  }
-
-  .btn-primary::before {
-    background: rgba(255, 255, 255, 0.2);
+    @apply bg-brand-500 text-white hover:bg-brand-600 active:bg-brand-700 shadow-sm hover:shadow-md;
   }
 
   .btn-secondary {
-    @apply bg-neutral-300 text-neutral-900 hover:bg-neutral-400 active:bg-neutral-500 border border-neutral-400 transition-colors;
-  }
-
-  .btn-secondary::before {
-    background: rgba(0, 0, 0, 0.05);
+    @apply bg-neutral-300 text-neutral-950 hover:bg-neutral-400 active:bg-neutral-600;
   }
 
   .btn-ghost {
-    @apply text-brand-600 hover:bg-brand-50 active:bg-brand-100 transition-colors;
-  }
-
-  .btn-ghost::before {
-    background: rgba(66, 133, 244, 0.1);
+    @apply text-brand-500 hover:bg-brand-900/10 active:bg-brand-900/20;
   }
 
   .btn-danger {
-    @apply bg-error-600 text-white hover:shadow-sm hover:bg-error-700 active:bg-error-800 transition-all;
-  }
-
-  .btn-danger::before {
-    background: rgba(255, 255, 255, 0.2);
+    @apply bg-error-500 text-white hover:bg-error-600 active:bg-error-700 shadow-sm hover:shadow-md;
   }
 
   .btn-sm {
     @apply px-4 py-2 text-sm;
   }
 
-  .btn {
-    @apply px-6 py-2.5 text-sm;
-  }
-
   .btn-lg {
     @apply px-7 py-3 text-base;
   }
 
-  .scrollbar-hide {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+  .icon-xs {
+    @apply w-3.5 h-3.5;
   }
 
-  .scrollbar-hide::-webkit-scrollbar {
-    display: none;
+  .icon-sm {
+    @apply w-4 h-4;
   }
-}
 
-.slide-fade-enter-active {
-  transition: all 0.3s ease-out;
-}
-
-.slide-fade-leave-active {
-  transition: all 0.2s cubic-bezier(1, 0.5, 0.8, 1);
-}
-
-.slide-fade-enter-from {
-  transform: translateX(20px);
-  opacity: 0;
-}
-
-.slide-fade-leave-to {
-  transform: translateX(-20px);
-  opacity: 0;
-}
-
-@keyframes scaleIn {
-  from {
-    transform: scale(0.95);
-    opacity: 0;
+  .icon-md {
+    @apply w-5 h-5;
   }
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
 
-@keyframes slideUp {
-  from {
-    transform: translateY(20px);
-    opacity: 0;
+  .icon-lg {
+    @apply w-6 h-6;
   }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
+  .icon-xl {
+    @apply w-8 h-8;
   }
 }
 
@@ -321,204 +81,8 @@
   }
 }
 
-@keyframes pulse-soft {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.7;
-  }
-}
-
-@keyframes shimmer {
-  0% {
-    background-position: -1000px 0;
-  }
-  100% {
-    background-position: 1000px 0;
-  }
-}
-
-@keyframes slideLeft {
-  from {
-    transform: translateX(-20px);
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
-}
-
-@keyframes bounceIn {
-  0% {
-    transform: scale(0.9);
-    opacity: 0;
-  }
-  50% {
-    opacity: 1;
-  }
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-
-@keyframes glow {
-  0%, 100% {
-    box-shadow: 0 0 5px rgba(66, 133, 244, 0.3);
-  }
-  50% {
-    box-shadow: 0 0 20px rgba(66, 133, 244, 0.5);
-  }
-}
-
-.animate-scale-in {
-  animation: scaleIn 0.3s ease-out;
-}
-
-.animate-slide-up {
-  animation: slideUp 0.4s ease-out;
-}
-
-.animate-fade-in {
-  animation: fadeIn 0.3s ease-out;
-}
-
 .animate-slide-in-right {
   animation: slideInRight 0.3s ease-out;
-}
-
-.animate-pulse-soft {
-  animation: pulse-soft 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-
-.animate-slide-left {
-  animation: slideLeft 0.4s ease-out;
-}
-
-.animate-bounce-in {
-  animation: bounceIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.animate-glow {
-  animation: glow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-
-.card-interactive {
-  @apply transition-all duration-300 ease-out;
-}
-
-.card-interactive:hover {
-  @apply shadow-lg -translate-y-1;
-}
-
-.card-interactive:active {
-  @apply scale-95;
-}
-
-.btn-interactive {
-  @apply transition-all duration-200 ease-out;
-}
-
-.btn-interactive:active {
-  @apply scale-95;
-}
-
-.input-interactive {
-  @apply transition-all duration-200;
-}
-
-.input-interactive:focus {
-  @apply shadow-md;
-}
-
-.input-interactive.error {
-  @apply border-error-500 shadow-error-500/10;
-}
-
-.input-interactive.success {
-  @apply border-success-500 shadow-success-500/10;
-}
-
-.skeleton {
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-  background-size: 200% 100%;
-  animation: shimmer 2s infinite;
-}
-
-@supports (padding: max(0px)) {
-  .safe-area-inset {
-    padding-left: max(1rem, env(safe-area-inset-left));
-    padding-right: max(1rem, env(safe-area-inset-right));
-  }
-}
-
-@media (max-width: 640px) {
-  body {
-    -webkit-font-smoothing: antialiased;
-    -webkit-tap-highlight-color: transparent;
-  }
-
-  input,
-  textarea,
-  select {
-    font-size: 16px;
-  }
-}
-
-.scroll-smooth-mobile {
-  -webkit-overflow-scrolling: touch;
-  scroll-behavior: smooth;
-}
-
-.glass-effect {
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.gradient-text {
-  background: linear-gradient(
-    135deg,
-    var(--tw-gradient-from),
-    var(--tw-gradient-to)
-  );
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.badge-success {
-  @apply bg-success-100 text-success-700 px-2 py-1 rounded-lg text-xs font-medium;
-}
-
-.badge-warning {
-  @apply bg-warning-100 text-warning-700 px-2 py-1 rounded-lg text-xs font-medium;
-}
-
-.badge-error {
-  @apply bg-error-100 text-error-700 px-2 py-1 rounded-lg text-xs font-medium;
-}
-
-.divider {
-  @apply border-t border-neutral-200;
-}
-
-.swipe-hint {
-  position: relative;
-}
-
-.swipe-hint::after {
-  content: "";
-  position: absolute;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  width: 40px;
-  background: linear-gradient(to left, rgba(255, 255, 255, 0.8), transparent);
-  pointer-events: none;
 }
 
 .modal-fade-enter-active,
@@ -546,11 +110,23 @@
   opacity: 0;
 }
 
-button:focus-visible,
-input:focus-visible,
-a:focus-visible {
-  outline: 2px solid var(--brand-color, #7c3aed);
-  outline-offset: 2px;
+@supports (padding: max(0px)) {
+  .safe-area-inset-bottom {
+    padding-bottom: max(0px, env(safe-area-inset-bottom));
+  }
+}
+
+@media (max-width: 640px) {
+  body {
+    -webkit-font-smoothing: antialiased;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  input,
+  textarea,
+  select {
+    font-size: 16px;
+  }
 }
 
 @media (hover: none) and (pointer: coarse) {

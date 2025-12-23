@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
 import { statsAPI } from "../services/api";
+import { logError } from "../utils/logger";
 
 export const useStatsStore = defineStore("stats", () => {
   const stats = ref({
@@ -32,7 +33,7 @@ export const useStatsStore = defineStore("stats", () => {
     } catch (err) {
       error.value =
         err.response?.data?.message || "Erreur lors du chargement des stats";
-      console.error("Error fetching stats:", err);
+      logError("StatsStore.fetch", err);
       throw err;
     } finally {
       loading.value = false;

@@ -9,7 +9,7 @@
       >
         <div
           :class="[
-            'max-h-[80vh] sm:max-h-[90vh] bg-neutral-200 rounded-2xl w-full border border-neutral-400 overflow-hidden transition-all duration-300 ease-out',
+            'max-h-[80vh] sm:max-h-[90vh] bg-neutral-100 rounded-2xl w-full shadow-xl overflow-hidden transition-all duration-300 ease-out',
             sizeClass,
           ]"
         >
@@ -23,10 +23,10 @@
             <button
               @click="close"
               :disabled="processing"
-              class="min-w-[44px] min-h-[44px] p-2.5 hover:bg-neutral-300 active:bg-neutral-400 rounded-xl transition-colors disabled:opacity-50 flex-shrink-0 group flex items-center justify-center"
+              class="min-w-[44px] min-h-[44px] p-2.5 hover:bg-neutral-200 active:bg-neutral-400 rounded-xl transition-colors disabled:opacity-50 flex-shrink-0 group flex items-center justify-center"
             >
               <X
-                class="w-5 h-5 text-neutral-700 group-hover:text-neutral-900 transition-colors"
+                class="w-5 h-5 text-neutral-600 group-hover:text-neutral-900 transition-colors"
               />
             </button>
           </div>

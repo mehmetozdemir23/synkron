@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-neutral-200 rounded-xl border border-neutral-400 p-6 sm:p-7">
+  <div class="bg-neutral-100 rounded-xl shadow-md p-6 sm:p-7">
     <h2 class="text-lg font-medium text-neutral-900 mb-5">Sécurité</h2>
 
     <form @submit.prevent="handleSubmit" class="space-y-4">

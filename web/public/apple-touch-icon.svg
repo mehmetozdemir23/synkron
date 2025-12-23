@@ -1,12 +1,11 @@
-<svg
-  xmlns="http://www.w3.org/2000/svg"
-  viewBox="0 0 111.968 94.379"
-  width="111.968"
-  height="94.379"
->
-  <g transform="translate(-25.353457 -10.408977)">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" width="180" height="180">
+  
+  <rect width="180" height="180" rx="40" fill="#5f7cff"/>
+
+  
+  <g transform="translate(34, 43) scale(1)">
     <path
-      fill="#4b63e6"
+      fill="#ffffff"
       d="M79.070118 14.93079
          C64.314191 6.7108795 44.865275 9.6295311 33.294538 24.245587
          l-0.006 0.0072 -0.006 0.0072
@@ -22,7 +21,7 @@
          z"
     />
     <path
-      fill="#b7c6ff"
+      fill="#ecefff"
       d="M120.02836 37.96505
          c-1.65489 -0.98053 -3.43687 -1.872749 -5.35149 -2.688575
          -4.11066 -1.728703 -8.66848 -2.462247 -13.77394 -2.782078

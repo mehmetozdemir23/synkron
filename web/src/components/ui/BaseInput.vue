@@ -6,7 +6,7 @@
       :class="[
         'label text-sm font-semibold transition-colors duration-200 mb-2',
         { 'label-required': required },
-        error ? 'text-error-600' : 'text-neutral-800',
+        error ? 'text-error-600' : 'text-neutral-700',
       ]"
     >
       {{ label }}
@@ -17,7 +17,7 @@
         :is="iconComponent"
         v-if="iconComponent"
         :class="[
-          'absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 pointer-events-none transition-all duration-300',
+          'absolute left-4 top-1/2 -translate-y-1/2 icon-md pointer-events-none transition-smooth',
           error
             ? 'text-error-500'
             : 'text-neutral-600 group-focus-within:text-brand-600',
@@ -43,7 +43,7 @@
         v-if="error"
         class="mt-1 text-xs text-error-700 flex items-center gap-1.5 animate-slide-in-right"
       >
-        <AlertCircle class="w-4 h-4 flex-shrink-0" />
+        <AlertCircle class="icon-sm flex-shrink-0" />
         <span>{{ error }}</span>
       </p>
       <p v-else-if="hint" class="mt-1 text-xs text-neutral-600">
@@ -115,7 +115,7 @@ const inputClasses = computed(() => {
     "min-h-[44px]",
     "text-sm",
     "font-medium",
-    "text-neutral-950",
+    "text-neutral-900",
     "bg-neutral-100",
     "border",
     "border-neutral-300",

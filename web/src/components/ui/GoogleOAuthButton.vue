@@ -3,7 +3,7 @@
     @click="handleGoogleLogin"
     variant="secondary"
     full-width
-    class="flex items-center justify-center gap-2"
+    class="flex items-center justify-center border border-neutral-200 gap-2 bg-white hover:bg-neutral-200"
   >
     <svg
       class="w-5 h-5"
@@ -36,11 +36,12 @@
 
 <script setup>
 import BaseButton from "@/components/ui/BaseButton.vue";
+import { safeRedirect } from "@/utils/security";
 
 function handleGoogleLogin() {
   const apiUrl = import.meta.env.VITE_API_URL;
   const backendUrl = apiUrl.endsWith("/api") ? apiUrl.slice(0, -4) : apiUrl;
   const googleAuthUrl = `${backendUrl}/auth/google/redirect`;
-  window.location.href = googleAuthUrl;
+  safeRedirect(googleAuthUrl, { fallbackUrl: "/login" });
 }
 </script>

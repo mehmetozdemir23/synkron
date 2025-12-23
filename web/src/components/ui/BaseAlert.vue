@@ -22,7 +22,7 @@
       <button
         v-if="dismissible"
         @click="show = false"
-        :class="['p-1 hover:bg-neutral-200 active:bg-neutral-300 rounded transition-colors flex-shrink-0', textColorClass]"
+        :class="['p-1 hover:bg-neutral-100 active:bg-neutral-200 rounded transition-colors flex-shrink-0', textColorClass]"
       >
         <X class="w-4 h-4" />
       </button>
@@ -94,13 +94,13 @@ const variantClasses = computed(() => {
 const textColorClass = computed(() => {
   switch (props.variant) {
     case "success":
-      return "text-success-800";
+      return "text-success-900";
     case "error":
-      return "text-error-800";
+      return "text-error-900";
     case "warning":
-      return "text-warning-800";
+      return "text-warning-900";
     default:
-      return "text-neutral-800";
+      return "text-neutral-900";
   }
 });
 
@@ -113,7 +113,7 @@ const iconColorClass = computed(() => {
     case "warning":
       return "text-warning-700";
     default:
-      return "text-neutral-700";
+      return "text-neutral-600";
   }
 });
 </script>

@@ -15,7 +15,7 @@
 
     <div class="w-full space-y-6">
       <section
-        class="bg-neutral-200 rounded-xl border border-neutral-400 p-6 sm:p-7 transition-all hover:shadow-md"
+        class="bg-neutral-100 rounded-xl border border-neutral-400 p-6 sm:p-7 transition-all hover:shadow-md"
       >
         <h2 class="text-lg font-semibold text-neutral-900 mb-5">
           Informations personnelles
@@ -39,14 +39,14 @@
           />
 
           <div>
-            <label class="block text-sm font-semibold text-neutral-800 mb-2"
+            <label class="block text-sm font-semibold text-neutral-700 mb-2"
               >Adresse email</label
             >
             <div
               class="flex items-center gap-3 px-4 py-3 bg-neutral-100 border border-neutral-300 rounded-xl"
             >
               <Mail class="w-5 h-5 text-neutral-600" />
-              <span class="text-sm font-medium text-neutral-800">{{
+              <span class="text-sm font-medium text-neutral-700">{{
                 formData.email
               }}</span>
             </div>
@@ -70,14 +70,16 @@
           />
 
           <div>
-            <label class="block text-sm font-semibold text-neutral-800 mb-2"
+            <label class="block text-sm font-semibold text-neutral-700 mb-2"
               >Fuseau horaire</label
             >
             <div class="relative">
-              <Clock class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-600 pointer-events-none" />
+              <Clock
+                class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-600 pointer-events-none"
+              />
               <select
                 v-model="formData.timezone"
-                class="w-full pl-11 pr-10 py-3 min-h-[44px] bg-neutral-100 border border-neutral-300 rounded-xl text-sm font-medium text-neutral-950 focus:outline-none focus:border-brand-500 focus:bg-neutral-200 hover:border-neutral-400 transition-all duration-200 appearance-none cursor-pointer"
+                class="w-full pl-11 pr-10 py-3 min-h-[44px] bg-neutral-100 border border-neutral-300 rounded-xl text-sm font-medium text-neutral-900 focus:outline-none focus:border-brand-500 focus:bg-neutral-200 hover:border-neutral-400 transition-all duration-200 appearance-none cursor-pointer"
                 required
               >
                 <optgroup label="Europe">
@@ -94,7 +96,9 @@
                   <option value="America/New_York">New York (GMT-5)</option>
                   <option value="America/Chicago">Chicago (GMT-6)</option>
                   <option value="America/Denver">Denver (GMT-7)</option>
-                  <option value="America/Los_Angeles">Los Angeles (GMT-8)</option>
+                  <option value="America/Los_Angeles">
+                    Los Angeles (GMT-8)
+                  </option>
                   <option value="America/Toronto">Toronto (GMT-5)</option>
                   <option value="America/Montreal">Montréal (GMT-5)</option>
                   <option value="America/Sao_Paulo">São Paulo (GMT-3)</option>
@@ -111,17 +115,23 @@
                 </optgroup>
                 <optgroup label="Océanie">
                   <option value="Australia/Sydney">Sydney (GMT+11)</option>
-                  <option value="Australia/Melbourne">Melbourne (GMT+11)</option>
+                  <option value="Australia/Melbourne">
+                    Melbourne (GMT+11)
+                  </option>
                   <option value="Pacific/Auckland">Auckland (GMT+13)</option>
                 </optgroup>
                 <optgroup label="Afrique">
                   <option value="Africa/Cairo">Le Caire (GMT+2)</option>
-                  <option value="Africa/Johannesburg">Johannesburg (GMT+2)</option>
+                  <option value="Africa/Johannesburg">
+                    Johannesburg (GMT+2)
+                  </option>
                   <option value="Africa/Lagos">Lagos (GMT+1)</option>
                   <option value="Africa/Nairobi">Nairobi (GMT+3)</option>
                 </optgroup>
               </select>
-              <ChevronDown class="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-600 pointer-events-none" />
+              <ChevronDown
+                class="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-600 pointer-events-none"
+              />
             </div>
             <p class="text-xs text-neutral-600 mt-2 font-medium">
               Utilisé pour afficher vos disponibilités
@@ -133,7 +143,6 @@
             variant="error"
             :message="error"
             dismissible
-            @update:modelValue="error = ''"
           />
 
           <BaseAlert
@@ -141,7 +150,6 @@
             variant="success"
             :message="success"
             dismissible
-            @update:modelValue="success = ''"
           />
 
           <div class="pt-2">
@@ -156,7 +164,7 @@
       <PasswordChangeForm />
 
       <section
-        class="bg-neutral-200 rounded-xl border border-neutral-400 p-6 sm:p-7 transition-all hover:shadow-md"
+        class="bg-neutral-100 rounded-xl shadow-md p-6 sm:p-7 transition-all hover:shadow-lg"
       >
         <h2 class="text-lg font-semibold text-neutral-900 mb-5">Abonnement</h2>
 
@@ -164,24 +172,24 @@
           <div
             class="p-5 bg-neutral-100 rounded-xl border border-neutral-300 space-y-3"
           >
-            <div class="h-4 bg-neutral-300 rounded w-28"></div>
-            <div class="h-5 bg-neutral-300 rounded w-36"></div>
+            <div class="h-4 bg-neutral-200 rounded w-28"></div>
+            <div class="h-5 bg-neutral-200 rounded w-36"></div>
           </div>
           <div class="grid grid-cols-2 gap-3">
             <div
               class="p-5 bg-neutral-100 rounded-xl border border-neutral-300 space-y-2"
             >
-              <div class="h-3 bg-neutral-300 rounded w-14"></div>
-              <div class="h-5 bg-neutral-300 rounded w-20"></div>
+              <div class="h-3 bg-neutral-200 rounded w-14"></div>
+              <div class="h-5 bg-neutral-200 rounded w-20"></div>
             </div>
             <div
               class="p-5 bg-neutral-100 rounded-xl border border-neutral-300 space-y-2"
             >
-              <div class="h-3 bg-neutral-300 rounded w-12"></div>
-              <div class="h-5 bg-neutral-300 rounded w-24"></div>
+              <div class="h-3 bg-neutral-200 rounded w-12"></div>
+              <div class="h-5 bg-neutral-200 rounded w-24"></div>
             </div>
           </div>
-          <div class="h-10 bg-neutral-300 rounded-lg w-40"></div>
+          <div class="h-10 bg-neutral-200 rounded-lg w-40"></div>
         </div>
 
         <div v-else class="space-y-5">
@@ -189,8 +197,8 @@
             class="flex items-center justify-between p-5 bg-neutral-100 border border-neutral-300 rounded-xl"
           >
             <div>
-              <p class="text-sm font-medium text-neutral-800">Plan actuel</p>
-              <p class="text-sm text-neutral-700 mt-1">
+              <p class="text-sm font-medium text-neutral-700">Plan actuel</p>
+              <p class="text-sm text-neutral-600 mt-1">
                 {{
                   subscriptionStore.isPro ? "Abonnement Pro" : "Plan Gratuit"
                 }}
@@ -204,7 +212,7 @@
             </div>
             <div
               v-else
-              class="px-4 py-2 bg-neutral-300 text-neutral-800 text-sm font-medium rounded-full border border-neutral-400"
+              class="px-4 py-2 bg-neutral-200 text-neutral-700 text-sm font-medium rounded-full border border-neutral-400"
             >
               Gratuit
             </div>
@@ -215,7 +223,7 @@
               <div
                 class="p-5 bg-neutral-100 rounded-xl border border-neutral-300"
               >
-                <p class="text-neutral-700 text-xs mb-1">Statut</p>
+                <p class="text-neutral-600 text-xs mb-1">Statut</p>
                 <p v-if="isOnGracePeriod" class="font-medium text-warning-700">
                   Annulé
                 </p>
@@ -224,7 +232,7 @@
               <div
                 class="p-5 bg-neutral-100 rounded-xl border border-neutral-300"
               >
-                <p class="text-neutral-700 text-xs mb-1">Tarif</p>
+                <p class="text-neutral-600 text-xs mb-1">Tarif</p>
                 <p class="font-medium text-neutral-900">9€/mois</p>
               </div>
               <div
@@ -259,7 +267,7 @@
 
             <div class="pt-5 border-t border-neutral-300">
               <div class="flex items-center gap-2 mb-4">
-                <CreditCard class="w-4 h-4 text-neutral-700" />
+                <CreditCard class="w-4 h-4 text-neutral-600" />
                 <p class="text-sm font-semibold text-neutral-900">
                   Facturation
                 </p>
@@ -284,7 +292,7 @@
               class="p-5 bg-neutral-100 rounded-lg border border-neutral-300"
             >
               <div class="flex items-center justify-between mb-3">
-                <span class="text-sm font-medium text-neutral-800"
+                <span class="text-sm font-medium text-neutral-700"
                   >Utilisation ce mois</span
                 >
                 <span class="text-sm font-bold text-neutral-900"
@@ -293,14 +301,14 @@
                   }}</span
                 >
               </div>
-              <div class="h-2 bg-neutral-300 rounded-full overflow-hidden">
+              <div class="h-2 bg-neutral-200 rounded-full overflow-hidden">
                 <div
                   :class="progressColor"
                   class="h-full transition-all duration-300 rounded-full"
                   :style="{ width: `${subscriptionStore.percentage}%` }"
                 ></div>
               </div>
-              <p class="text-xs text-neutral-700 mt-2">
+              <p class="text-xs text-neutral-600 mt-2">
                 {{ subscriptionStore.percentage }}% de votre limite mensuelle
                 utilisée
               </p>
@@ -326,9 +334,10 @@
 <script setup>
 import { ref, computed, onMounted } from "vue";
 import { useAuthStore } from "@/stores/auth";
+import { useProfileStore } from "@/stores/profile";
 import { useSubscriptionStore } from "@/stores/subscription";
 import { useToastStore } from "@/stores/toast";
-import { profileAPI } from "@/services/api";
+import { logError } from "@/utils/logger";
 import DashboardLayout from "@/components/layout/DashboardLayout.vue";
 import BaseButton from "@/components/ui/BaseButton.vue";
 import BaseInput from "@/components/ui/BaseInput.vue";
@@ -350,6 +359,7 @@ import {
 } from "lucide-vue-next";
 
 const authStore = useAuthStore();
+const profileStore = useProfileStore();
 const subscriptionStore = useSubscriptionStore();
 const toastStore = useToastStore();
 
@@ -362,12 +372,12 @@ const formData = ref({
   timezone: "",
 });
 
-const saving = ref(false);
-const error = ref("");
-const success = ref("");
+const saving = computed(() => profileStore.saving);
+const error = computed(() => profileStore.error);
+const success = computed(() => profileStore.success);
 const showUpgradeModal = ref(false);
-const cancelling = ref(false);
-const resuming = ref(false);
+const cancelling = computed(() => subscriptionStore.saving);
+const resuming = computed(() => subscriptionStore.saving);
 const openingPortal = ref(false);
 
 const progressColor = computed(() => {
@@ -392,21 +402,10 @@ const endsAt = computed(() => {
 });
 
 async function updateProfile() {
-  saving.value = true;
-  error.value = "";
-  success.value = "";
-
   try {
-    await profileAPI.update(formData.value);
+    await profileStore.update(formData.value);
     await authStore.fetchUser();
-    success.value = "Profil mis à jour avec succès !";
-    setTimeout(() => (success.value = ""), 3000);
-  } catch (err) {
-    error.value =
-      err.response?.data?.message || "Erreur lors de la mise à jour";
-  } finally {
-    saving.value = false;
-  }
+  } catch (err) {}
 }
 
 const handleCancelSubscription = async () => {
@@ -418,30 +417,18 @@ const handleCancelSubscription = async () => {
     return;
   }
 
-  cancelling.value = true;
   try {
     await subscriptionStore.cancelSubscription();
-    toastStore.success(
-      "Abonnement annulé. Vous conservez l'accès jusqu'au " + endsAt.value
-    );
   } catch (error) {
-    toastStore.error("Erreur lors de l'annulation de l'abonnement");
-    console.error("Error cancelling subscription:", error);
-  } finally {
-    cancelling.value = false;
+    logError("ProfileView.handleCancelSubscription", error);
   }
 };
 
 const handleResumeSubscription = async () => {
-  resuming.value = true;
   try {
     await subscriptionStore.resumeSubscription();
-    toastStore.success("Abonnement réactivé avec succès!");
   } catch (error) {
-    toastStore.error("Erreur lors de la réactivation de l'abonnement");
-    console.error("Error resuming subscription:", error);
-  } finally {
-    resuming.value = false;
+    logError("ProfileView.handleResumeSubscription", error);
   }
 };
 
@@ -466,7 +453,7 @@ const handleOpenBillingPortal = async () => {
       toastStore.error(errorMessage);
     }
 
-    console.error("Error opening billing portal:", error);
+    logError("ProfileView.handleOpenBillingPortal", error);
   }
 };
 
