@@ -8,6 +8,7 @@ use App\Models\Service;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Log;
 
 class CalculateAvailableSlotsAction
 {
@@ -16,7 +17,8 @@ class CalculateAvailableSlotsAction
     public function handle(Service $service, Carbon $startDate, Carbon $endDate): array
     {
         $timezone = $service->user->timezone;
-        $startDate = $startDate->copy()->startOfDay();
+
+        $startDate = $startDate->copy()->startOfDay()->max(Carbon::now($timezone));
         $endDate = $endDate->copy()->endOfDay();
 
         $availabilities = $service->user->availabilities()
@@ -37,7 +39,7 @@ class CalculateAvailableSlotsAction
             ->where('start_at', '<', $endDate)
             ->where('end_at', '>', $startDate)
             ->get()
-            ->map(fn ($booking) => (object) [
+            ->map(fn($booking) => (object) [
                 'start_at' => $booking->start_at->copy()->setTimezone($timezone),
                 'end_at' => $booking->end_at->copy()->setTimezone($timezone),
             ]);
@@ -49,17 +51,24 @@ class CalculateAvailableSlotsAction
 
         foreach (CarbonPeriod::create($startDate, $endDate) as $date) {
             foreach ($availabilities[$date->dayOfWeek] ?? [] as $availability) {
-                array_push($slots, ...$this->generateSlots($date, $timezone, $availability, $serviceDuration, $bookings));
+                array_push($slots, ...$this->generateSlots($date, $timezone, $availability, $serviceDuration, $bookings, $startDate));
             }
         }
 
         return $slots;
     }
 
-    private function generateSlots(Carbon $date, string $timezone, Availability $availability, int $serviceDuration, Collection $bookings): array
+    private function generateSlots(Carbon $date, string $timezone, Availability $availability, int $serviceDuration, Collection $bookings, Carbon $startDate): array
     {
-        $availabilityStart = Carbon::parse("{$date->format('Y-m-d')} {$availability->start_time}", $timezone);
-        $availabilityEnd = Carbon::parse("{$date->format('Y-m-d')} {$availability->end_time}", $timezone);
+        $start = Carbon::parse("{$date->format('Y-m-d')} {$availability->start_time}", $timezone);
+        $end = Carbon::parse("{$date->format('Y-m-d')} {$availability->end_time}", $timezone);
+
+        if ($date->isSameDay($startDate)) {
+            $start = $start->max($startDate);
+        }
+
+        $availabilityStart = $this->roundUpToQuarterHour($start);
+        $availabilityEnd = $end;
 
         $slots = [];
         $currentSlotStart = $availabilityStart->copy();
@@ -82,6 +91,18 @@ class CalculateAvailableSlotsAction
 
     private function isSlotAvailable(Carbon $slotStart, Carbon $slotEnd, Collection $bookings): bool
     {
-        return $bookings->every(fn ($booking): bool => $slotStart >= $booking->end_at || $slotEnd <= $booking->start_at);
+        return $bookings->every(fn($booking): bool => $slotStart >= $booking->end_at || $slotEnd <= $booking->start_at);
+    }
+
+    private function roundUpToQuarterHour(Carbon $date): Carbon
+    {
+        $minutes = $date->minute;
+        $remainder = $minutes % self::SLOT_INTERVAL_MINUTES;
+
+        if ($remainder === 0) {
+            return $date;
+        }
+
+        return $date->copy()->addMinutes(self::SLOT_INTERVAL_MINUTES - $remainder)->second(0);
     }
 }
