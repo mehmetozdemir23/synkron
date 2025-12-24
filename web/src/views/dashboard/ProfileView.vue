@@ -15,7 +15,7 @@
 
     <div class="w-full space-y-6">
       <section
-        class="bg-neutral-100 rounded-xl border border-neutral-400 p-6 sm:p-7 transition-all hover:shadow-md"
+        class="bg-white rounded-xl border border-neutral-200 p-6 sm:p-7"
       >
         <h2 class="text-lg font-semibold text-neutral-900 mb-5">
           Informations personnelles
@@ -43,7 +43,7 @@
               >Adresse email</label
             >
             <div
-              class="flex items-center gap-3 px-4 py-3 bg-neutral-100 border border-neutral-300 rounded-xl"
+              class="flex items-center gap-3 px-4 py-3 bg-neutral-50 border border-neutral-300 rounded-xl"
             >
               <Mail class="w-5 h-5 text-neutral-600" />
               <span class="text-sm font-medium text-neutral-700">{{
@@ -79,7 +79,7 @@
               />
               <select
                 v-model="formData.timezone"
-                class="w-full pl-11 pr-10 py-3 min-h-[44px] bg-neutral-100 border border-neutral-300 rounded-xl text-sm font-medium text-neutral-900 focus:outline-none focus:border-brand-500 focus:bg-neutral-200 hover:border-neutral-400 transition-all duration-200 appearance-none cursor-pointer"
+                class="w-full pl-11 pr-10 py-3 min-h-[44px] bg-neutral-50 border border-neutral-300 rounded-xl text-sm font-medium text-neutral-900 focus:outline-none focus:border-brand-500 focus:bg-neutral-200 hover:border-neutral-400 transition-all duration-200 appearance-none cursor-pointer"
                 required
               >
                 <optgroup label="Europe">
@@ -164,26 +164,26 @@
       <PasswordChangeForm />
 
       <section
-        class="bg-neutral-100 rounded-xl shadow-md p-6 sm:p-7 transition-all hover:shadow-lg"
+        class="bg-white rounded-xl border border-neutral-200 p-6 sm:p-7"
       >
         <h2 class="text-lg font-semibold text-neutral-900 mb-5">Abonnement</h2>
 
         <div v-if="subscriptionStore.loading" class="space-y-5 animate-pulse">
           <div
-            class="p-5 bg-neutral-100 rounded-xl border border-neutral-300 space-y-3"
+            class="p-5 bg-neutral-50 rounded-xl border border-neutral-300 space-y-3"
           >
             <div class="h-4 bg-neutral-200 rounded w-28"></div>
             <div class="h-5 bg-neutral-200 rounded w-36"></div>
           </div>
           <div class="grid grid-cols-2 gap-3">
             <div
-              class="p-5 bg-neutral-100 rounded-xl border border-neutral-300 space-y-2"
+              class="p-5 bg-neutral-50 rounded-xl border border-neutral-300 space-y-2"
             >
               <div class="h-3 bg-neutral-200 rounded w-14"></div>
               <div class="h-5 bg-neutral-200 rounded w-20"></div>
             </div>
             <div
-              class="p-5 bg-neutral-100 rounded-xl border border-neutral-300 space-y-2"
+              class="p-5 bg-neutral-50 rounded-xl border border-neutral-300 space-y-2"
             >
               <div class="h-3 bg-neutral-200 rounded w-12"></div>
               <div class="h-5 bg-neutral-200 rounded w-24"></div>
@@ -194,7 +194,7 @@
 
         <div v-else class="space-y-5">
           <div
-            class="flex items-center justify-between p-5 bg-neutral-100 border border-neutral-300 rounded-xl"
+            class="flex items-center justify-between p-5 bg-neutral-50 border border-neutral-300 rounded-xl"
           >
             <div>
               <p class="text-sm font-medium text-neutral-700">Plan actuel</p>
@@ -221,7 +221,7 @@
           <div v-if="subscriptionStore.isPro" class="space-y-4">
             <div class="grid grid-cols-2 gap-3 text-sm">
               <div
-                class="p-5 bg-neutral-100 rounded-xl border border-neutral-300"
+                class="p-5 bg-neutral-50 rounded-xl border border-neutral-300"
               >
                 <p class="text-neutral-600 text-xs mb-1">Statut</p>
                 <p v-if="isOnGracePeriod" class="font-medium text-warning-700">
@@ -230,7 +230,7 @@
                 <p v-else class="font-medium text-success-700">Actif</p>
               </div>
               <div
-                class="p-5 bg-neutral-100 rounded-xl border border-neutral-300"
+                class="p-5 bg-neutral-50 rounded-xl border border-neutral-300"
               >
                 <p class="text-neutral-600 text-xs mb-1">Tarif</p>
                 <p class="font-medium text-neutral-900">9€/mois</p>
@@ -289,7 +289,7 @@
 
           <div v-else class="space-y-4">
             <div
-              class="p-5 bg-neutral-100 rounded-lg border border-neutral-300"
+              class="p-5 bg-neutral-50 rounded-lg border border-neutral-300"
             >
               <div class="flex items-center justify-between mb-3">
                 <span class="text-sm font-medium text-neutral-700"
@@ -325,6 +325,21 @@
           </div>
         </div>
       </section>
+
+      <section
+        class="bg-white rounded-xl border border-neutral-200 p-6 sm:p-7"
+      >
+        <h2 class="text-lg font-semibold text-neutral-900 mb-5">Compte</h2>
+
+        <BaseButton
+          @click="handleLogout"
+          variant="secondary"
+          class="w-full sm:w-auto"
+        >
+          <LogOut class="w-4 h-4" />
+          Se déconnecter
+        </BaseButton>
+      </section>
     </div>
 
     <UpgradeModal :show="showUpgradeModal" @close="showUpgradeModal = false" />
@@ -333,6 +348,7 @@
 
 <script setup>
 import { ref, computed, onMounted } from "vue";
+import { useRouter } from "vue-router";
 import { useAuthStore } from "@/stores/auth";
 import { useProfileStore } from "@/stores/profile";
 import { useSubscriptionStore } from "@/stores/subscription";
@@ -356,8 +372,10 @@ import {
   Building2,
   Clock,
   ChevronDown,
+  LogOut,
 } from "lucide-vue-next";
 
+const router = useRouter();
 const authStore = useAuthStore();
 const profileStore = useProfileStore();
 const subscriptionStore = useSubscriptionStore();
@@ -455,6 +473,11 @@ const handleOpenBillingPortal = async () => {
 
     logError("ProfileView.handleOpenBillingPortal", error);
   }
+};
+
+const handleLogout = async () => {
+  await authStore.logout();
+  router.push("/login");
 };
 
 onMounted(async () => {

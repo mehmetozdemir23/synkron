@@ -21,9 +21,9 @@
           <StepIndicator :current-step="currentStep" class="mb-6 sm:mb-8" />
 
           <div
-            class="bg-neutral-100 border border-neutral-200 rounded-2xl flex flex-col flex-1 overflow-hidden shadow-sm"
+            class="bg-neutral-100 border border-neutral-200 rounded-2xl flex flex-col h-[calc(100vh-20rem)] overflow-hidden shadow-sm"
           >
-            <div class="p-4 sm:p-6 md:p-8 flex-1 overflow-y-auto">
+            <div class="p-4 sm:p-6 md:p-8 flex-1 overflow-y-auto min-h-0">
               <Transition name="fade-slide" mode="out-in">
                 <StepService
                   v-if="currentStep === 1"

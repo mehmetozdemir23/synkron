@@ -31,7 +31,7 @@
         <div
           v-for="i in 3"
           :key="i"
-          class="bg-neutral-200 rounded-xl border border-neutral-400 p-5 space-y-4"
+          class="bg-white rounded-xl border border-neutral-200 p-5 space-y-4"
         >
           <div class="flex items-start justify-between mb-4">
             <div class="flex-1 space-y-3">
@@ -101,7 +101,7 @@
         <div
           v-for="service in services"
           :key="service.id"
-          class="group relative bg-neutral-100 rounded-xl shadow-md p-5 overflow-hidden"
+          class="group relative bg-white rounded-xl border border-neutral-200 p-5 overflow-hidden"
         >
           <div class="flex items-start justify-between mb-4">
             <div class="flex-1 pr-2">

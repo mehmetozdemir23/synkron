@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col min-h-screen bg-neutral-50">
+  <div class="flex flex-col min-h-screen">
     <PublicHeader />
 
     <div class="flex-1 flex items-center justify-center px-4 py-8 sm:py-12">
@@ -14,9 +14,7 @@
         </div>
 
         <div v-else-if="error" class="text-center animate-fade-in">
-          <div
-            class="bg-neutral-200 rounded-2xl border border-neutral-400 shadow-md p-8 mb-6"
-          >
+          <div class="rounded-2xl border border-neutral-400 shadow-md p-8 mb-6">
             <div
               class="w-16 h-16 bg-error-100 rounded-full flex items-center justify-center mx-auto mb-4"
             >
@@ -38,7 +36,7 @@
 
         <div v-else class="animate-fade-in">
           <div
-            class="bg-neutral-200 rounded-2xl border border-neutral-400 shadow-md p-6 sm:p-8"
+            class="rounded-2xl border border-neutral-400 shadow-md p-6 sm:p-8"
           >
             <div class="text-center mb-6">
               <div
@@ -55,16 +53,24 @@
               </p>
             </div>
 
-            <div class="bg-neutral-500 rounded-lg p-3 mb-6">
-              <div class="flex items-center gap-2 text-neutral-900 font-medium">
-                <Mail class="w-4 h-4 flex-shrink-0" />
-                <p class="text-xs">
-                  Vous recevrez un email à
-                  <span class="font-semibold">{{
-                    bookingData.client_email
-                  }}</span>
-                  dès validation.
-                </p>
+            <div
+              class="relative overflow-hidden rounded-xl p-5 mb-6 bg-gradient-to-br from-brand-50 to-brand-100/50 border-2 border-brand-200"
+            >
+              <div class="flex flex-col gap-4">
+                <div
+                  class="w-11 h-11 bg-brand-500 rounded-md flex items-center justify-center flex-shrink-0 shadow-sm"
+                >
+                  <Mail class="w-5 h-5 text-white" />
+                </div>
+                <div class="flex-1 min-w-0">
+                  <p class="text-sm text-brand-700 leading-relaxed">
+                    Un email de confirmation sera envoyé à
+                    <span class="font-bold">{{
+                      bookingData.client_email
+                    }}</span>
+                    dès validation.
+                  </p>
+                </div>
               </div>
             </div>
 
@@ -178,6 +184,7 @@ import {
   AlertCircle,
   Mail,
   ArrowLeft,
+  Info,
 } from "lucide-vue-next";
 
 const route = useRoute();

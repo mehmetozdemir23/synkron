@@ -1,8 +1,6 @@
 <template>
   <div class="min-h-screen bg-neutral-100 overflow-x-hidden antialiased">
-    <nav
-      class="sticky top-0 z-50 bg-neutral-100/80 backdrop-blur-md border-b border-neutral-300 px-4 sm:px-6"
-    >
+    <nav class="sticky top-0 z-50 px-4 sm:px-6">
       <div class="max-w-6xl mx-auto py-4 flex items-center justify-between">
         <LogoBrand size="sm" />
         <div class="flex items-center gap-2 sm:gap-3">
@@ -271,7 +269,7 @@
               class="absolute -top-3.5 left-1/2 -translate-x-1/2 -translate-y-0.5 rounded-full pl-1.5 pr-3.5 py-1.5 flex items-center bg-amber-300 text-neutral-800"
             >
               <Check class="mt-px h-4" />
-              <span class="text-sm font-semibold font-mono">
+              <span class="text-xs sm:text-sm font-semibold font-mono">
                 OFFRE RECOMMANDEE
               </span>
             </div>

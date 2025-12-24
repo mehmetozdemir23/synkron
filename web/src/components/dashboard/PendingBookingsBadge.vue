@@ -2,9 +2,9 @@
   <button
     v-if="pendingCount > 0"
     @click="$emit('show-pending-modal')"
-    class="min-h-0 flex items-center text-xs text-warning-800 rounded-full gap-2 bg-warning-300 hover:bg-warning-400 active:bg-warning-400 px-2.5 py-1"
+    class="min-h-0 flex items-center text-xs text-warning-700 font-semibold rounded-full gap-2 bg-warning-300 hover:bg-warning-400 active:bg-warning-400 px-2.5 py-1"
   >
-    <div class="w-1.5 h-1.5 rounded-full bg-warning-500"></div>
+    <div class="w-1.5 h-1.5 rounded-full bg-warning-600"></div>
     <span class="mb-0.5"
       >{{ pendingCount }}
       <span v-if="showFullText"

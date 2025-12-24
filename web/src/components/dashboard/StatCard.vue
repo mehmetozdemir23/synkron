@@ -1,80 +1,69 @@
 <template>
-  <component
-    :is="clickable ? 'button' : 'div'"
-    @click="clickable ? $emit('click') : null"
+  <div
     :class="[
-      'group relative bg-neutral-100 rounded-xl shadow-md transition-all duration-200 overflow-hidden',
-      clickable ? 'cursor-pointer hover:shadow-lg hover:shadow-neutral-900/5' : 'cursor-default',
+      'bg-white rounded-xl p-5 border border-neutral-200 flex flex-col justify-between h-full overflow-hidden',
+      bgClass,
     ]"
   >
-    <div class="absolute top-3 right-3 opacity-10 pointer-events-none">
-      <component :is="icon" :class="['w-20 h-20', iconColor]" />
-    </div>
-
-    <div class="relative p-6 z-10">
-      <div class="text-sm font-medium text-neutral-600 mb-2">
-        {{ label }}
+    <div>
+      <div class="flex items-center justify-between mb-3">
+        <p :class="['text-sm font-medium', labelColor]">{{ label }}</p>
+        <component :is="resolvedIcon" :class="['icon-md', iconColor]" />
       </div>
-      <div class="text-3xl font-normal text-neutral-900">
+      <p class="text-3xl sm:text-4xl font-bold text-neutral-900">
         {{ value }}
-      </div>
+      </p>
     </div>
-  </component>
+    <p :class="['text-xs mt-2', sublabelColor]">{{ sublabel }}</p>
+  </div>
 </template>
 
 <script setup>
+import { CheckCircle, DollarSign, AlertCircle } from "lucide-vue-next";
 import { computed } from "vue";
 
 const props = defineProps({
-  icon: {
-    type: [Object, Function],
+  label: {
+    type: String,
     required: true,
   },
   value: {
     type: [String, Number],
     required: true,
   },
-  label: {
+  sublabel: {
+    type: String,
+    default: "",
+  },
+  iconComponent: {
     type: String,
     required: true,
-  },
-  color: {
-    type: String,
-    default: "neutral",
     validator: (value) =>
-      ["amber", "green", "blue", "purple", "neutral"].includes(value),
+      ["CheckCircle", "DollarSign", "AlertCircle"].includes(value),
   },
-  clickable: {
-    type: Boolean,
-    default: false,
+  iconColor: {
+    type: String,
+    default: "text-neutral-600",
+  },
+  bgClass: {
+    type: String,
+    default: "",
+  },
+  labelColor: {
+    type: String,
+    default: "text-neutral-700",
+  },
+  sublabelColor: {
+    type: String,
+    default: "text-neutral-500",
   },
 });
 
-defineEmits(["click"]);
+const iconMap = {
+  CheckCircle,
+  DollarSign,
+  AlertCircle,
+};
 
-function getColorScheme(colorType) {
-  const colorMap = {
-    amber: {
-      iconColor: "text-amber-600",
-    },
-    green: {
-      iconColor: "text-green-600",
-    },
-    blue: {
-      iconColor: "text-blue-600",
-    },
-    purple: {
-      iconColor: "text-purple-600",
-    },
-    neutral: {
-      iconColor: "text-neutral-600",
-    },
-  };
-
-  return colorMap[colorType] || colorMap.neutral;
-}
-
-const colorScheme = computed(() => getColorScheme(props.color));
-
-const iconColor = computed(() => colorScheme.value.iconColor);
+const resolvedIcon = computed(() => iconMap[props.iconComponent]);
 </script>

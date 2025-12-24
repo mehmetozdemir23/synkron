@@ -13,7 +13,7 @@
           </p>
         </div>
 
-        <div class="bg-neutral-100 rounded-2xl transition-all animate-fade-in">
+        <div class="transition-all animate-fade-in">
           <div class="space-y-5">
             <AuthForm :error="error" :loading="loading" @submit="handleLogin">
               <BaseInput

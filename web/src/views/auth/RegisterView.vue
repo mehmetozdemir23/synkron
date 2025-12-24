@@ -13,9 +13,7 @@
           </p>
         </div>
 
-        <div
-          class="rounded-2xl shadow-md hover:shadow-lg transition-all animate-fade-in"
-        >
+        <div class="transition-all animate-fade-in">
           <div class="space-y-5">
             <AuthForm
               :error="error"

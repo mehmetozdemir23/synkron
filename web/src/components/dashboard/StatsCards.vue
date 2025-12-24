@@ -4,7 +4,7 @@
       <div
         v-for="i in 2"
         :key="i"
-        class="bg-neutral-200 rounded-xl border border-neutral-400 p-4 space-y-3"
+        class="bg-white rounded-xl border border-neutral-200 p-5 space-y-3"
       >
         <div class="flex items-start gap-3">
           <div
@@ -19,23 +19,21 @@
       </div>
     </template>
     <template v-else>
-      <StatBadge
+      <StatCard
         label="Rendez-vous confirmés"
         sublabel="ce mois-ci"
         :value="stats.upcoming_confirmed_bookings || 0"
         icon-component="CheckCircle"
         icon-color="text-success-500"
-        bg-class="bg-neutral-200 border border-neutral-400 shadow-md"
         label-color="text-neutral-700"
         sublabel-color="text-neutral-600"
       />
-      <StatBadge
+      <StatCard
         label="Revenu prévu"
         :value="`${stats.revenue_this_month}€`"
         sublabel="ce mois-ci"
         icon-component="DollarSign"
         icon-color="text-brand-500"
-        bg-class="bg-neutral-200 border border-neutral-400 shadow-md"
         label-color="text-neutral-700"
         sublabel-color="text-neutral-600"
       />
@@ -44,7 +42,7 @@
 </template>
 
 <script setup>
-import StatBadge from "./StatBadge.vue";
+import StatCard from "./StatCard.vue";
 
 defineProps({
   stats: {

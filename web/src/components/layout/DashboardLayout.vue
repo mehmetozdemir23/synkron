@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-neutral-50">
+  <div class="min-h-screen">
     <aside
       class="hidden lg:flex fixed left-0 top-0 h-screen w-20 flex-col z-40 shadow-sm"
     >
@@ -26,16 +26,20 @@
           @click="showUserMenu = !showUserMenu"
           aria-label="Menu utilisateur"
           :aria-expanded="showUserMenu"
-          class="flex flex-col items-center justify-center gap-1 py-1.5 w-full group"
+          class="relative flex flex-col items-center justify-center gap-1 py-2 w-full text-neutral-600 rounded-2xl hover:text-neutral-700 transition-smooth"
           :title="userDisplayName"
         >
           <div
-            class="flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-brand-400 to-brand-600 text-white font-semibold text-base group-hover:shadow-md transition-all"
+            class="flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-brand-400 to-brand-600 text-white font-semibold text-base transition-smooth"
+            :class="{
+              'ring ring-offset-2 ring-offset-white': showUserMenu,
+            }"
           >
             {{ userInitials }}
           </div>
           <span
-            class="text-xs font-medium text-neutral-700 truncate w-full px-1 text-center"
+            class="text-xs font-medium leading-tight truncate w-full px-1 text-center"
+            :class="{ 'font-semibold': showUserMenu }"
           >
             {{ userFirstName }}
           </span>
@@ -86,9 +90,7 @@
     </aside>
 
     <main class="lg:ml-20 h-screen flex flex-col pb-20 lg:pb-0">
-      <div
-        class="lg:hidden flex-shrink-0 bg-neutral-100 px-4 py-3 flex items-center justify-center shadow-md"
-      >
+      <div class="lg:hidden flex-shrink-0 bg-neutral-100 p-4 flex items-center">
         <LogoBrand size="sm" />
       </div>
 
@@ -128,63 +130,7 @@
           label="Horaires"
         />
 
-        <button
-          @click="showUserMenuMobile = !showUserMenuMobile"
-          aria-label="Menu utilisateur"
-          :aria-expanded="showUserMenuMobile"
-          class="flex flex-col items-center justify-center gap-1 py-2 px-3 rounded-lg hover:bg-neutral-200 transition-colors"
-        >
-          <div
-            class="flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-br from-brand-400 to-brand-600 text-white font-semibold text-xs"
-          >
-            {{ userInitials }}
-          </div>
-          <span class="text-xs font-medium text-neutral-700 truncate">
-            Profil
-          </span>
-        </button>
-
-        <Transition
-          enter-active-class="transition ease-out duration-100"
-          enter-from-class="opacity-0 scale-95"
-          enter-to-class="opacity-100 scale-100"
-          leave-active-class="transition ease-in duration-75"
-          leave-from-class="opacity-100 scale-100"
-          leave-to-class="opacity-0 scale-95"
-        >
-          <div
-            v-if="showUserMenuMobile"
-            class="absolute bottom-full right-4 mb-2 w-56 bg-neutral-100 rounded-xl shadow-xl border border-neutral-300 overflow-hidden z-50"
-          >
-            <div class="p-3 border-b border-neutral-300 bg-neutral-200">
-              <p class="text-sm font-semibold text-neutral-950 truncate">
-                {{ userDisplayName }}
-              </p>
-              <p class="text-xs text-neutral-700 truncate mt-0.5">
-                {{ authStore.user?.email }}
-              </p>
-            </div>
-
-            <div class="py-1 bg-neutral-100">
-              <router-link
-                to="/dashboard/profile"
-                @click="showUserMenuMobile = false"
-                class="flex items-center gap-2 px-3 py-2.5 text-sm text-neutral-900 hover:bg-neutral-200 transition-colors"
-              >
-                <User class="w-4 h-4" />
-                <span class="font-medium">Mon profil</span>
-              </router-link>
-
-              <button
-                @click="handleLogout"
-                class="w-full flex items-center gap-2 px-3 py-2.5 text-sm text-error-600 hover:bg-error-50 transition-colors"
-              >
-                <LogOut class="w-4 h-4" />
-                <span class="font-medium">Déconnexion</span>
-              </button>
-            </div>
-          </div>
-        </Transition>
+        <MobileNavItem to="/dashboard/profile" :icon="User" label="Profil" />
       </div>
     </nav>
   </div>
@@ -208,7 +154,6 @@ import {
 const router = useRouter();
 const authStore = useAuthStore();
 const showUserMenu = ref(false);
-const showUserMenuMobile = ref(false);
 
 const userDisplayName = computed(() => {
   if (!authStore.user) return "";
@@ -258,7 +203,6 @@ const navItems = [
 
 async function handleLogout() {
   showUserMenu.value = false;
-  showUserMenuMobile.value = false;
   await authStore.logout();
   router.push("/login");
 }
@@ -266,8 +210,6 @@ async function handleLogout() {
 function handleClickOutside(event) {
   const menuDesktop = document.querySelector(".absolute.bottom-full.left-4");
   const buttonDesktop = document.querySelector("button[title]");
-  const menuMobile = document.querySelector(".absolute.bottom-full.right-4");
-  const buttonMobile = event.target.closest("button");
 
   if (showUserMenu.value && menuDesktop && buttonDesktop) {
     if (
@@ -275,18 +217,6 @@ function handleClickOutside(event) {
       !buttonDesktop.contains(event.target)
     ) {
       showUserMenu.value = false;
-    }
-  }
-
-  if (showUserMenuMobile.value && menuMobile) {
-    if (
-      !menuMobile.contains(event.target) &&
-      buttonMobile?.textContent?.includes("Profil")
-    ) {
-      return;
-    }
-    if (!menuMobile.contains(event.target)) {
-      showUserMenuMobile.value = false;
     }
   }
 }

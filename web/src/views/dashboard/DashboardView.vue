@@ -9,7 +9,7 @@
             Bonjour, {{ authStore.user?.firstname }}
           </h1>
         </div>
-        <div class="flex-shrink-0">
+        <div class="w-full sm:w-auto sm:flex-shrink-0">
           <ShareLink :url="publicUrl" />
         </div>
       </div>
@@ -18,7 +18,7 @@
     <div class="w-full space-y-6">
       <section>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <StatsBadges :stats="stats" :is-loading="isLoadingStats" />
+          <StatsCards :stats="stats" :is-loading="isLoadingStats" />
         </div>
       </section>
 
@@ -39,7 +39,7 @@ import { useAuthStore } from "@/stores/auth";
 import { useStatsStore } from "@/stores/stats";
 import { useBookingsStore } from "@/stores/bookings";
 import DashboardLayout from "@/components/layout/DashboardLayout.vue";
-import StatsBadges from "@/components/dashboard/StatsBadges.vue";
+import StatsCards from "@/components/dashboard/StatsCards.vue";
 import BookingsSection from "@/components/dashboard/BookingsSection.vue";
 import ShareLink from "@/components/dashboard/ShareLink.vue";
 
