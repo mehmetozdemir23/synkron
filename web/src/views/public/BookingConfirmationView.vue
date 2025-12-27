@@ -84,7 +84,7 @@
                   <div
                     class="w-9 h-9 bg-brand-100 rounded-lg flex items-center justify-center flex-shrink-0"
                   >
-                    <Briefcase class="w-4 h-4 text-brand-600" />
+                    <BriefcaseBusiness class="w-4 h-4 text-brand-600" />
                   </div>
                   <div class="flex-1 min-w-0">
                     <p class="text-xs font-medium text-neutral-600">Service</p>
@@ -179,7 +179,7 @@ import { logError } from "@/utils/logger";
 import {
   Calendar,
   Clock,
-  Briefcase,
+  BriefcaseBusiness,
   User,
   AlertCircle,
   Mail,

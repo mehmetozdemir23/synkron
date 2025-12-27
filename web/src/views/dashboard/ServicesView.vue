@@ -85,7 +85,7 @@
 
       <EmptyState
         v-else-if="services.length === 0"
-        :icon="Briefcase"
+        :icon="BriefcaseBusiness"
         title="Aucun service"
         description="Commencez par créer votre premier service pour accepter les réservations"
       >
@@ -279,7 +279,7 @@ import BaseAlert from "@/components/ui/BaseAlert.vue";
 import EmptyState from "@/components/ui/EmptyState.vue";
 import {
   Plus,
-  Briefcase,
+  BriefcaseBusiness,
   Clock,
   Edit2,
   Trash2,

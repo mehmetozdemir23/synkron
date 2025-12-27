@@ -24,7 +24,7 @@
 </template>
 
 <script setup>
-import { User, Briefcase } from "lucide-vue-next";
+import { User, BriefcaseBusiness } from "lucide-vue-next";
 
 defineProps({
   professional: {

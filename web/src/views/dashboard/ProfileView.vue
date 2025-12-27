@@ -14,9 +14,7 @@
     </template>
 
     <div class="w-full space-y-6">
-      <section
-        class="bg-white rounded-xl border border-neutral-200 p-6 sm:p-7"
-      >
+      <section class="bg-white rounded-xl border border-neutral-200 p-6 sm:p-7">
         <h2 class="text-lg font-semibold text-neutral-900 mb-5">
           Informations personnelles
         </h2>
@@ -66,7 +64,7 @@
             v-model="formData.activity"
             label="Spécialité"
             placeholder="Psychologue, Coach..."
-            :icon-component="Briefcase"
+            :icon-component="BriefcaseBusiness"
           />
 
           <div>
@@ -163,9 +161,7 @@
 
       <PasswordChangeForm />
 
-      <section
-        class="bg-white rounded-xl border border-neutral-200 p-6 sm:p-7"
-      >
+      <section class="bg-white rounded-xl border border-neutral-200 p-6 sm:p-7">
         <h2 class="text-lg font-semibold text-neutral-900 mb-5">Abonnement</h2>
 
         <div v-if="subscriptionStore.loading" class="space-y-5 animate-pulse">
@@ -288,9 +284,7 @@
           </div>
 
           <div v-else class="space-y-4">
-            <div
-              class="p-5 bg-neutral-50 rounded-lg border border-neutral-300"
-            >
+            <div class="p-5 bg-neutral-50 rounded-lg border border-neutral-300">
               <div class="flex items-center justify-between mb-3">
                 <span class="text-sm font-medium text-neutral-700"
                   >Utilisation ce mois</span
@@ -326,9 +320,7 @@
         </div>
       </section>
 
-      <section
-        class="bg-white rounded-xl border border-neutral-200 p-6 sm:p-7"
-      >
+      <section class="bg-white rounded-xl border border-neutral-200 p-6 sm:p-7">
         <h2 class="text-lg font-semibold text-neutral-900 mb-5">Compte</h2>
 
         <BaseButton
@@ -363,7 +355,7 @@ import UpgradeModal from "@/components/subscription/UpgradeModal.vue";
 import {
   User,
   Mail,
-  Briefcase,
+  BriefcaseBusiness,
   Save,
   ArrowUp,
   Check,
