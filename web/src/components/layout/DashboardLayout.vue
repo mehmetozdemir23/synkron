@@ -120,7 +120,7 @@
 
         <MobileNavItem
           to="/dashboard/services"
-          :icon="Briefcase"
+          :icon="BriefcaseBusiness"
           label="Services"
         />
 
@@ -145,7 +145,7 @@ import { useRouter } from "vue-router";
 import { useAuthStore } from "@/stores/auth";
 import {
   LayoutDashboard,
-  Briefcase,
+  BriefcaseBusiness,
   CalendarDays,
   User,
   LogOut,
@@ -189,7 +189,7 @@ const navItems = [
   },
   {
     path: "/dashboard/services",
-    icon: Briefcase,
+    icon: BriefcaseBusiness,
     label: "Services",
     title: "Services",
   },
