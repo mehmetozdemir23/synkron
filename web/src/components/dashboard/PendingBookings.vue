@@ -1,60 +1,43 @@
 <template>
   <div v-if="pendingBookings.length > 0">
-    
-    <div class="mb-4">
-      <div
-        class="inline-flex items-center gap-2 px-4 py-2 bg-warning-100 rounded-full border border-warning-300"
-      >
-        <div class="w-2 h-2 rounded-full bg-warning-500"></div>
-        <span class="text-sm font-medium text-warning-900">
-          {{ pendingBookings.length }}
-          {{ pendingBookings.length > 1 ? "réservations" : "réservation" }} à
-          traiter
-        </span>
-      </div>
-    </div>
-
-    
     <div class="space-y-3 overflow-y-auto max-h-[60vh]">
       <div
         v-for="booking in pendingBookings"
         :key="booking.id"
-        class="bg-neutral-100 rounded-2xl shadow-md overflow-hidden"
+        class="bg-white rounded-xl border border-neutral-200 p-5"
       >
-        <div class="p-4">
-          <h3 class="text-base font-medium text-neutral-900 mb-3">
-            {{ booking.service.name }}
-          </h3>
+        <h3 class="text-base font-medium text-neutral-900 mb-4">
+          {{ booking.service.name }}
+        </h3>
 
-          <div class="space-y-2 mb-4">
-            <div class="flex items-center gap-3 text-sm text-neutral-700">
-              <Calendar class="w-5 h-5 text-neutral-600" />
-              {{ formatDateShort(booking.start_at) }}
-            </div>
-            <div class="flex items-center gap-3 text-sm text-neutral-700">
-              <Clock class="w-5 h-5 text-neutral-600" />
-              {{ formatTime(booking.start_at) }}
-            </div>
-            <div class="flex items-center gap-3 text-sm text-neutral-700">
-              <User class="w-5 h-5 text-neutral-600" />
-              {{ booking.client_name }}
-            </div>
+        <div class="space-y-2.5 mb-4">
+          <div class="flex items-center gap-3 text-sm text-neutral-700">
+            <Calendar class="w-4 h-4 text-neutral-600" />
+            {{ formatDateShort(booking.start_at) }}
+          </div>
+          <div class="flex items-center gap-3 text-sm text-neutral-700">
+            <Clock class="w-4 h-4 text-neutral-600" />
+            {{ formatTime(booking.start_at) }}
+          </div>
+          <div class="flex items-center gap-3 text-sm text-neutral-700">
+            <User class="w-4 h-4 text-neutral-600" />
+            {{ booking.client_name }}
           </div>
         </div>
 
-        <div class="flex gap-3 p-4 border-t border-neutral-300">
+        <div class="flex gap-2 pt-4 border-t border-neutral-200">
           <button
             @click="rejectBooking(booking.id)"
             :disabled="actionInProgress"
-            class="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-medium text-error-700 hover:bg-error-50 active:bg-error-100 rounded-lg transition-colors disabled:opacity-40"
+            class="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-medium text-error-600 hover:bg-error-50 active:bg-error-100 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <X class="w-4 h-4" />
-            <span>Rejeter</span>
+            <span>Refuser</span>
           </button>
           <button
             @click="confirmBooking(booking.id)"
             :disabled="actionInProgress"
-            class="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-medium text-white bg-brand-500 hover:bg-brand-600 hover:shadow-sm active:bg-brand-700 rounded-lg transition-all disabled:opacity-40"
+            class="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-medium text-white bg-brand-600 hover:bg-brand-700 active:bg-brand-800 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <Check class="w-4 h-4" />
             <span>Confirmer</span>
@@ -64,9 +47,10 @@
     </div>
   </div>
 
-  
-  <div v-else class="flex flex-col items-center justify-center p-12 text-center">
-    <div class="w-12 h-12 rounded-full bg-neutral-200 flex items-center justify-center mb-3">
+  <div v-else class="flex flex-col items-center justify-center py-12 text-center">
+    <div
+      class="w-12 h-12 rounded-lg bg-neutral-100 flex items-center justify-center mb-3"
+    >
       <Check class="w-6 h-6 text-neutral-600" />
     </div>
     <p class="text-sm font-medium text-neutral-900 mb-1">Tout est à jour</p>

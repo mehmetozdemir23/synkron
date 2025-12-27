@@ -1,5 +1,5 @@
 <template>
-  <div class="border-t border-neutral-200 p-3 sm:p-4 flex-shrink-0 bg-neutral-100/80 backdrop-blur-sm">
+  <div class="border-t border-neutral-200 p-3 sm:p-4 flex-shrink-0 bg-white backdrop-blur-sm">
     <div v-if="currentStep === 1" class="flex justify-end">
       <BaseButton
         @click="emit('go-to-step', 2)"

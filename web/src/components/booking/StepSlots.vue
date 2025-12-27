@@ -1,11 +1,11 @@
 <template>
   <div class="space-y-4">
     <div class="flex items-center gap-2 flex-wrap">
-      <div v-if="selectedService" class="flex items-center gap-1.5 px-2.5 py-1.5 bg-neutral-200 text-neutral-800 rounded-lg border border-neutral-300">
+      <div v-if="selectedService" class="flex items-center gap-1.5 px-3 py-2 bg-gradient-to-br from-brand-50 to-brand-100/50 text-brand-700 rounded-lg border border-brand-200">
         <Clock class="w-4 h-4" />
-        <span class="text-sm font-medium whitespace-nowrap">{{ selectedService.duration_minutes }} min</span>
+        <span class="text-sm font-semibold whitespace-nowrap">{{ selectedService.duration_minutes }} min</span>
       </div>
-      <div class="flex items-center gap-1.5 px-2.5 py-1.5 bg-neutral-200 text-neutral-700 rounded-lg border border-neutral-300">
+      <div class="flex items-center gap-1.5 px-3 py-2 bg-neutral-50 text-neutral-700 rounded-lg border border-neutral-200">
         <span class="text-sm font-medium whitespace-nowrap">{{ formatTimezone(professionalTimezone) }}</span>
       </div>
     </div>
@@ -29,12 +29,18 @@
             :class="[
               'flex-shrink-0 px-3 py-2 sm:px-4 sm:py-3 rounded-lg border-2 text-center min-w-[64px] sm:min-w-[70px] transition-all',
               props.selectedDayIndex === index
-                ? 'border-neutral-400 bg-neutral-200/50 shadow-sm'
-                : 'border-neutral-300 bg-neutral-100/50 hover:border-neutral-400',
+                ? 'border-brand-600 bg-gradient-to-br from-brand-50 to-brand-100/50 shadow-md'
+                : 'border-neutral-200 bg-white hover:border-brand-400 hover:shadow-sm',
             ]"
           >
-            <div class="text-[11px] sm:text-xs md:text-sm font-medium text-neutral-950">{{ day.dayName }}</div>
-            <div class="text-[10px] sm:text-xs text-neutral-800 mt-0.5">{{ day.dayNumber }}</div>
+            <div :class="[
+              'text-[11px] sm:text-xs md:text-sm font-semibold',
+              props.selectedDayIndex === index ? 'text-brand-700' : 'text-neutral-900'
+            ]">{{ day.dayName }}</div>
+            <div :class="[
+              'text-[10px] sm:text-xs mt-0.5',
+              props.selectedDayIndex === index ? 'text-brand-600' : 'text-neutral-600'
+            ]">{{ day.dayNumber }}</div>
           </button>
         </div>
       </div>
@@ -46,10 +52,10 @@
             :key="slot.start_at"
             @click="selectSlot(slot)"
             :class="[
-              'py-2.5 sm:py-2.5 px-2 sm:px-2 rounded-lg border-2 text-center text-[11px] sm:text-xs md:text-sm font-medium transition-all',
+              'py-2.5 sm:py-2.5 px-2 sm:px-2 rounded-lg border-2 text-center text-[11px] sm:text-xs md:text-sm font-semibold transition-all',
               selectedSlot?.start_at === slot.start_at
-                ? 'border-neutral-400 bg-neutral-200 text-neutral-950 shadow-sm'
-                : 'border-neutral-300 bg-neutral-50 text-neutral-950 hover:border-neutral-400',
+                ? 'border-brand-600 bg-gradient-to-br from-brand-50 to-brand-100/50 text-brand-700 shadow-md'
+                : 'border-neutral-200 bg-white text-neutral-900 hover:border-brand-400 hover:shadow-sm',
             ]"
           >
             {{ formatSlotTime(slot.start_at) }}
@@ -70,6 +76,9 @@
 
 <script setup>
 import { CalendarDays, Clock } from "lucide-vue-next";
+import { useFormatters } from "@/composables/useFormatters";
+
+const { formatTime } = useFormatters();
 
 const props = defineProps({
   slotsByDay: {
@@ -109,12 +118,7 @@ function selectDay(index) {
 }
 
 function formatSlotTime(dateString) {
-  const date = new Date(dateString);
-  return new Intl.DateTimeFormat("fr-FR", {
-    hour: "2-digit",
-    minute: "2-digit",
-    timeZone: props.professionalTimezone,
-  }).format(date);
+  return formatTime(dateString, props.professionalTimezone);
 }
 
 function formatTimezone(timezone) {

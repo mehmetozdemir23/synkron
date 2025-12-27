@@ -1,8 +1,6 @@
 <template>
   <div class="min-h-screen bg-neutral-100 overflow-x-hidden antialiased">
-    <nav
-      class="sticky top-0 z-50 bg-neutral-100/80 backdrop-blur-md border-b border-neutral-300 px-4 sm:px-6"
-    >
+    <nav class="sticky top-0 z-50 px-4 sm:px-6">
       <div class="max-w-6xl mx-auto py-4 flex items-center justify-between">
         <LogoBrand size="sm" />
         <div class="flex items-center gap-2 sm:gap-3">
@@ -14,7 +12,7 @@
           </router-link>
           <router-link
             to="/register"
-            class="px-4 sm:px-5 pt-2 pb-2.5 text-xs sm:text-sm font-bold bg-brand-600 text-neutral-100 rounded-lg hover:bg-brand-600 transition-all"
+            class="px-4 sm:px-5 py-2 text-xs sm:text-sm font-bold bg-brand-600 text-neutral-100 rounded-lg hover:bg-brand-600 transition-all"
           >
             Commencer
           </router-link>
@@ -27,33 +25,67 @@
     >
       <div class="max-w-6xl mx-auto w-full">
         <div class="grid lg:grid-cols-2 gap-16 items-center">
-          <div class="self-start lg:mt-8">
+          <div class="text-center sm:text-left sm:self-start lg:mt-6">
             <h1
-              class="text-3xl sm:text-4xl md:text-5xl font-medium text-neutral-900 leading-tight mb-6"
+              class="text-3xl sm:text-4xl md:text-5xl font-medium text-neutral-900 leading-tight mb-8"
             >
               Gérez vos réservations en toute
-              <span class="relative inline-block">
-                <span class="relative z-10 text-brand-600 font-semibold"
-                  >simplicité</span
-                >
-                <span
-                  class="absolute bottom-0 left-0 w-full h-5 bg-blue-100 -z-0"
-                  aria-hidden="true"
-                ></span> </span
+              <span
+                class="inline-block relative z-10 text-brand-600 font-semibold"
+                >simplicité</span
               >.
             </h1>
-            <p
-              class="text-lg sm:text-xl text-neutral-700 font-medium mb-8 leading-relaxed"
-            >
-              Créez votre page de réservation, partagez votre lien unique et
-              recevez vos réservations automatiquement.
-            </p>
+
             <div
-              class="flex flex-col justify-center sm:justify-start sm:items-center sm:flex-row gap-4 mb-8"
+              class="mb-8 flex justify-between gap-4 sm:gap-6 max-w-md mx-auto sm:mx-0"
             >
+              <div class="flex flex-col items-center sm:items-start">
+                <div
+                  class="w-12 h-12 mb-3 bg-brand-500 rounded-xl flex items-center justify-center shadow-sm"
+                >
+                  <BriefcaseBusiness class="w-6 h-6 text-white" />
+                </div>
+                <p class="text-sm text-neutral-700 font-medium leading-snug">
+                  Ajoutez vos<br />services
+                </p>
+              </div>
+              <ArrowRight class="w-4 h-4 text-neutral-500 mt-4 flex-shrink-0" />
+              <div class="flex flex-col items-center sm:items-start">
+                <div
+                  class="w-12 h-12 mb-3 bg-brand-500 rounded-xl flex items-center justify-center shadow-sm"
+                >
+                  <Link2 class="w-6 h-6 text-white" />
+                </div>
+                <p class="text-sm text-neutral-700 font-medium leading-snug">
+                  Partagez<br />votre lien
+                </p>
+              </div>
+              <ArrowRight class="w-4 h-4 text-neutral-500 mt-4 flex-shrink-0" />
+              <div class="flex flex-col items-center sm:items-start">
+                <div
+                  class="w-12 h-12 mb-3 bg-brand-500 rounded-xl flex items-center justify-center shadow-sm"
+                >
+                  <CalendarCheck2 class="w-6 h-6 text-white" />
+                </div>
+                <p class="text-sm text-neutral-700 font-medium leading-snug">
+                  Gérez vos<br />rendez-vous
+                </p>
+              </div>
+            </div>
+
+            <div
+              class="mb-6 inline-flex items-center gap-2 px-3 py-2 bg-success-50 rounded-lg border border-success-200"
+            >
+              <CheckCircle class="w-4 h-4 flex-shrink-0 text-success-600" />
+              <span class="text-sm font-medium text-success-900"
+                >10 réservations gratuites / mois · Sans carte bancaire</span
+              >
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-3">
               <router-link
                 to="/register"
-                class="inline-flex items-center justify-center gap-2 pl-6 pr-4 pt-3 pb-3.5 bg-brand-600 text-neutral-100 rounded-lg font-bold hover:bg-brand-600 transition-all"
+                class="inline-flex items-center justify-center gap-2 pl-6 pr-4 pt-3 pb-3.5 bg-brand-600 text-neutral-100 rounded-lg font-bold hover:bg-brand-700 transition-all shadow-sm"
               >
                 Essayer gratuitement
                 <ArrowRight class="w-5 h-5 mt-0.5" />
@@ -64,26 +96,6 @@
               >
                 Se connecter
               </router-link>
-            </div>
-            <div class="flex flex-wrap justify-center sm:justify-start gap-6">
-              <div
-                class="inline-flex items-center gap-1.5 text-neutral-700 text-sm font-medium"
-              >
-                <CheckCircle class="w-4 h-4 flex-shrink-0 text-success-600" />
-                <span>10 réservations gratuites / mois</span>
-              </div>
-              <div
-                class="inline-flex items-center gap-1.5 text-neutral-700 text-sm font-medium"
-              >
-                <CheckCircle class="w-4 h-4 flex-shrink-0 text-success-600" />
-                <span>Sans CB</span>
-              </div>
-              <div
-                class="inline-flex items-center gap-1.5 text-neutral-700 text-sm font-medium"
-              >
-                <CheckCircle class="w-4 h-4 flex-shrink-0 text-success-600" />
-                <span>Services illimités</span>
-              </div>
             </div>
           </div>
           <DashboardDemo />
@@ -271,7 +283,7 @@
               class="absolute -top-3.5 left-1/2 -translate-x-1/2 -translate-y-0.5 rounded-full pl-1.5 pr-3.5 py-1.5 flex items-center bg-amber-300 text-neutral-800"
             >
               <Check class="mt-px h-4" />
-              <span class="text-sm font-semibold font-mono">
+              <span class="text-xs sm:text-sm font-semibold font-mono">
                 OFFRE RECOMMANDEE
               </span>
             </div>
@@ -345,6 +357,8 @@ import {
   Bell,
   Link2,
   Check,
+  CalendarCheck2,
+  BriefcaseBusiness,
 } from "lucide-vue-next";
 import LogoBrand from "@/components/layout/LogoBrand.vue";
 import DashboardDemo from "@/components/demo/DashboardDemo.vue";

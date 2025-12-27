@@ -3,41 +3,41 @@
     <Transition name="modal-fade">
       <div
         v-if="show"
-        class="fixed inset-0 z-50 bg-black/25 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 md:p-6"
+        class="fixed inset-0 z-50 bg-neutral-900/40 backdrop-blur-sm flex items-center justify-center p-4"
         @click.self="close"
         :key="show"
       >
         <div
           :class="[
-            'max-h-[80vh] sm:max-h-[90vh] bg-neutral-100 rounded-2xl w-full shadow-xl overflow-hidden transition-all duration-300 ease-out',
+            'max-h-[85vh] bg-neutral-50 rounded-xl w-full shadow-lg border border-neutral-200 overflow-hidden flex flex-col',
             sizeClass,
           ]"
         >
           <div
-            v-if="$slots.header"
-            class="flex items-center justify-between p-5 sm:p-6 md:p-7 border-b border-neutral-300"
+            v-if="$slots.header || title"
+            class="flex items-center justify-between px-6 py-4 border-b border-neutral-200 bg-neutral-100 flex-shrink-0"
           >
-            <h2 class="text-lg sm:text-xl md:text-2xl font-semibold text-neutral-900">
-              <slot name="header" />
+            <h2 class="text-lg font-semibold text-neutral-900">
+              <slot name="header">{{ title }}</slot>
             </h2>
             <button
               @click="close"
               :disabled="processing"
-              class="min-w-[44px] min-h-[44px] p-2.5 hover:bg-neutral-200 active:bg-neutral-400 rounded-xl transition-colors disabled:opacity-50 flex-shrink-0 group flex items-center justify-center"
+              class="p-2 hover:bg-neutral-200 active:bg-neutral-300 rounded-lg transition-smooth disabled:opacity-50 flex-shrink-0 group flex items-center justify-center"
             >
               <X
-                class="w-5 h-5 text-neutral-600 group-hover:text-neutral-900 transition-colors"
+                class="w-5 h-5 text-neutral-600 group-hover:text-neutral-900 transition-smooth"
               />
             </button>
           </div>
 
-          <div class="p-5 sm:p-6 md:p-7">
+          <div class="overflow-y-auto flex-1 p-6">
             <slot />
           </div>
 
           <div
             v-if="$slots.footer"
-            class="border-t border-neutral-300 p-5 sm:p-6 md:p-7 bg-neutral-100"
+            class="border-t border-neutral-200 px-6 py-4 bg-neutral-100 flex-shrink-0"
           >
             <slot name="footer" />
           </div>
@@ -53,6 +53,10 @@ import { X } from "lucide-vue-next";
 
 const props = defineProps({
   show: Boolean,
+  title: {
+    type: String,
+    default: "",
+  },
   processing: {
     type: Boolean,
     default: false,

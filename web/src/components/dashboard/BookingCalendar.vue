@@ -26,10 +26,10 @@
           <div v-if="pendingCount > 0" class="flex justify-center">
             <button
               @click="showPendingModal = true"
-              class="flex items-center gap-2 text-xs bg-warning-300 text-warning-800 rounded-full px-3 py-1"
+              class="flex items-center gap-2 text-xs bg-warning-300 text-warning-800 rounded-full px-3 pt-1.5 pb-1 min-h-0"
             >
               <span class="w-1.5 h-1.5 bg-warning-500 rounded-full"></span>
-              {{ pendingCount }} en attente
+              <span class="mb-1 sm:mb-0">{{ pendingCount }} en attente</span>
               <ArrowRight class="icon-xs" />
             </button>
           </div>
@@ -161,6 +161,110 @@
         </div>
       </div>
     </div>
+
+    <BaseModal
+      :show="showPendingModal"
+      @close="showPendingModal = false"
+      title="Réservations en attente"
+    >
+      <PendingBookings
+        :bookings="props.bookings.filter((b) => b.status === 'pending')"
+        @booking-updated="handleBookingUpdated"
+      />
+    </BaseModal>
+
+    <BaseModal
+      :show="!!selectedBooking"
+      @close="selectedBooking = null"
+      :title="selectedBooking?.service.name || ''"
+      size="sm"
+    >
+      <div v-if="selectedBooking" class="space-y-5">
+        <div>
+          <span
+            :class="getStatusBadgeClass(selectedBooking.status)"
+            class="px-3 py-1.5 rounded-lg text-xs font-semibold"
+          >
+            {{ getStatusLabel(selectedBooking.status) }}
+          </span>
+        </div>
+
+        <div class="space-y-3">
+          <div>
+            <p class="text-sm font-semibold text-neutral-900">
+              {{ formatDateFull(selectedBooking.start_at) }}
+            </p>
+            <p class="text-sm text-neutral-600 mt-0.5">
+              {{ formatTime(selectedBooking.start_at) }}
+            </p>
+          </div>
+
+          <div>
+            <p class="text-sm font-semibold text-neutral-900">
+              {{ selectedBooking.client_name }}
+            </p>
+            <p class="text-sm text-neutral-600 mt-0.5 truncate">
+              {{ selectedBooking.client_email }}
+            </p>
+          </div>
+        </div>
+
+        <div
+          v-if="selectedBooking.status === 'pending'"
+          class="flex gap-2 pt-2 border-t border-neutral-200"
+        >
+          <button
+            @click="handleAcceptBooking(selectedBooking)"
+            :disabled="actionInProgress"
+            class="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-success-500 text-white rounded-lg hover:bg-success-600 active:bg-success-700 disabled:opacity-50 disabled:cursor-not-allowed font-medium text-sm transition-smooth"
+          >
+            <Check class="w-4 h-4" />
+            Accepter
+          </button>
+          <button
+            @click="handleRejectBooking(selectedBooking)"
+            :disabled="actionInProgress"
+            class="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-error-500 text-white rounded-lg hover:bg-error-600 active:bg-error-700 disabled:opacity-50 disabled:cursor-not-allowed font-medium text-sm transition-smooth"
+          >
+            <X class="w-4 h-4" />
+            Refuser
+          </button>
+        </div>
+      </div>
+    </BaseModal>
+
+    <BaseModal
+      :show="!!selectedDayDate"
+      @close="selectedDayDate = null"
+      :title="selectedDayDate ? formatDateFull(selectedDayDate) : ''"
+    >
+      <div v-if="selectedDayDate" class="space-y-2">
+        <div
+          v-for="booking in getBookingsForDay(selectedDayDate)"
+          :key="booking.id"
+          @click="
+            selectedDayDate = null;
+            selectBooking(booking);
+          "
+          class="p-3 rounded-lg bg-neutral-100 hover:bg-neutral-200 cursor-pointer transition-smooth"
+        >
+          <div class="flex items-center justify-between mb-1.5">
+            <p class="text-sm font-semibold text-neutral-900">
+              {{ booking.service.name }}
+            </p>
+            <span
+              :class="getStatusBadgeClass(booking.status)"
+              class="px-2.5 py-1 rounded-lg text-xs font-semibold"
+            >
+              {{ getStatusLabel(booking.status) }}
+            </span>
+          </div>
+          <p class="text-xs text-neutral-600">
+            {{ formatTime(booking.start_at) }} • {{ booking.client_name }}
+          </p>
+        </div>
+      </div>
+    </BaseModal>
   </div>
 </template>
 
@@ -183,8 +287,7 @@ import PendingBookingsBadge from "./PendingBookingsBadge.vue";
 
 const { formatTime, formatDateShort, formatDateFull, formatMonthYear } =
   useFormatters();
-const { getStatusBadgeClass, getStatusLabel, getStatusColor } =
-  useStatusClasses();
+const { getStatusBadgeClass, getStatusLabel } = useStatusClasses();
 
 const bookingsStore = useBookingsStore();
 const alertStore = useAlertStore();
@@ -297,5 +400,41 @@ function selectBooking(booking) {
 
 function showDayBookings(date) {
   selectedDayDate.value = date;
+}
+
+async function handleAcceptBooking(booking) {
+  actionInProgress.value = true;
+  try {
+    await bookingsStore.updateBookingStatus(booking.id, "confirmed");
+    alertStore.showAlert("Réservation acceptée", "success");
+    selectedBooking.value = null;
+    emit("refresh");
+  } catch (error) {
+    alertStore.showAlert(
+      "Erreur lors de l'acceptation de la réservation",
+      "error"
+    );
+  } finally {
+    actionInProgress.value = false;
+  }
+}
+
+async function handleRejectBooking(booking) {
+  actionInProgress.value = true;
+  try {
+    await bookingsStore.updateBookingStatus(booking.id, "cancelled");
+    alertStore.showAlert("Réservation refusée", "success");
+    selectedBooking.value = null;
+    emit("refresh");
+  } catch (error) {
+    alertStore.showAlert("Erreur lors du refus de la réservation", "error");
+  } finally {
+    actionInProgress.value = false;
+  }
+}
+
+function handleBookingUpdated() {
+  showPendingModal.value = false;
+  emit("refresh");
 }
 </script>

@@ -13,9 +13,7 @@
           </p>
         </div>
 
-        <div
-          class="rounded-2xl shadow-md hover:shadow-lg transition-all animate-fade-in"
-        >
+        <div class="transition-all animate-fade-in">
           <div class="space-y-5">
             <AuthForm
               :error="error"
@@ -81,8 +79,7 @@
               <div class="w-full border-t border-neutral-300"></div>
             </div>
             <div class="relative flex justify-center">
-              <span
-                class="px-3 bg-neutral-100 text-sm text-neutral-600 font-medium"
+              <span class="px-3 bg-white text-sm text-neutral-600 font-medium"
                 >ou</span
               >
             </div>

@@ -7,9 +7,9 @@
   >
     <div
       :class="[
-        'relative flex-center w-14 py-1 rounded-full transition-smooth',
+        'relative flex items-center justify-center w-14 h-8 rounded-full transition-smooth',
         isActive
-          ? 'bg-brand-100'
+          ? 'bg-brand-200'
           : 'group-hover:bg-neutral-200/50 group-active:bg-neutral-200',
       ]"
     >
@@ -26,7 +26,7 @@
     <span
       :class="[
         'text-[11px] font-medium transition-smooth leading-none text-center px-1',
-        isActive ? 'text-neutral-900' : 'text-neutral-600',
+        isActive ? 'text-neutral-900' : 'text-neutral-500',
       ]"
     >
       {{ label }}

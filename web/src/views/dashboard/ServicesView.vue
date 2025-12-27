@@ -31,7 +31,7 @@
         <div
           v-for="i in 3"
           :key="i"
-          class="bg-neutral-200 rounded-xl border border-neutral-400 p-5 space-y-4"
+          class="bg-white rounded-xl border border-neutral-200 p-5 space-y-4"
         >
           <div class="flex items-start justify-between mb-4">
             <div class="flex-1 space-y-3">
@@ -85,7 +85,7 @@
 
       <EmptyState
         v-else-if="services.length === 0"
-        :icon="Briefcase"
+        :icon="BriefcaseBusiness"
         title="Aucun service"
         description="Commencez par créer votre premier service pour accepter les réservations"
       >
@@ -101,7 +101,7 @@
         <div
           v-for="service in services"
           :key="service.id"
-          class="group relative bg-neutral-100 rounded-xl shadow-md p-5 overflow-hidden"
+          class="group relative bg-white rounded-xl border border-neutral-200 p-5 overflow-hidden"
         >
           <div class="flex items-start justify-between mb-4">
             <div class="flex-1 pr-2">
@@ -279,7 +279,7 @@ import BaseAlert from "@/components/ui/BaseAlert.vue";
 import EmptyState from "@/components/ui/EmptyState.vue";
 import {
   Plus,
-  Briefcase,
+  BriefcaseBusiness,
   Clock,
   Edit2,
   Trash2,

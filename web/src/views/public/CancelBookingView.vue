@@ -1,11 +1,11 @@
 <template>
-  <div
-    class="min-h-screen bg-neutral-100 flex flex-col"
-  >
+  <div class="min-h-screen bg-neutral-100 flex flex-col">
     <PublicHeader />
 
     <div class="flex-1 flex items-center justify-center p-4 py-6 sm:py-8">
-      <div class="w-full max-w-md bg-neutral-200 rounded-2xl border border-neutral-400 shadow-lg p-6 sm:p-8 flex flex-col">
+      <div
+        class="w-full max-w-md bg-neutral-200 rounded-2xl border border-neutral-400 shadow-lg p-6 sm:p-8 flex flex-col"
+      >
         <div v-if="loading" class="text-center py-12">
           <div
             class="w-12 h-12 border-4 border-brand-200 border-t-brand-600 rounded-full animate-spin mx-auto mb-4"
@@ -32,35 +32,54 @@
           >
             <div class="space-y-3">
               <div class="flex items-center gap-3">
-                <div class="w-8 h-8 bg-neutral-200 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <Briefcase class="w-4 h-4 text-neutral-600" />
+                <div
+                  class="w-8 h-8 bg-neutral-200 rounded-lg flex items-center justify-center flex-shrink-0"
+                >
+                  <BriefcaseBusiness class="w-4 h-4 text-neutral-600" />
                 </div>
                 <div>
-                  <p class="text-xs font-medium text-neutral-500 uppercase tracking-wide">Service</p>
+                  <p
+                    class="text-xs font-medium text-neutral-500 uppercase tracking-wide"
+                  >
+                    Service
+                  </p>
                   <p class="text-sm font-semibold text-neutral-900 mt-0.5">
                     {{ booking.service?.name }}
                   </p>
                 </div>
               </div>
               <div class="flex items-center gap-3">
-                <div class="w-8 h-8 bg-neutral-200 rounded-lg flex items-center justify-center flex-shrink-0">
+                <div
+                  class="w-8 h-8 bg-neutral-200 rounded-lg flex items-center justify-center flex-shrink-0"
+                >
                   <Calendar class="w-4 h-4 text-neutral-600" />
                 </div>
                 <div>
-                  <p class="text-xs font-medium text-neutral-500 uppercase tracking-wide">Date</p>
+                  <p
+                    class="text-xs font-medium text-neutral-500 uppercase tracking-wide"
+                  >
+                    Date
+                  </p>
                   <p class="text-sm font-semibold text-neutral-900 mt-0.5">
                     {{ formatDate(booking.start_at) }}
                   </p>
                 </div>
               </div>
               <div class="flex items-center gap-3">
-                <div class="w-8 h-8 bg-neutral-200 rounded-lg flex items-center justify-center flex-shrink-0">
+                <div
+                  class="w-8 h-8 bg-neutral-200 rounded-lg flex items-center justify-center flex-shrink-0"
+                >
                   <Clock class="w-4 h-4 text-neutral-600" />
                 </div>
                 <div>
-                  <p class="text-xs font-medium text-neutral-500 uppercase tracking-wide">Heure</p>
+                  <p
+                    class="text-xs font-medium text-neutral-500 uppercase tracking-wide"
+                  >
+                    Heure
+                  </p>
                   <p class="text-sm font-semibold text-neutral-900 mt-0.5">
-                    {{ formatTime(booking.start_at) }} - {{ formatTime(booking.end_at) }}
+                    {{ formatTime(booking.start_at) }} -
+                    {{ formatTime(booking.end_at) }}
                   </p>
                 </div>
               </div>
@@ -97,35 +116,54 @@
           >
             <div class="space-y-3">
               <div class="flex items-center gap-3">
-                <div class="w-8 h-8 bg-brand-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <Briefcase class="w-4 h-4 text-brand-600" />
+                <div
+                  class="w-8 h-8 bg-brand-100 rounded-lg flex items-center justify-center flex-shrink-0"
+                >
+                  <BriefcaseBusiness class="w-4 h-4 text-brand-600" />
                 </div>
                 <div>
-                  <p class="text-xs font-medium text-neutral-500 uppercase tracking-wide">Service</p>
+                  <p
+                    class="text-xs font-medium text-neutral-500 uppercase tracking-wide"
+                  >
+                    Service
+                  </p>
                   <p class="text-sm font-semibold text-neutral-900 mt-0.5">
                     {{ booking.service?.name }}
                   </p>
                 </div>
               </div>
               <div class="flex items-center gap-3">
-                <div class="w-8 h-8 bg-brand-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                <div
+                  class="w-8 h-8 bg-brand-100 rounded-lg flex items-center justify-center flex-shrink-0"
+                >
                   <Calendar class="w-4 h-4 text-brand-600" />
                 </div>
                 <div>
-                  <p class="text-xs font-medium text-neutral-500 uppercase tracking-wide">Date</p>
+                  <p
+                    class="text-xs font-medium text-neutral-500 uppercase tracking-wide"
+                  >
+                    Date
+                  </p>
                   <p class="text-sm font-semibold text-neutral-900 mt-0.5">
                     {{ formatDate(booking.start_at) }}
                   </p>
                 </div>
               </div>
               <div class="flex items-center gap-3">
-                <div class="w-8 h-8 bg-brand-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                <div
+                  class="w-8 h-8 bg-brand-100 rounded-lg flex items-center justify-center flex-shrink-0"
+                >
                   <Clock class="w-4 h-4 text-brand-600" />
                 </div>
                 <div>
-                  <p class="text-xs font-medium text-neutral-500 uppercase tracking-wide">Heure</p>
+                  <p
+                    class="text-xs font-medium text-neutral-500 uppercase tracking-wide"
+                  >
+                    Heure
+                  </p>
                   <p class="text-sm font-semibold text-neutral-900 mt-0.5">
-                    {{ formatTime(booking.start_at) }} - {{ formatTime(booking.end_at) }}
+                    {{ formatTime(booking.start_at) }} -
+                    {{ formatTime(booking.end_at) }}
                   </p>
                 </div>
               </div>
@@ -167,7 +205,7 @@ import {
   AlertCircle,
   Calendar,
   Clock,
-  Briefcase,
+  BriefcaseBusiness,
 } from "lucide-vue-next";
 
 const route = useRoute();

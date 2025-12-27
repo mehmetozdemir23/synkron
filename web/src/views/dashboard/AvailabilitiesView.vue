@@ -15,7 +15,7 @@
             @click="saveAvailabilities"
             variant="primary"
             :loading="saving"
-            :disabled="loading"
+            :disabled="loading || !hasChanges"
           >
             <Save class="w-4 h-4" />
             Enregistrer
@@ -44,7 +44,7 @@
           <div
             v-for="i in 7"
             :key="i"
-            class="bg-neutral-200 rounded-xl border border-neutral-400 p-6 animate-pulse"
+            class="bg-white rounded-xl border border-neutral-200 p-6 animate-pulse"
           >
             <div class="h-5 bg-neutral-200 rounded w-24 mb-4"></div>
             <div class="space-y-3">
@@ -62,7 +62,7 @@
           <div
             v-for="day in days"
             :key="day.value"
-            class="bg-neutral-100 rounded-xl shadow-md p-4 sm:p-6 transition-all hover:shadow-lg"
+            class="bg-white rounded-xl border border-neutral-200 p-4 sm:p-6 transition-all hover:shadow-lg"
           >
             <div
               class="flex items-center justify-between gap-2 xs:gap-0 mb-4 sm:mb-5"

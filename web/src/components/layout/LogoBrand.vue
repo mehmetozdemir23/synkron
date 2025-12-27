@@ -1,9 +1,9 @@
 <template>
-  <router-link to="/" class="flex items-center gap-2.5 group">
+  <router-link to="/" class="flex items-center gap-2 group">
     <img src="@/assets/logo-simple.svg" alt="Synkron" :class="logoClass" />
-    <span class="font-sans text-2xl font-semibold text-neutral-800 mb-px"
-      >Synkron</span
-    >
+    <span class="mb-px font-sans text-xl font-[800] text-brand-600">
+      <span class="inline-block -mr-[0.03rem]">S</span>ynkron
+    </span>
   </router-link>
 </template>
 
@@ -20,9 +20,9 @@ const props = defineProps({
 
 const logoClass = computed(() => {
   const sizeClasses = {
-    sm: "h-7",
-    md: "h-9",
-    lg: "h-11",
+    sm: "h-6",
+    md: "h-8",
+    lg: "h-10",
   };
   return `w-auto ${sizeClasses[props.size]}`;
 });

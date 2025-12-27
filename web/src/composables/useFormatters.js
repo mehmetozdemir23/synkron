@@ -1,9 +1,28 @@
 export function useFormatters() {
-  function formatTime(dateString) {
+  function formatTime(dateString, timezone = undefined) {
     const date = new Date(dateString);
-    return date.toLocaleTimeString("fr-FR", {
+    const options = {
       hour: "2-digit",
       minute: "2-digit",
+    };
+    if (timezone) {
+      options.timeZone = timezone;
+    }
+    return date.toLocaleTimeString("fr-FR", options);
+  }
+
+  function formatDayName(dateString) {
+    const date = new Date(dateString);
+    return date.toLocaleDateString("fr-FR", {
+      weekday: "long",
+    });
+  }
+
+  function formatDayNumber(dateString) {
+    const date = new Date(dateString);
+    return date.toLocaleDateString("fr-FR", {
+      day: "2-digit",
+      month: "short",
     });
   }
 
@@ -26,6 +45,15 @@ export function useFormatters() {
     });
   }
 
+  function formatFullDate(dateString) {
+    const date = new Date(dateString);
+    return date.toLocaleDateString("fr-FR", {
+      weekday: "long",
+      day: "numeric",
+      month: "long",
+    });
+  }
+
   function formatMonthYear(date) {
     return date.toLocaleDateString("fr-FR", {
       month: "long",
@@ -35,8 +63,11 @@ export function useFormatters() {
 
   return {
     formatTime,
+    formatDayName,
+    formatDayNumber,
     formatDateShort,
     formatDateFull,
+    formatFullDate,
     formatMonthYear,
   };
 }

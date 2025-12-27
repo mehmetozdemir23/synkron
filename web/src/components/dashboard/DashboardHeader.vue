@@ -7,7 +7,7 @@
         Bonjour, {{ userName }}
       </h1>
     </div>
-    <div class="flex-shrink-0">
+    <div class="w-full sm:w-auto sm:flex-shrink-0">
       <ShareLink :url="publicUrl" />
     </div>
   </div>
